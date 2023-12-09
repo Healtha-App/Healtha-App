@@ -35,6 +35,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  file_picker: ^4.0.0
+  google_nav_bar: ^5.0.6
+  line_icons: ^2.0.3
+  animated_text_kit: ^4.2.2
+  dotted_border: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -59,8 +64,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -74,6 +79,23 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Regular.ttf
+
+    - family: Bebas_Neue
+      fonts:
+        - asset: fonts/BebasNeue-Regular.ttf
+
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-VariableFont_wght.ttf
+
+    - family: Merriweather
+      fonts:
+      #  - asset: fonts/Merriweather-Regular.ttf
+        - asset: fonts/Merriweather-Light.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
