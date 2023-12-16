@@ -36,13 +36,13 @@ class _ReportState extends State<Report> {
                 ),
               ),
               Positioned(
-                bottom: -275,
+                bottom: -350,
                 left: MediaQuery.of(context).size.width * 0.05,
                 right: MediaQuery.of(context).size.width * 0.05,
                 child: Container(
                   padding: EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: 550,
+                  height: 720,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
@@ -60,17 +60,19 @@ class _ReportState extends State<Report> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Proactive health starts here!",
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: myPurple),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Unlocking insights with smart reports",
+                        """Dear Esraa,
+
+We hope this report finds you in good health. We have conducted a comprehensive lab analysis to assess your overall health, with a specific focus on your haemoglobin levels and thyroid health. Below, you will find the results of the analysis along with some tips for managing your thyroid health.
+
+1. Haemoglobin Level:
+Your haemoglobin level is measured at 12.9 g/dL. Haemoglobin is a protein found in red blood cells that carries oxygen throughout the body. The normal range for haemoglobin in women is typically between 12.0 and 15.5 g/dL. Based on your results, your haemoglobin level falls within the normal range, indicating that your blood is carrying an adequate amount of oxygen.
+
+Please note that this report is based on the results of the lab analysis conducted on 10-10-2023. It is essential to consult with your healthcare provider for a comprehensive evaluation of your health and to discuss any concerns or questions you may have.
+
+Take care of your health and follow the tips provided to maintain optimal thyroid health. Should you have any further questions or require additional information, please do not hesitate to reach out to us.
+
+Wishing you good health and well-being.
+    """,
                         style: TextStyle(fontSize: 14),
                       ),
                     ],
