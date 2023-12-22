@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
+import 'package:healtha/prediction/disease_prediction.dart';
 import 'package:line_icons/line_icons.dart';
 
 import 'lab_analysis/drop_file.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
 
       home: Scaffold(
-        body: Report(),
+        body: disease(),
         bottomNavigationBar: Container(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
