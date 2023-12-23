@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:healtha/encyclopedias/encyclopedia_types.dart';
+import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
-import 'package:healtha/prediction/disease_prediction.dart';
 import 'package:line_icons/line_icons.dart';
 
 import 'lab_analysis/drop_file.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       ),
 
       home: Scaffold(
+
         body: laboratory(),
         bottomNavigationBar: Container(
           child: Padding(
