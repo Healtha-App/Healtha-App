@@ -63,6 +63,7 @@ class EncyclopediaPage extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: 50,),
           Expanded(
             child: ListView.builder(
               itemCount: 10, // Adjust the number of items as needed
@@ -96,6 +97,7 @@ class EncyclopediaPage extends StatelessWidget {
                         ),
                       ),
                     ),
+
                   ),
                 );
               },

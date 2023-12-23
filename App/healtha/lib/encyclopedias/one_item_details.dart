@@ -72,6 +72,7 @@ class DetailsPage extends StatelessWidget {
                 itemCount: detailsList.length,
                 itemBuilder: (context, index) {
                   return Card(
+                    //color: Colors.white,
                     elevation: 5, // Adjust the elevation as needed
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
