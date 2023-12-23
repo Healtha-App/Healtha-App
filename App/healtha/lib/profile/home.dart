@@ -58,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage("assets/habiba1.jpeg"),
+                      image: AssetImage("assets/girl.PNG"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -66,12 +66,12 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 const Text(
                   "Habiba Mohammed Ali",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,color: Colors.white),
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,color: Colors.black),
                 ),
                 const SizedBox(height: 5),
                 const Text(
                   "Gastroenterology Doctor",
-                  style: TextStyle(fontSize: 15.0,color: Colors.white),
+                  style: TextStyle(fontSize: 15.0,color: Colors.black),
                 ),
                 const SizedBox(height: 25),
                 customContainer(
