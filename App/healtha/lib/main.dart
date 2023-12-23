@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
+import 'lab_doctor/lab_doctor.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
 
       home: Scaffold(
-        body: disease(),
+        body: laboratory(),
         bottomNavigationBar: Container(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
