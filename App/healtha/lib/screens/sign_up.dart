@@ -24,6 +24,7 @@ class SignUp extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(70),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
                     'images/healtha1.png',
@@ -49,7 +50,7 @@ class SignUp extends StatelessWidget {
               height: 20,
             ),
             Container(
-              height: 500,
+              height: 600,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
