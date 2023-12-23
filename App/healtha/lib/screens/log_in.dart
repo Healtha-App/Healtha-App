@@ -24,6 +24,7 @@ class Login extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 70),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
                     'images/healtha1.png',
@@ -49,7 +50,7 @@ class Login extends StatelessWidget {
               height: 60,
             ),
             Container(
-              height: 450,
+              height: 600,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -57,6 +58,7 @@ class Login extends StatelessWidget {
                   topRight: Radius.circular(40),
                 ),
               ),
+
               child: Form(
                 key: _formkey,
                 child: Container(
@@ -64,7 +66,7 @@ class Login extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 20,
+                        height: 80,
                       ),
                       Text(
                         'Log In',
@@ -75,7 +77,7 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
                       Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),

@@ -5,6 +5,8 @@ import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
 import 'package:healtha/profile/home.dart';
 import 'package:healtha/screens/home_screen.dart';
+import 'package:healtha/screens/log_in.dart';
+import 'package:healtha/screens/sign_up.dart';
 import 'package:healtha/screens/splash.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
 
       home: Scaffold(
 
-        body: HomeScreen(),
+        body: SignUp(),
 
 
       )
