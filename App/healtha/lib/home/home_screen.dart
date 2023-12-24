@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../chatbot/chat_screen.dart';
 import '../encyclopedias/encyclopedia_types.dart';
 import '../lab_analysis/upload_analysis.dart';
 import '../navigation.dart';
 import '../prediction/disease_prediction.dart';
 import '../profile/home.dart';
-import 'chat_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';

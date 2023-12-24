@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healtha/screens/sign_up.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'home_screen.dart';
+import '../encyclopedias/encyclopedia_types.dart';
+import '../register_login/sign_up.dart';
+
 
 class slider extends StatefulWidget {
   const slider({Key? key}) : super(key: key);
@@ -146,7 +147,7 @@ class _sliderState extends State<slider> {
                 Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                        builder: (context) => SignUp()));
+                        builder: (context) => EncyclopediaTypes()));
               },
               child: Container(
                 alignment: Alignment.center,
