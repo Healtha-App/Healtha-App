@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healtha/screens/sign_up.dart';
+import 'package:healtha/register_login/sign_up.dart';
 
-import 'home_screen.dart';
+import '../home/home_screen.dart';
+import '../navigation.dart';
+
 
 
 class Login extends StatelessWidget {
@@ -50,7 +52,7 @@ class Login extends StatelessWidget {
               height: 60,
             ),
             Container(
-              height: 600,
+              height: 650,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -129,7 +131,7 @@ class Login extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
+                                      builder: (context) => YourWidget(),
                                     ));
                               }),
                         ),

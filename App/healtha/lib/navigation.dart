@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/profile/home.dart';
-import 'package:healtha/screens/home_screen.dart';
-import 'package:line_icons/line_icons.dart'; // Make sure to import the flutter_gnav package
+import 'package:healtha/home/home_screen.dart';
+import 'package:line_icons/line_icons.dart';
+
+import 'lab_doctor/lab_doctor.dart'; // Make sure to import the flutter_gnav package
 
 
 class YourWidget extends StatefulWidget {
@@ -20,10 +23,10 @@ class _YourWidgetState extends State<YourWidget> {
       body: PageView(
         controller: _pageController,
         children: [
-          HomeScreen(),
-          HomeScreen(),
-          HomeScreen(),
-          ProfileScreen()
+          HomeScreen(), // Use HomeScreen widget instead of HomePage()
+          EncyclopediaTypes(), // Replace with your actual LikesPage widget
+          HomeScreen(), // Replace with your actual SearchPage widget
+          ProfileScreen(), // Replace with your actual ProfilePage widget
         ],
         onPageChanged: (index) {
           setState(() {
@@ -35,19 +38,33 @@ class _YourWidgetState extends State<YourWidget> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
           child: GNav(
-            // ... your existing GNav configuration
+            rippleColor: myPurple.withOpacity(0.2),
+            hoverColor: myPurple.withOpacity(0.2),
+            haptic: true,
+            tabBorderRadius: 25,
+            tabActiveBorder: Border.all(color: myPurple, width: 0.2),
+            tabBorder: Border.all(color: Colors.grey, width: 0.2),
+            tabShadow: [BoxShadow(color: Colors.white, blurRadius: 8)],
+            curve: Curves.easeInExpo,
+            duration: Duration(milliseconds: 200),
+            gap: 5,
+            color: Colors.grey[700],
+            activeColor: myPurple,
+            iconSize: 24,
+            tabBackgroundColor: myPurple.withOpacity(0.1),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             tabs: [
               GButton(
                 icon: LineIcons.home,
                 text: 'Home',
               ),
               GButton(
-                icon: LineIcons.heart,
-                text: 'Likes',
+                icon: Icons.chrome_reader_mode_outlined,
+                text: 'Encyclopedia',
               ),
               GButton(
-                icon: LineIcons.search,
-                text: 'Search',
+                icon: Icons.bookmark_outline_outlined,
+                text: 'Saved',
               ),
               GButton(
                 icon: LineIcons.user,
