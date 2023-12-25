@@ -57,7 +57,7 @@ class editPage extends StatelessWidget {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage("assets/habiba1.jpeg"),
+                      image: AssetImage("assets/girl.PNG"),
                       fit: BoxFit.cover,
                     ),
                   ),

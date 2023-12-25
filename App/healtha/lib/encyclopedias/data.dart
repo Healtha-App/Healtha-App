@@ -19,28 +19,25 @@ class DiseaseDatabase {
         'content': 'Treatment procedures for Disease1 may involve ... Consult with a healthcare professional for personalized advice.',
       },
     ],
-    'Lab Test1': [
-      {'title': 'Test Overview', 'content': 'Brief overview of LabTest1.'},
+    'Complete Blood Count (CBC)': [
+      {'title': 'Why Get Tested?', 'content': 'To determine your general health status: to screen for, diagnose, or monitor any one of a variety of diseases and conditions that affect blood cells, such as anemia, infection, inflammation, bleeding disorder or cancer.'},
       {
-        'title': 'Why and When to Get Tested?',
-        'content': 'LabTest1 is recommended in situations like ... It is crucial to understand when and why you need this test.',
+        'title': 'When to Get Tested?',
+        'content': 'As part of a routine medical exam; when you have signs and symptoms that may be related to a condition that affects blood cells; at regular intervals to monitor treatment or when you are receiving treatment known to affect blood cells.',
       },
       {
-        'title': 'Test Preparations',
-        'content': 'Before taking LabTest1, you need to ... Follow these preparations to ensure accurate results.',
+        'title': 'Sample Required',
+        'content': 'A blood sample drawn from a vein in your arm or a fingerstick or heelstick (newborns).',
       },
       {
-        'title': 'What is Being Tested?',
-        'content': 'LabTest1 examines ... It helps identify specific markers or conditions.',
+        'title': 'How is the test used?',
+        'content': 'The complete blood count (CBC) is often used as a broad screening test to determine an individual\'s general health status. It can be used to:\n'
+  '• Screen for a wide range of conditions and diseases \n'
+      '• Help diagnose various conditions, such as anemia, infection, inflammation, bleeding disorder or leukemia, to name just a few\n'
+      '• Monitor the condition and/or effectiveness of treatment after a diagnosis is established\n'
+      '• Monitor treatment that is known to affect blood cells, such as chemotherapy or radiation therapy.',
       },
-      {
-        'title': 'What Does the Test Result Mean?',
-        'content': 'Interpreting LabTest1 results involves ... Understand the implications of different outcomes.',
-      },
-      {
-        'title': 'Anything Else to Know?',
-        'content': 'Additional information about LabTest1 includes ... Stay informed for a better understanding.',
-      },
+
     ],
     // Add more diseases or lab tests as needed
   };

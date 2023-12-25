@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'editPage.dart';
 import 'headerContainer.dart';
-
 import 'customContainer.dart';
 
 class ProfileScreen extends StatelessWidget {

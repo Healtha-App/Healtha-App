@@ -13,13 +13,23 @@ class EncyclopediaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: MyApp.myPurple,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Column(
         children: [
           Stack(
             clipBehavior: Clip.none,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: MyApp.myPurple,
@@ -69,18 +79,24 @@ class EncyclopediaPage extends StatelessWidget {
               itemCount: 10, // Adjust the number of items as needed
               itemBuilder: (context, index) {
                 return Card(
+
                   elevation: 3,
                   shape: RoundedRectangleBorder(
+
                     borderRadius: BorderRadius.circular(15),
                   ),
                   color: Colors.white, // Adjust the elevation as needed
                   child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 25), // Adjust the vertical padding as needed
                     leading: Image.asset(
                       image,
                       width: 35, // Adjust the width as needed
                       height: 35, // Adjust the height as needed
                     ),
-                    title: Text('$category Type $index', style: TextStyle(color: Colors.black,)),
+                    title: Text(
+                      '$category Type $index',
+                      style: TextStyle(color: Colors.black),
+                    ),
                     trailing: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -97,12 +113,13 @@ class EncyclopediaPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                  )
 
-                  ),
                 );
               },
             ),
           ),
+
         ],
       ),
     );

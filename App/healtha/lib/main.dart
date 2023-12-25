@@ -4,17 +4,20 @@ import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
 import 'package:healtha/profile/home.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:healtha/home/home_screen.dart';
+import 'package:healtha/register_login/log_in.dart';
+import 'package:healtha/register_login/sign_up.dart';
+import 'package:healtha/start/splash.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:healtha/start/slider.dart';
 import 'package:healtha/start/splash.dart';
 
-import 'package:line_icons/line_icons.dart';
 
 import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
 import 'lab_doctor/lab_doctor.dart';
-import 'navigation.dart';
 
 void main() {
   runApp(const MyApp());

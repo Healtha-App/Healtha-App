@@ -35,8 +35,18 @@ class _diseaseState extends State<disease> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: myPurple,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
-      body:    SingleChildScrollView(
+      body:   SingleChildScrollView(
         child: Column(
           children: [
 
@@ -44,7 +54,7 @@ class _diseaseState extends State<disease> {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
+                  height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: myPurple,

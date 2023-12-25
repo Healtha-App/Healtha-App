@@ -14,13 +14,23 @@ class DetailsPage extends StatelessWidget {
     List<Map<String, String>> detailsList = DiseaseDatabase.getDetails(category);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: MyApp.myPurple,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Column(
         children: [
           Stack(
             clipBehavior: Clip.none,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: MyApp.myPurple,
