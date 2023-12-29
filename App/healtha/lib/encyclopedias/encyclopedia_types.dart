@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/main.dart';
-
 import '../register_login/sign_up.dart';
 
 class EncyclopediaTypes extends StatelessWidget {
@@ -11,7 +10,6 @@ class EncyclopediaTypes extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-
             children: [
               Stack(
                 clipBehavior: Clip.none,
