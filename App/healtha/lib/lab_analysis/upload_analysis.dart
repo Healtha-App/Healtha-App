@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'drop_file.dart';
 
 class UploadPage extends StatefulWidget {
@@ -19,6 +20,36 @@ class _UploadPageState extends State<UploadPage> {
 
   int _selectedIndex = 0;
   static const Color myPurple = Color(0xff7c77d1);
+
+  String _result = ''; // Add this variable to store the result
+
+  Future<void> fetchData() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:5000/get_analysis'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{}),
+      );
+
+      print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        // Parse and use the response
+        final data = json.decode(response.body);
+        setState(() {
+          _result = data['result'];
+        });
+      } else {
+        // Handle errors
+        print('Failed to load data');
+      }
+    } catch (error) {
+      print("Error during request: $error");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,17 +178,25 @@ class _UploadPageState extends State<UploadPage> {
                   if (_isEnabled == false)
                     AnimatedTextKit(
                     animatedTexts: [
+      //                 TypewriterAnimatedText(
+      //                   """Your healtha report is being generated with care...
+      //
+      // We will notify you as soon as it is ready
+      //
+      // Thank you for allowing us the time to ensure accuracy!""",
+      //                   textStyle: TextStyle(
+      //                     fontSize: 14,
+      //                     color: Colors.black87,
+      //                   ),
+      //                   // textStyle: TextStyle(fontSize: 30.0),
+      //                   speed: Duration(milliseconds: 40),
+      //                 ),
                       TypewriterAnimatedText(
-                        """Your healtha report is being generated with care...
-        
-      We will notify you as soon as it is ready
-      
-      Thank you for allowing us the time to ensure accuracy!""",
+                        _result,
                         textStyle: TextStyle(
                           fontSize: 14,
                           color: Colors.black87,
                         ),
-                        // textStyle: TextStyle(fontSize: 30.0),
                         speed: Duration(milliseconds: 40),
                       ),
                     ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
+import 'package:healtha/lab_analysis/fetch.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
 import 'package:healtha/profile/home.dart';
 import 'package:line_icons/line_icons.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
 
       home: Scaffold(
 
-        body: SplashScreen(),
+        body: MyHomePage(),
 
 
       )
