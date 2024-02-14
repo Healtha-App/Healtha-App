@@ -1,18 +1,15 @@
 // details_page.dart
-
 import 'package:flutter/material.dart';
 import '../main.dart';
-import 'data.dart';
+import 'one_encyclopedia.dart';
 
-class DetailsPage extends StatelessWidget {
-  final String category;
+class LabTestDetailsPage extends StatelessWidget {
+  final LabTest labTest; // Update the type here
 
-  DetailsPage(this.category);
+  LabTestDetailsPage({required this.labTest});
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> detailsList = DiseaseDatabase.getDetails(category);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyApp.myPurple,
@@ -62,7 +59,7 @@ class DetailsPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "$category",
+                      "${labTest.name}",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -74,42 +71,28 @@ class DetailsPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30,),
+          SizedBox(height: 30),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ListView.builder(
-                itemCount: detailsList.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    //color: Colors.white,
-                    elevation: 5, // Adjust the elevation as needed
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Lab Test Details:',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: MyApp.myPurple,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            detailsList[index]['title'] ?? '',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: MyApp.myPurple,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            detailsList[index]['content'] ?? '',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Name: ${labTest.name}',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  // Add more details as needed
+                ],
               ),
             ),
           ),
