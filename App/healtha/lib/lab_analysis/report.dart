@@ -1,8 +1,6 @@
-import 'package:line_icons/line_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Report extends StatefulWidget {
   @override
@@ -11,21 +9,63 @@ class Report extends StatefulWidget {
 
 class _ReportState extends State<Report> {
   String _fileName = 'No file chosen';
-  bool showAfterAnimation= false;
+  bool showAfterAnimation = false;
   bool _isEnabled = true;
+  String healthReport = ''; // Variable to store health report data
 
   int _selectedIndex = 0;
   static const Color myPurple = Color(0xff7c77d1);
 
+  Future<void> fetchData() async {
+    final response = await http.post(
+      Uri.parse('https://api.chatpdf.com/v1/chats/message'),
+      headers: {
+        'x-api-key': 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'sourceId': 'src_zGaagrXZbLcNV3hDaVUyR',
+        'messages': [
+          {
+            'role': 'user',
+            'content': 'Write a user-friendly lab analysis report about this lab test in this formats '
+                'in points and each point list of items, in this report write'
+                "start with Dear (patient name from the report), We hope this report finds you in good health. "
+                "We have conducted a comprehensive analysis to assess your health. "
+                "1. Test name and definition 2. Interpretations about each important value result"
+                "3. Medical advices and tips for managing these values to take care of their health"
+                "write all under 250 word"
+                'after the final warm regards write (Healtha team)',
+          }
+        ],
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        healthReport = json.decode(response.body)['content'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Fetch data when the widget is initialized
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return SingleChildScrollView(
+      child: Column(
         children: [
           Stack(
             clipBehavior: Clip.none,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height*.50,
+                height: MediaQuery.of(context).size.height * .50,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: myPurple,
@@ -36,13 +76,14 @@ class _ReportState extends State<Report> {
                 ),
               ),
               Positioned(
-                bottom: -350,
+                bottom: -400,
+                top: 60,
                 left: MediaQuery.of(context).size.width * 0.05,
                 right: MediaQuery.of(context).size.width * 0.05,
                 child: Container(
                   padding: EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: 720,
+                  height: 750,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
@@ -55,34 +96,62 @@ class _ReportState extends State<Report> {
                       ),
                     ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        """Dear Esraa,
-
-We hope this report finds you in good health. We have conducted a comprehensive lab analysis to assess your overall health, with a specific focus on your haemoglobin levels and thyroid health. Below, you will find the results of the analysis along with some tips for managing your thyroid health.
-
-1. Haemoglobin Level:
-Your haemoglobin level is measured at 12.9 g/dL. Haemoglobin is a protein found in red blood cells that carries oxygen throughout the body. The normal range for haemoglobin in women is typically between 12.0 and 15.5 g/dL. Based on your results, your haemoglobin level falls within the normal range, indicating that your blood is carrying an adequate amount of oxygen.
-
-Please note that this report is based on the results of the lab analysis conducted on 10-10-2023. It is essential to consult with your healthcare provider for a comprehensive evaluation of your health and to discuss any concerns or questions you may have.
-
-Take care of your health and follow the tips provided to maintain optimal thyroid health. Should you have any further questions or require additional information, please do not hesitate to reach out to us.
-
-Wishing you good health and well-being.
-    """,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Your Healtha Report",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          healthReport,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Implement save logic
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: myPurple, // Background color
+                          ),
+                          child: Text(
+                            "Save",
+                            style: TextStyle(
+                              color: Colors.white, // Text color
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              // Implement chatbot logic
+                            },
+                            child: Text(
+                              "Want to get a better understanding? \n"
+                                  "Click here to chat with Healthabot",
+                              style: TextStyle(
+                                color: myPurple,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-
         ],
-      );
+      ),
+    );
   }
 }
