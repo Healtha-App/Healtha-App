@@ -44,351 +44,353 @@ final iconBot = Image.asset(
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Hello Habiba! \nWelcome to",
-                          style: GoogleFonts.openSans(
-                            textStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "Hello Habiba! \nWelcome to",
+                            style: GoogleFonts.openSans(
+                              textStyle: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                        ),
-                        Text(
-                          " \nHealtha",
-                          style: GoogleFonts.dancingScript(
-                            textStyle: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xff7c77d1),
+                          Text(
+                            " \nHealtha",
+                            style: GoogleFonts.dancingScript(
+                              textStyle: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff7c77d1),
+                              ),
                             ),
                           ),
+                        ],
+                      ),
+                      InkResponse(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProfileScreen()),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage("images/girl.PNG"),
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    "Popular Laboratory Tests",
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xff161515),
                     ),
-                    InkResponse(
-                      onTap: (){
+                  ),
+                ),
+                CarouselSlider(
+                  items: LabTestsList(),
+                  options: CarouselOptions(
+                    height: 250,
+                    padEnds: false,
+                    initialPage: 0,
+                    enableInfiniteScroll: true,
+                    reverse: false,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                    enlargeFactor: 0.3,
+                    scrollDirection: Axis.horizontal,
+                  ),
+                ),
+
+                /* SizedBox(
+                  height: 70,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: symptoms.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF4F6FA),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            symptoms[index],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF7165D6),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ), */
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ProfileScreen()),
+                          MaterialPageRoute(builder: (context) => EncyclopediaTypes()),
                         );
                       },
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage("images/girl.PNG"),
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color(0xff7c77d1),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              spreadRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: ImageIcon(
+                                AssetImage("images/body.png"),
+                                size: 35.0, // Adjust size as needed
+                                color:
+                                    Color(0xff7c77d1), // Modify color if desired
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            Text(
+                              "Explore healtha encyclopedias",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Lab analysis encyclopedia and diseases encyclopedia",
+                              style: TextStyle(
+                                color: Colors.white54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UploadPage()),
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              spreadRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFF0EEFA),
+                                shape: BoxShape.circle,
+                              ),
+                              child: ImageIcon(
+                                AssetImage("images/ency2.png"),
+                                size: 35.0, // Adjust size as needed
+                                color:
+                                    Color(0xff7c77d1), // Modify color if desired
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            Text(
+                              "Generate Laboratory Test Report ",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Discover how could you get your lab report via Healtha!",
+                              style: TextStyle(
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Disease()),
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color(0xff7c77d1),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              spreadRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: ImageIcon(
+                                AssetImage("images/symbtoms.png"),
+                                size: 35.0, // Adjust size as needed
+                                color:
+                                    Color(0xff7c77d1), // Modify color if desired
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            Text(
+                              "Track your symptomes",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Make use of the diseases prediction feature and show your symptomes",
+                              style: TextStyle(
+                                color: Colors.white54,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "Popular Laboratory Tests",
-                  style: TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff161515),
-                  ),
-                ),
-              ),
-              CarouselSlider(
-                items: LabTestsList(),
-                options: CarouselOptions(
-                  height: 250,
-                  padEnds: false,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  enlargeFactor: 0.3,
-                  scrollDirection: Axis.horizontal,
-                ),
-              ),
-
-              /* SizedBox(
-                height: 70,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: symptoms.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 25),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF4F6FA),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          symptoms[index],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF7165D6),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ), */
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => EncyclopediaTypes()),
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.all(10),
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Color(0xff7c77d1),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            spreadRadius: 4,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: ImageIcon(
-                              AssetImage("images/body.png"),
-                              size: 35.0, // Adjust size as needed
-                              color:
-                                  Color(0xff7c77d1), // Modify color if desired
-                            ),
-                          ),
-                          SizedBox(height: 30),
-                          Text(
-                            "Explore healtha encyclopedias",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "Lab analysis encyclopedia and diseases encyclopedia",
-                            style: TextStyle(
-                              color: Colors.white54,
-                            ),
-                          ),
-                        ],
-                      ),
+                SizedBox(height: 25),
+                /* Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    "Popular lab analysis",
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black54,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => UploadPage()),
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.all(10),
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            spreadRadius: 4,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFF0EEFA),
-                              shape: BoxShape.circle,
-                            ),
-                            child: ImageIcon(
-                              AssetImage("images/ency2.png"),
-                              size: 35.0, // Adjust size as needed
-                              color:
-                                  Color(0xff7c77d1), // Modify color if desired
-                            ),
-                          ),
-                          SizedBox(height: 30),
-                          Text(
-                            "Generate Laboratory Test Report ",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "Discover how could you get your lab report via Healtha!",
-                            style: TextStyle(
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => disease()),
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.all(10),
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Color(0xff7c77d1),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            spreadRadius: 4,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: ImageIcon(
-                              AssetImage("images/symbtoms.png"),
-                              size: 35.0, // Adjust size as needed
-                              color:
-                                  Color(0xff7c77d1), // Modify color if desired
-                            ),
-                          ),
-                          SizedBox(height: 30),
-                          Text(
-                            "Track your symptomes",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "Make use of the diseases prediction feature and show your symptomes",
-                            style: TextStyle(
-                              color: Colors.white54,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 25),
-              /* Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "Popular lab analysis",
-                  style: TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black54,
-                  ),
-                ),
-              ), */
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: Container(
-        width: 80.0,
-        height: 80.0,
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChatScreen()),
-              );
-            },
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.white,
-                    blurRadius: 6.0,
-                    offset: Offset(0.0, 2.0),
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(24.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: iconBot,
-              ),
+                ), */
+              ],
             ),
-            backgroundColor: Colors.white,
           ),
         ),
-      ),
+        floatingActionButton: Container(
+          width: 80.0,
+          height: 80.0,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
+              },
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white,
+                      blurRadius: 6.0,
+                      offset: Offset(0.0, 2.0),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: iconBot,
+                ),
+              ),
+              backgroundColor: Colors.white,
+            ),
+          ),
+        ),
 
+      ),
     );
   }
 }

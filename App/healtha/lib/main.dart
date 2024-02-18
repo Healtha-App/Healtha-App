@@ -4,6 +4,8 @@ import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/lab_analysis/fetch.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
+import 'package:healtha/prediction/disease_prediction.dart';
+import 'package:healtha/prediction/test_prediction.dart';
 import 'package:healtha/profile/home.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:healtha/home/home_screen.dart';
@@ -13,8 +15,6 @@ import 'package:healtha/start/splash.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:healtha/start/slider.dart';
 import 'package:healtha/start/splash.dart';
-
-
 import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
@@ -35,14 +35,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-
-      home: Scaffold(
-
-        body: Report(),
-
-
-      )
-
+      home: HomeScreen()
     );
+
   }
 }
