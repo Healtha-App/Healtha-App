@@ -15,14 +15,15 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    confirmationPassword: {
+        type: String,
+        required: true
+    },
     email: String,
-    fullName: String,
     dateOfBirth: Date,
     gender: String,
     contactInformation: String,
-    address: String,
-    medicalHistory: String,
-    insuranceInformation: String,
+   
 });
 
 const Patient = mongoose.model('Patient', patientSchema);
