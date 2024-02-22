@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/main.dart';
+import '../register_login/join_as.dart';
 import '../register_login/sign_up.dart';
 
 class EncyclopediaTypes extends StatelessWidget {
@@ -95,7 +96,7 @@ class EncyclopediaTypes extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                          builder: (context) => SignUp()));
+                          builder: (context) => ZoomPage()));
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -108,7 +109,7 @@ class EncyclopediaTypes extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Start using app",
+                        "Join app",
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,

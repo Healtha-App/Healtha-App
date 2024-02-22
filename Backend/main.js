@@ -22,7 +22,7 @@ const port = 4000;
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect(uri, { useUnifiedTopology: true })
+mongoose.connect(uri)
     .then(() => {
         console.log('Connected to MongoDB');
 
@@ -60,3 +60,4 @@ mongoose.connect(uri, { useUnifiedTopology: true })
         console.error('Error connecting to MongoDB:', error.message);
     });
     
+   
