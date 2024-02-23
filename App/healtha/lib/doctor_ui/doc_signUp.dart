@@ -26,7 +26,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
   bool isPasswordVisible = false;
 
   Future<void> signUp(BuildContext context) async {
-    final url = 'http://192.168.56.1:4000/api/healtha/specialistdoctors';
+    final url = 'http://192.168.1.12:4000/api/healtha/specialistdoctors';
 
     try {
       final response = await http.post(

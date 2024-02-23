@@ -14,8 +14,6 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmationPasswordController =
-  TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
   bool isMale = false; // New state for gender selection
@@ -27,8 +25,6 @@ class _SignUpState extends State<SignUp> {
   bool isPasswordVisible = false;
 
   Future<void> signUp(BuildContext context) async {
-    print("Sign Up button pressed."); // Added print statement
-
     final url = 'http://192.168.1.12:4000/api/healtha/patients';
     try {
       final response = await http.post(
@@ -43,9 +39,6 @@ class _SignUpState extends State<SignUp> {
         }),
         headers: {'Content-Type': 'application/json'},
       );
-
-      print("Response status code: ${response.statusCode}"); // Added print statement
-
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -83,8 +76,6 @@ class _SignUpState extends State<SignUp> {
           ),
               (route) => false,
         );
-        print("Navigating to HomeScreen."); // Added print statement
-
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -95,7 +86,7 @@ class _SignUpState extends State<SignUp> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.grey,
           ),
         );
       }
@@ -103,6 +94,7 @@ class _SignUpState extends State<SignUp> {
       print('Error: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +132,7 @@ class _SignUpState extends State<SignUp> {
             ),
          //   SizedBox(height: 20),
             Container(
-              height: 700,
+              height: 1000,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
