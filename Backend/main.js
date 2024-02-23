@@ -20,6 +20,7 @@ const uri = 'mongodb+srv://esraamaged:Healtha2024@healtha.omutrrl.mongodb.net/he
 const port = 4000;
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 mongoose.connect(uri)

@@ -17,8 +17,12 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-   
-    email: String,
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/ // Example email validation
+    },
     dateOfBirth: Date,
     gender: String,
     contactInformation: String,
@@ -52,9 +56,10 @@ patientSchema.pre('save', async function(next) {
     }
 });
 
+
 const Patient = mongoose.model('Patient', patientSchema);
 
-// Routes (remaining routes remain the same)
+
 router.get('/healtha/patients', async (req, res) => {
     try {
         const patients = await Patient.find();
