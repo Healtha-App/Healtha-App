@@ -7,6 +7,7 @@ import 'package:healtha/lab_analysis/saved_reports.dart';
 import 'package:healtha/prediction/disease_prediction.dart';
 import 'package:healtha/prediction/test_prediction.dart';
 import 'package:healtha/profile/home.dart';
+import 'package:healtha/register_login/join_as.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:healtha/home/home_screen.dart';
 import 'package:healtha/register_login/log_in.dart';
@@ -15,6 +16,7 @@ import 'package:healtha/start/splash.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:healtha/start/slider.dart';
 import 'package:healtha/start/splash.dart';
+import 'doctor_ui/doc_signUp.dart';
 import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: SplashScreen()
+      home: ZoomPage()
     );
 
   }

@@ -5,7 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../home/home_screen.dart';
 import 'log_in.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -13,11 +18,17 @@ class SignUp extends StatelessWidget {
   TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
+  bool isMale = false; // New state for gender selection
+  bool isFemale = false; // New state for gender selection
   final TextEditingController contactInformationController =
   TextEditingController();
 
+  // New state for password visibility
+  bool isPasswordVisible = false;
+
   Future<void> signUp(BuildContext context) async {
+    print("Sign Up button pressed."); // Added print statement
+
     final url = 'http://192.168.1.12:4000/api/healtha/patients';
     try {
       final response = await http.post(
@@ -25,14 +36,16 @@ class SignUp extends StatelessWidget {
         body: jsonEncode({
           'username': usernameController.text,
           'password': passwordController.text,
-          'confirmationPassword': confirmationPasswordController.text,
           'email': emailController.text,
           'dateOfBirth': dateOfBirthController.text,
-          'gender': genderController.text,
-          'contactInformation': contactInformationController.text
+          'gender': isMale ? 'Male' : 'Female',
+          'contactInformation': contactInformationController.text,
         }),
         headers: {'Content-Type': 'application/json'},
       );
+
+      print("Response status code: ${response.statusCode}"); // Added print statement
+
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -62,14 +75,16 @@ class SignUp extends StatelessWidget {
           ),
         );
 
-        Future.delayed(Duration(seconds: 5), () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomeScreen(),
-            ),
-          );
-        });
+        // Navigate to the home screen immediately after displaying the SnackBar
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+              (route) => false,
+        );
+        print("Navigating to HomeScreen."); // Added print statement
+
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -123,9 +138,9 @@ class SignUp extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+         //   SizedBox(height: 20),
             Container(
-              height: 600,
+              height: 700,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -165,31 +180,36 @@ class SignUp extends StatelessWidget {
                         labelText: 'Email',
                         suffixIcon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
-                      ),
-                      buildTextFormField(
-                        controller: passwordController,
-                        labelText: 'Password',
-                        suffixIcon: Icons.remove_red_eye_outlined,
-                        obscureText: true,
-                        keyboardType: TextInputType.text,
                         validator: (value) {
-                          if (value!.length < 6) {
-                            return 'Your password must be larger than 6 characters';
+                          if (value!.isEmpty) {
+                            return 'Please enter your Email';
+                          } else if (!RegExp(r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
+                              .hasMatch(value)) {
+                            return 'Please enter a valid email address';
                           }
                           return null;
                         },
                       ),
                       buildTextFormField(
-                        controller: confirmationPasswordController,
-                        labelText: 'Confirm Password',
-                        suffixIcon: Icons.remove_red_eye,
-                        obscureText: true,
+                        controller: passwordController,
+                        labelText: 'Password',
+                        suffixIcon: isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        obscureText: !isPasswordVisible,
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          if (value!.length < 6) {
-                            return 'Your password must be larger than 6 characters';
+                          if (value!.length < 8 ||
+                              !RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
+                                  .hasMatch(value)) {
+                            return 'Password must be at least 8 characters with a mix of uppercase, lowercase, and numbers';
                           }
                           return null;
+                        },
+                        onTapSuffix: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
                         },
                       ),
                       buildTextFormField(
@@ -203,18 +223,54 @@ class SignUp extends StatelessWidget {
                           }
                           return null;
                         },
-                      ),
-                      buildTextFormField(
-                        controller: genderController,
-                        labelText: 'Gender',
-                        suffixIcon: Icons.person_search,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your gender';
+                        onTapSuffix: () async {
+                          DateTime? selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                          );
+
+                          if (selectedDate != null &&
+                              selectedDate != DateTime.now()) {
+                            setState(() {
+                              dateOfBirthController.text =
+                              selectedDate.toLocal().toString().split(' ')[0];
+                            });
                           }
-                          return null;
                         },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: Row(
+                          children: [
+                            Text('Gender'),
+                            Checkbox(
+                              value: isMale,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  isMale = newValue!;
+                                  if (isMale) {
+                                    isFemale = false;
+                                  }
+                                });
+                              },
+                            ),
+                            Text('Male'),
+                            Checkbox(
+                              value: isFemale,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  isFemale = newValue!;
+                                  if (isFemale) {
+                                    isMale = false;
+                                  }
+                                });
+                              },
+                            ),
+                            Text('Female'),
+                          ],
+                        ),
                       ),
                       buildTextFormField(
                         controller: contactInformationController,
@@ -224,6 +280,8 @@ class SignUp extends StatelessWidget {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your number';
+                          } else if (value.length != 11) {
+                            return 'Phone number must be 11 digits';
                           }
                           return null;
                         },
@@ -293,6 +351,7 @@ class SignUp extends StatelessWidget {
     TextInputType? keyboardType,
     bool obscureText = false,
     String? Function(String?)? validator,
+    VoidCallback? onTapSuffix,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -302,7 +361,10 @@ class SignUp extends StatelessWidget {
         obscureText: obscureText,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-          suffixIcon: Icon(suffixIcon),
+          suffixIcon: GestureDetector(
+            onTap: onTapSuffix,
+            child: Icon(suffixIcon),
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50.0),
           ),

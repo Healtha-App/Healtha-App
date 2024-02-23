@@ -56,7 +56,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   Future<void> fetchLabTests() async {
     try {
       final response =
-      await http.get(Uri.parse('http://192.168.100.96:4000/api/healtha/lab-tests'));
+      await http.get(Uri.parse('http://192.168.56.1:4000/api/healtha/lab-tests'));
       print('Lab Tests Response status: ${response.statusCode}');
       print('Lab Tests Response body: ${response.body}');
 
