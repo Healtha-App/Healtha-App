@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:healtha/chatbot/chat_screen.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/lab_analysis/fetch.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: EncyclopediaTypes()
+      home: ChatScreen()
     );
 
   }
