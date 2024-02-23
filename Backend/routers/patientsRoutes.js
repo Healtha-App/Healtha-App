@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+
+
+// Define the schema for the patient
 const patientSchema = new mongoose.Schema({
     userid: {
-        type: String,
-        required: true
+        type: Number, // Change type to Number for userid
     },
     username: {
         type: String,
@@ -15,20 +17,44 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    confirmationPassword: {
-        type: String,
-        required: true
-    },
+   
     email: String,
     dateOfBirth: Date,
     gender: String,
     contactInformation: String,
-   
+});
+
+// Define a schema for the counter
+const counterSchema = new mongoose.Schema({
+    _id: { type: String, required: true },
+    sequence_value: { type: Number, default: 0 }
+});
+
+// Create a model for the counter schema with a different name
+const SequenceCounter = mongoose.model('SequenceCounter', counterSchema);
+
+// Define a pre-save hook to auto-generate userid
+patientSchema.pre('save', async function(next) {
+    const doc = this;
+    try {
+        // Find the counter document for 'userid'
+        const counter = await SequenceCounter.findOneAndUpdate(
+            { _id: 'userid' },
+            { $inc: { sequence_value: 1 } },
+            { new: true, upsert: true }
+        );
+
+        // Set the userid to the incremented value
+        doc.userid = counter.sequence_value;
+        next();
+    } catch (err) {
+        next(err);
+    }
 });
 
 const Patient = mongoose.model('Patient', patientSchema);
 
-
+// Routes (remaining routes remain the same)
 router.get('/healtha/patients', async (req, res) => {
     try {
         const patients = await Patient.find();
