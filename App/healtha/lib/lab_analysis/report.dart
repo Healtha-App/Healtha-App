@@ -58,99 +58,102 @@ class _ReportState extends State<Report> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * .50,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: myPurple,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: -400,
-                top: 60,
-                left: MediaQuery.of(context).size.width * 0.05,
-                right: MediaQuery.of(context).size.width * 0.05,
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: 750,
+    return Scaffold(
+      body:
+      SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * .50,
+                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xff7c77d1),
-                        offset: Offset(0.0, 2.0),
-                        blurRadius: 1.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Your Healtha Report",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          healthReport,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Implement save logic
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: myPurple, // Background color
-                          ),
-                          child: Text(
-                            "Save",
-                            style: TextStyle(
-                              color: Colors.white, // Text color
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Implement chatbot logic
-                            },
-                            child: Text(
-                              "Want to get a better understanding? \n"
-                                  "Click here to chat with Healthabot",
-                              style: TextStyle(
-                                color: myPurple,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    color: myPurple,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                Positioned(
+                  bottom: -400,
+                  top: 60,
+                  left: MediaQuery.of(context).size.width * 0.05,
+                  right: MediaQuery.of(context).size.width * 0.05,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 750,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff7c77d1),
+                          offset: Offset(0.0, 2.0),
+                          blurRadius: 1.0,
+                          spreadRadius: 0.0,
+                        ),
+                      ],
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Your Healtha Report",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            healthReport,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Implement save logic
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: myPurple, // Background color
+                            ),
+                            child: Text(
+                              "Save",
+                              style: TextStyle(
+                                color: Colors.white, // Text color
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Implement chatbot logic
+                              },
+                              child: Text(
+                                "Want to get a better understanding? \n"
+                                    "Click here to chat with Healthabot",
+                                style: TextStyle(
+                                  color: myPurple,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

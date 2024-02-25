@@ -11,7 +11,9 @@ class Login extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   Future<bool> login(BuildContext context) async {
-    final url = 'http://192.168.1.12:4000/api/healtha/patients';
+    String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
+
+    final url = healthaIP;
 
     try {
       final response = await http.get(Uri.parse(url));

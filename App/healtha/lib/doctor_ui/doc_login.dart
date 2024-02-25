@@ -5,6 +5,7 @@ import 'package:healtha/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
 
 import '../home/home_screen.dart';
+import '../encyclopedias/one_encyclopedia.dart';
 import 'doc_signUp.dart';
 
 class docLogin extends StatelessWidget {
@@ -12,7 +13,8 @@ class docLogin extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   Future<bool> login(BuildContext context) async {
-    final url = 'http://192.168.1.12:4000/api/healtha/specialistdoctors';
+    String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
+    final url = healthaIP;
 
     try {
       final response = await http.get(Uri.parse(url));

@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: ChatScreen()
+      home: SplashScreen()
     );
 
   }

@@ -26,7 +26,9 @@ class _docSignUpPageState extends State<docSignUpPage> {
   bool isPasswordVisible = false;
 
   Future<void> signUp(BuildContext context) async {
-    final url = 'http://192.168.1.12:4000/api/healtha/specialistdoctors';
+    String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
+
+    final url = healthaIP;
 
     try {
       final response = await http.post(
@@ -85,7 +87,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
             content: Text(
               'Sign-up failed. Please try again ..',
               style: TextStyle(
-                color: Colors.red,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),

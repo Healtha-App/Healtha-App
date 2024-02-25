@@ -6,6 +6,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'drop_file.dart';
+import 'report.dart';
 
 class UploadPage extends StatefulWidget {
   @override
@@ -178,19 +179,19 @@ class _UploadPageState extends State<UploadPage> {
                   if (_isEnabled == false)
                     AnimatedTextKit(
                     animatedTexts: [
-      //                 TypewriterAnimatedText(
-      //                   """Your healtha report is being generated with care...
-      //
-      // We will notify you as soon as it is ready
-      //
-      // Thank you for allowing us the time to ensure accuracy!""",
-      //                   textStyle: TextStyle(
-      //                     fontSize: 14,
-      //                     color: Colors.black87,
-      //                   ),
-      //                   // textStyle: TextStyle(fontSize: 30.0),
-      //                   speed: Duration(milliseconds: 40),
-      //                 ),
+                      TypewriterAnimatedText(
+                        """Your healtha report is being generated with care...
+
+      We will notify you as soon as it is ready
+
+      Thank you for allowing us the time to ensure accuracy!""",
+                        textStyle: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black87,
+                        ),
+                        // textStyle: TextStyle(fontSize: 30.0),
+                        speed: Duration(milliseconds: 40),
+                      ),
                       TypewriterAnimatedText(
                         _result,
                         textStyle: TextStyle(
@@ -208,8 +209,14 @@ class _UploadPageState extends State<UploadPage> {
                       repeatForever: false,
                       onFinished: () {
                         setState(() {
-                          // Update state to show the widget after finishing the animation
                           showAfterAnimation = true;
+                          // Delay navigation to Report page after 2 seconds
+                          Future.delayed(Duration(seconds: 2), () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Report()),
+                            );
+                          });
                         });
                       },
 

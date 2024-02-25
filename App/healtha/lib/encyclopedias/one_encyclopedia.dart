@@ -55,8 +55,9 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
 
   Future<void> fetchLabTests() async {
     try {
+      String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
       final response =
-      await http.get(Uri.parse('http://192.168.100.96:4000/api/healtha/lab-tests'));
+      await http.get(Uri.parse(healthaIP));
       print('Lab Tests Response status: ${response.statusCode}');
       print('Lab Tests Response body: ${response.body}');
 
@@ -313,4 +314,3 @@ class LabTestDetailsPage extends StatelessWidget {
     );
   }
 }
-
