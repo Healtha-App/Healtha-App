@@ -26,7 +26,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
   bool isPasswordVisible = false;
 
   Future<void> signUp(BuildContext context) async {
-    String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
+    String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors';
 
     final url = healthaIP;
 
