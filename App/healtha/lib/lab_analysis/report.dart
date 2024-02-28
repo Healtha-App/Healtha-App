@@ -168,7 +168,7 @@ class _ReportState extends State<Report> {
                 onPressed: () {
                   if (!_isTranslating) {
                     // Save the report without triggering translation
-                    postReport(4, translatedReport ?? '');
+                    postReport(patientId!, translatedReport ?? '');
                     // Don't translate on save, only save the report
                     // translateReport();
                   }
