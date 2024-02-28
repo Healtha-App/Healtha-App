@@ -9,7 +9,7 @@ class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
-
+int ? patientId;
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
@@ -24,7 +24,7 @@ class _SignUpState extends State<SignUp> {
   // New state for password visibility
   bool isPasswordVisible = false;
 
-  Future<void> signUp(BuildContext context) async {
+  Future<int?> signUp(BuildContext context) async {
     String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
 
     final url = healthaIP;
@@ -43,6 +43,7 @@ class _SignUpState extends State<SignUp> {
       );
 
       if (response.statusCode == 201) {
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: SizedBox(
@@ -69,6 +70,10 @@ class _SignUpState extends State<SignUp> {
             behavior: SnackBarBehavior.floating,
           ),
         );
+        // Patient created successfully, parse response JSON to get the patient ID
+        final parsedResponse = jsonDecode(response.body);
+        patientId = parsedResponse['userid']; // Access the auto-generated ID
+        print(patientId);
 
         // Navigate to the home screen immediately after displaying the SnackBar
         Navigator.pushAndRemoveUntil(
@@ -78,6 +83,8 @@ class _SignUpState extends State<SignUp> {
           ),
               (route) => false,
         );
+        return patientId;
+
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

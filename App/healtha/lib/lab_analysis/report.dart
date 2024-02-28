@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:healtha/register_login/sign_up.dart';
 
 class Report extends StatefulWidget {
   @override
@@ -19,6 +20,9 @@ class _ReportState extends State<Report> {
   int _selectedIndex = 0;
   static const Color myPurple = Color(0xff7c77d1);
   static const String apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
+
+  // API endpoint for posting reports
+  static const String postReportUrl = 'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports';
 
   Future<void> fetchData(String prompt) async {
     final response = await http.post(
@@ -81,6 +85,32 @@ class _ReportState extends State<Report> {
     });
   }
 
+  Future<void> postReport(int userID, String content) async {
+    try {
+      final response = await http.post(
+        Uri.parse(postReportUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'userid': userID,
+          'content': content,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Report successfully posted
+        print('Report successfully posted');
+      } else {
+        // Handle errors here
+        print('Failed to post report. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error posting report: $error');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -108,7 +138,6 @@ class _ReportState extends State<Report> {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Text(
@@ -120,13 +149,12 @@ class _ReportState extends State<Report> {
                   ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200], // Light grey color
+                    color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Text(
@@ -139,7 +167,10 @@ class _ReportState extends State<Report> {
               ElevatedButton(
                 onPressed: () {
                   if (!_isTranslating) {
-                    translateReport();
+                    // Save the report without triggering translation
+                    postReport(4, translatedReport ?? '');
+                    // Don't translate on save, only save the report
+                    // translateReport();
                   }
                 },
                 style: ElevatedButton.styleFrom(

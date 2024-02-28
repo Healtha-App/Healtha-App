@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+// Body parsing middleware
+router.use(express.json());
+
 // Schema definition
 const reportSchema = new mongoose.Schema({
     userid: {
@@ -18,7 +21,6 @@ const reportSchema = new mongoose.Schema({
         required: true
     },
 });
-
 const Report = mongoose.model('Report', reportSchema);
 
 // Routes
