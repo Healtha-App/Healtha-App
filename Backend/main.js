@@ -12,6 +12,8 @@ const diseasesEncyclopediaRouters = require('./routers/diseasesEncyclopediaRoute
 const diseaseReportsRouters = require('./routers/diseaseReportsRouters');
 const labTestReportsRouters = require('./routers/labTestReportsRouters');
 const loggedUsersRouters = require('./routers/loggedUsersRouters');
+const reportRouters = require('./routers/reportRouters'); 
+
 
 const app = express();
 
@@ -50,6 +52,9 @@ mongoose.connect(uri)
 
         // Use the lab tests reports routes
         app.use('/api', labTestReportsRouters);
+
+        // Use the report routes
+        app.use('/api', reportRouters);
 
 
         // Start the server after successfully connecting to MongoDB
