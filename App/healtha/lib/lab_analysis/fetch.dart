@@ -94,9 +94,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-// Replace 'main' function to use MyHomePage
-void main() {
-  runApp(MaterialApp(
-    home: MyHomePage(),
-  ));
-}

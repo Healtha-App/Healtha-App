@@ -1,135 +1,195 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import 'key.dart';
-
-class ChatGPTScreen extends StatefulWidget {
-  @override
-  _ChatGPTScreenState createState() => _ChatGPTScreenState();
-}
-
-class _ChatGPTScreenState extends State<ChatGPTScreen> {
-  final List<Message> _messages = [];
-
-  final TextEditingController _textEditingController = TextEditingController();
-
-  void onSendMessage() async {
-    Message message = Message(text: _textEditingController.text, isMe: true);
-
-    _textEditingController.clear();
-
-    setState(() {
-      _messages.insert(0, message);
-    });
-
-    String response = await sendMessageToChatGpt(message.text);
-
-    Message chatGpt = Message(text: response, isMe: false);
-
-    setState(() {
-      _messages.insert(0, chatGpt);
-    });
-  }
-
-  Future<String> sendMessageToChatGpt(String message) async {
-    Uri uri = Uri.parse("https://api.openai.com/v1/chat/completions");
-
-    Map<String, dynamic> body = {
-      "model": "gpt-3.5-turbo",
-      "messages": [
-        {"role": "user", "content": message}
-      ],
-      "max_tokens": 500,
-    };
-
-    final response = await http.post(
-      uri,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer ${APIKey.apiKey}",
-      },
-      body: json.encode(body),
-    );
-
-    print(response.body);
-
-    Map<String, dynamic> parsedReponse = json.decode(response.body);
-
-    String reply = parsedReponse['choices'][0]['message']['content'];
-
-    return reply;
-  }
-
-  Widget _buildMessage(Message message) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        child: Column(
-          crossAxisAlignment:
-          message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              message.isMe ? 'You' : 'GPT',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(message.text),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('ChatGPT'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              reverse: true,
-              itemCount: _messages.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _buildMessage(_messages[index]);
-              },
-            ),
-          ),
-          Divider(height: 1.0),
-          Container(
-            decoration: BoxDecoration(color: Theme.of(context).cardColor),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    controller: _textEditingController,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10.0),
-                      hintText: 'Type a message...',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: onSendMessage,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Message {
-  final String text;
-  final bool isMe;
-
-  Message({required this.text, required this.isMe});
-}
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+//
+// class APIKey {
+//   static const apiKey =
+//       "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";
+// }
+//
+// class ChatScreen extends StatefulWidget {
+//   @override
+//   _ChatScreenState createState() => _ChatScreenState();
+// }
+//
+// class _ChatScreenState extends State<ChatScreen> {
+//   final TextEditingController _textEditingController = TextEditingController();
+//   final List<Message> _messages = [];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Color(0xff7c77d1),
+//         title: Row(
+//           children: [
+//             Image.asset(
+//               'images/healtha1.png',
+//               color: Colors.white,
+//               width: 50.0,
+//               height: 50.0,
+//             ),
+//             SizedBox(width: 10.0),
+//             Text(
+//               'Healtha',
+//               style: TextStyle(
+//                 fontSize: 25,
+//                 fontWeight: FontWeight.w700,
+//                 color: Colors.white,
+//               ),
+//             ),
+//           ],
+//         ),
+//         centerTitle: true,
+//       ),
+//       body: ListView(
+//         padding: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 80),
+//         children: _messages.map((message) => _buildMessage(message)).toList(),
+//       ),
+//       bottomSheet: _buildBottomSheet(),
+//     );
+//   }
+//
+//   Widget _buildBottomSheet() {
+//     return Container(
+//       height: 65,
+//       decoration: BoxDecoration(color: Colors.white, boxShadow: [
+//         BoxShadow(
+//           color: Colors.grey.withOpacity(0.5),
+//           spreadRadius: 2,
+//           blurRadius: 10,
+//           offset: Offset(0, 3),
+//         ),
+//       ]),
+//       child: Row(
+//         children: [
+//           Padding(
+//             padding: EdgeInsets.only(left: 8),
+//             child: Icon(
+//               Icons.add,
+//               size: 30,
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.only(left: 5),
+//             child: Icon(
+//               Icons.emoji_emotions_outlined,
+//               size: 30,
+//               color: Color(0xff7c77d1),
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.only(left: 10),
+//             child: Container(
+//               alignment: Alignment.centerRight,
+//               width: 230,
+//               child: TextFormField(
+//                 controller: _textEditingController,
+//                 decoration: InputDecoration(
+//                   hintText: "Type something",
+//                   border: InputBorder.none,
+//                 ),
+//               ),
+//             ),
+//           ),
+//           Spacer(),
+//           Padding(
+//             padding: EdgeInsets.only(right: 10),
+//             child: IconButton(
+//               icon: Icon(
+//                 Icons.send,
+//                 size: 30,
+//                 color: Color(0xff7c77d1),
+//               ),
+//               onPressed: () async {
+//                 if (_textEditingController.text.isNotEmpty) {
+//                   await _sendMessage(_textEditingController.text);
+//                   _textEditingController.clear();
+//                 }
+//               },
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+//
+//   Widget _buildMessage(Message message) {
+//     return Container(
+//       margin: EdgeInsets.symmetric(vertical: 10.0),
+//       child: Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: <Widget>[
+//             Text(
+//               message.sender,
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Text(
+//               message.text,
+//               style: TextStyle(fontSize: 16),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+//
+//   Future<void> _sendMessage(String text) async {
+//     Message userMessage = Message(sender: 'You', text: text);
+//     setState(() {
+//       _messages.add(userMessage);
+//     });
+//
+//     try {
+//       String response = await sendMessageToChatGpt(userMessage);
+//       Message chatGptMessage = Message(sender: 'Healtha', text: response);
+//       setState(() {
+//         _messages.add(chatGptMessage);
+//       });
+//     } catch (e) {
+//       print('Error: $e');
+//       // Handle the error appropriately, e.g., show a snackbar
+//     }
+//   }
+//
+//   Future<String> sendMessageToChatGpt(Message message) async {
+//     final uri = Uri.parse("https://api.openai.com/v1/chat/completions");
+//     final body = {
+//       "model": "gpt-3.5-turbo",
+//       "messages": [
+//         {"role": message.sender, "content": message.text}
+//       ],
+//       "max_tokens": 500,
+//     };
+//
+//     try {
+//       final response = await http.post(
+//         uri,
+//         headers: {
+//           "Content-Type": "application/json",
+//           "Authorization": "Bearer ${APIKey.apiKey}",
+//         },
+//         body: json.encode(body),
+//       );
+//
+//       if (response.statusCode == 200) {
+//         Map<String, dynamic> parsedResponse = json.decode(response.body);
+//         return parsedResponse['choices'][0]['message']['content'];
+//       } else {
+//         throw Exception(
+//             'Failed to send message to ChatGPT. Status code: ${response.statusCode}');
+//       }
+//     } catch (e) {
+//       throw Exception('Failed to send message to ChatGPT. Error: $e');
+//     }
+//   }
+// }
+//
+// class Message {
+//   final String sender;
+//   final String text;
+//
+//   Message({required this.sender, required this.text});
+// }

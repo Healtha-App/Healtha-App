@@ -11,16 +11,20 @@ class _ReportState extends State<Report> {
   String _fileName = 'No file chosen';
   bool showAfterAnimation = false;
   bool _isEnabled = true;
-  String healthReport = ''; // Variable to store health report data
+  String healthReport = '';
+  String translatedReport = '';
+  bool isTranslated = false;
+  bool _isTranslating = false;
 
   int _selectedIndex = 0;
   static const Color myPurple = Color(0xff7c77d1);
+  static const String apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
 
-  Future<void> fetchData() async {
+  Future<void> fetchData(String prompt) async {
     final response = await http.post(
       Uri.parse('https://api.chatpdf.com/v1/chats/message'),
       headers: {
-        'x-api-key': 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9',
+        'x-api-key': apiKey,
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
@@ -28,14 +32,7 @@ class _ReportState extends State<Report> {
         'messages': [
           {
             'role': 'user',
-            'content': 'Write a user-friendly lab analysis report about this lab test in this formats '
-                'in points and each point list of items, in this report write'
-                "start with Dear (patient name from the report), We hope this report finds you in good health. "
-                "We have conducted a comprehensive analysis to assess your health. "
-                "1. Test name and definition 2. Interpretations about each important value result"
-                "3. Medical advices and tips for managing these values to take care of their health"
-                "write all under 250 word"
-                'after the final warm regards write (Healtha team)',
+            'content': prompt,
           }
         ],
       }),
@@ -44,115 +41,140 @@ class _ReportState extends State<Report> {
     if (response.statusCode == 200) {
       setState(() {
         healthReport = json.decode(response.body)['content'];
+        translatedReport = healthReport;
       });
     } else {
       throw Exception('Failed to load data');
     }
   }
 
+  Future<void> translateReport() async {
+    setState(() {
+      _isTranslating = true;
+    });
+
+    String promptWithLanguage = isTranslated
+        ? 'Write a user-friendly lab analysis report about this lab test in this formats '
+        'in points and each point list of items, in this report write'
+        "start with Dear (patient name from the report), We hope this report finds you in good health. "
+        "We have conducted a comprehensive analysis to assess your health. "
+        "1. Test name and definition 2. Interpretations about each important value result"
+        "3. Medical advices and tips for managing these values to take care of their health"
+        "write all under 250 words"
+        'after the final warm regards write (Healtha team)'
+
+        : 'Write a user-friendly lab analysis report about this lab test in this formats '
+        'in points and each point list of items, in this report write'
+        "start with Dear (patient name from the report), We hope this report finds you in good health. "
+        "We have conducted a comprehensive analysis to assess your health. "
+        "1. Test name and definition 2. Interpretations about each important value result"
+        "3. Medical advices and tips for managing these values to take care of their health"
+        "write all under 250 words"
+        'after the final warm regards write (Healtha team)'
+        'write the whole report in Arabic language';
+
+    await fetchData(promptWithLanguage);
+
+    setState(() {
+      isTranslated = !isTranslated;
+      _isTranslating = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    fetchData(); // Fetch data when the widget is initialized
+    fetchData(
+      'Write a user-friendly lab analysis report about this lab test in this formats '
+          'in points and each point list of items, in this report write'
+          "start with Dear (patient name from the report), We hope this report finds you in good health. "
+          "We have conducted a comprehensive analysis to assess your health. "
+          "1. Test name and definition 2. Interpretations about each important value result"
+          "3. Medical advices and tips for managing these values to take care of their health"
+          "write all under 250 words"
+          'after the final warm regards write (Healtha team)'
+      ,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:
-      SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * .50,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Text(
+                  "Your Healtha Report",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                     color: myPurple,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
                   ),
                 ),
-                Positioned(
-                  bottom: -400,
-                  top: 60,
-                  left: MediaQuery.of(context).size.width * 0.05,
-                  right: MediaQuery.of(context).size.width * 0.05,
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 750,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff7c77d1),
-                          offset: Offset(0.0, 2.0),
-                          blurRadius: 1.0,
-                          spreadRadius: 0.0,
-                        ),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Your Healtha Report",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            healthReport,
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              // Implement save logic
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: myPurple, // Background color
-                            ),
-                            child: Text(
-                              "Save",
-                              style: TextStyle(
-                                color: Colors.white, // Text color
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Implement chatbot logic
-                              },
-                              child: Text(
-                                "Want to get a better understanding? \n"
-                                    "Click here to chat with Healthabot",
-                                style: TextStyle(
-                                  color: myPurple,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200], // Light grey color
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    translatedReport ?? '',
+                    style: TextStyle(fontSize: 14,),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              SizedBox(height: 10,),
+              ElevatedButton(
+                onPressed: () {
+                  if (!_isTranslating) {
+                    translateReport();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: myPurple,
+                  onPrimary: _isTranslating ? Colors.grey : Colors.white,
+                ),
+                child: _isTranslating
+                    ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                )
+                    : Text(
+                  isTranslated ? "حفظ" : "Save",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              InkWell(
+                onTap: () {
+                  if (!_isTranslating) {
+                    translateReport();
+                  }
+                },
+                child: Text(
+                  "Translate to ${isTranslated ? 'English' : 'Arabic'}",
+                  style: TextStyle(
+                    color: myPurple,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );

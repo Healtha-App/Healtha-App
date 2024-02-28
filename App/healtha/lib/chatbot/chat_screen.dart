@@ -3,6 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
+class APIKey {
+  static const apiKey =
+      "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";
+}
+
+
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -163,10 +170,13 @@ class _ChatScreenState extends State<ChatScreen> {
         uri,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer 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",
+          "Authorization": "Bearer ${APIKey.apiKey}",
         },
         body: json.encode(body),
       );
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
         Map<String, dynamic> parsedResponse = json.decode(response.body);
