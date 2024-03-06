@@ -17,7 +17,6 @@ import 'package:healtha/register_login/sign_up.dart';
 import 'package:healtha/start/slider.dart';
 import 'package:healtha/start/splash.dart';
 import 'doctor_ui/doc_login.dart';
-import 'doctor_ui/requested-reports.dart';
 import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: requestedReports()
+      home: Report()
     );
 
   }
