@@ -45,58 +45,56 @@ class EncyclopediaPage extends StatefulWidget {
 }
 
 class _EncyclopediaPageState extends State<EncyclopediaPage> {
-  List<LabTest> labTests = [];
+  late Future<List<LabTest>> labTestsFuture;
 
   @override
   void initState() {
     super.initState();
-    fetchLabTests();
+    labTestsFuture = fetchLabTests();
   }
 
-  Future<void> fetchLabTests() async {
+  Future<List<LabTest>> fetchLabTests() async {
     try {
-      String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
-      final response =
-      await http.get(Uri.parse(healthaIP));
+      String healthaIP =
+          'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
+      final response = await http.get(Uri.parse(healthaIP));
       print('Lab Tests Response status: ${response.statusCode}');
       print('Lab Tests Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonList = jsonDecode(response.body);
-        setState(() {
-          labTests = jsonList.map((labTest) => LabTest.fromJson(labTest)).toList();
-        });
+        return jsonList.map((labTest) => LabTest.fromJson(labTest)).toList();
       } else {
         throw Exception('Failed to load lab tests');
       }
     } catch (e) {
       print('Error fetching lab tests: $e');
+      throw e;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff7c77d1),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: Column(
         children: [
           Stack(
             clipBehavior: Clip.none,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.08,
+                height: MediaQuery.of(context).size.height * 0.20,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Color(0xff7c77d1),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xff7c77d1).withOpacity(0.5),
+                      Color(0xff7c77d1).withOpacity(0.7),
+                      Color(0xff7c77d1).withOpacity(0.9),
+                      Color(0xff7c77d1),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),
@@ -139,48 +137,68 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
           ),
           SizedBox(height: 50),
           Expanded(
-            child: ListView.builder(
-              itemCount: labTests.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  color: Colors.white,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                    leading: Image.asset(
-                      widget.image,
-                      width: 35,
-                      height: 35,
-                    ),
-                    title: Text(
-                      labTests[index].name ?? '',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LabTestDetailsPage(
-                              labTest: labTests[index],
-                            ),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'View Details',
-                        style: TextStyle(
-                          color: Color(0xff7c77d1),
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
+            child: FutureBuilder<List<LabTest>>(
+              future: labTestsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Failed to load data'),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                      ),
-                    ),
-                  ),
-                );
+                        color: Colors.white,
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 25),
+                          leading: Image.asset(
+                            widget.image,
+                            width: 35,
+                            height: 35,
+                          ),
+                          title: Text(
+                            snapshot.data![index].name ?? '',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          trailing: RawMaterialButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LabTestDetailsPage(
+                                    labTest: snapshot.data![index],
+                                  ),
+                                ),
+                              );
+                            },
+                            elevation: 2.0,
+                            fillColor: Color(0xFF7C77D1),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: 17.0,
+                            ),
+                            padding: EdgeInsets.all(12.0),
+                            shape: CircleBorder(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),
@@ -198,7 +216,7 @@ class LabTestDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+     /* appBar: AppBar(
         backgroundColor: Color(0xff7c77d1),
         elevation: 0,
         leading: IconButton(
@@ -207,17 +225,28 @@ class LabTestDetailsPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-      ),
+      ),*/
       body: Column(
         children: [
           Stack(
             clipBehavior: Clip.none,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.08,
+                //0.08
+                height: MediaQuery.of(context).size.height * 0.20,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Color(0xff7c77d1),
+                 // color: Color(0xff7c77d1),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xff7c77d1).withOpacity(0.5),
+                      Color(0xff7c77d1).withOpacity(0.7),
+                      Color(0xff7c77d1).withOpacity(0.9),
+                      Color(0xff7c77d1),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),
@@ -262,50 +291,54 @@ class LabTestDetailsPage extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Lab Test Details:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff7c77d1),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Name: ${labTest.name}',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  // Display sections
-                  if (labTest.sections.isNotEmpty) ...[
-                    SizedBox(height: 16),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 15,),
                     Text(
-                      'Sections:',
+                      'Lab Test Details:',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff7c77d1),
                       ),
                     ),
-                    for (Section section in labTest.sections)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 8),
-                          Text(
-                            'Title: ${section.title}',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          Text(
-                            'Content: ${section.content}',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ],
+                    SizedBox(height: 16),
+                    Text(
+                      'Name: ${labTest.name}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    // Display sections
+                    if (labTest.sections.isNotEmpty) ...[
+                      SizedBox(height: 16),
+                      Text(
+                        'Sections:',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff7c77d1),
+                        ),
                       ),
+                      for (Section section in labTest.sections)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 8),
+                            Text(
+                              'Title: ${section.title}',
+                              style: TextStyle(fontSize: 17,
+                              fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              'Content: ${section.content}',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),

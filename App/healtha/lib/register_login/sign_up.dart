@@ -108,238 +108,252 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff7c77d1),
+      //backgroundColor: Color(0xff7c77d1),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(70),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'images/healtha1.png',
-                    color: Colors.white,
-                    width: 70.0,
-                    height: 70.0,
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Healtha',
-                    style: GoogleFonts.dancingScript(
-                      textStyle: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xff7c77d1).withOpacity(0.5),
+                Color(0xff7c77d1).withOpacity(0.7),
+                Color(0xff7c77d1).withOpacity(0.9),
+                Color(0xff7c77d1),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(70),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'images/healtha1.png',
+                      color: Colors.white,
+                      width: 70.0,
+                      height: 70.0,
+                    ),
+                    SizedBox(width: 10.0),
+                    Text(
+                      'Healtha',
+                      style: GoogleFonts.dancingScript(
+                        textStyle: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-         //   SizedBox(height: 20),
-            Container(
-              height: 1000,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                  ],
                 ),
               ),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 40),
-                      Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xff7c77d1),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      buildTextFormField(
-                        controller: usernameController,
-                        labelText: 'Name',
-                        suffixIcon: Icons.person,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your Username';
-                          }
-                          return null;
-                        },
-                      ),
-                      buildTextFormField(
-                        controller: emailController,
-                        labelText: 'Email',
-                        suffixIcon: Icons.email_outlined,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your Email';
-                          } else if (!RegExp(r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
-                              .hasMatch(value)) {
-                            return 'Please enter a valid email address';
-                          }
-                          return null;
-                        },
-                      ),
-                      buildTextFormField(
-                        controller: passwordController,
-                        labelText: 'Password',
-                        suffixIcon: isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        obscureText: !isPasswordVisible,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.length < 8 ||
-                              !RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
-                                  .hasMatch(value)) {
-                            return 'Password must be at least 8 characters with a mix of uppercase, lowercase, and numbers';
-                          }
-                          return null;
-                        },
-                        onTapSuffix: () {
-                          setState(() {
-                            isPasswordVisible = !isPasswordVisible;
-                          });
-                        },
-                      ),
-                      buildTextFormField(
-                        controller: dateOfBirthController,
-                        labelText: 'Date of Birth',
-                        suffixIcon: Icons.date_range_outlined,
-                        keyboardType: TextInputType.datetime,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your birth date';
-                          }
-                          return null;
-                        },
-                        onTapSuffix: () async {
-                          DateTime? selectedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now(),
-                          );
-
-                          if (selectedDate != null &&
-                              selectedDate != DateTime.now()) {
-                            setState(() {
-                              dateOfBirthController.text =
-                              selectedDate.toLocal().toString().split(' ')[0];
-                            });
-                          }
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Text('Gender'),
-                            Checkbox(
-                              value: isMale,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  isMale = newValue!;
-                                  if (isMale) {
-                                    isFemale = false;
-                                  }
-                                });
-                              },
-                            ),
-                            Text('Male'),
-                            Checkbox(
-                              value: isFemale,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  isFemale = newValue!;
-                                  if (isFemale) {
-                                    isMale = false;
-                                  }
-                                });
-                              },
-                            ),
-                            Text('Female'),
-                          ],
-                        ),
-                      ),
-                      buildTextFormField(
-                        controller: contactInformationController,
-                        labelText: 'Contact Info',
-                        suffixIcon: Icons.phone,
-                        keyboardType: TextInputType.phone,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your number';
-                          } else if (value.length != 11) {
-                            return 'Phone number must be 11 digits';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        child: Container(
-                          width: double.infinity,
-                          height: 55,
-                          decoration: BoxDecoration(
+           //   SizedBox(height: 20),
+              Container(
+                height: 1000,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 40),
+                        Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.w700,
                             color: Color(0xff7c77d1),
-                            borderRadius: BorderRadius.circular(50.0),
                           ),
-                          child: MaterialButton(
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.white,
+                        ),
+                        SizedBox(height: 20),
+                        buildTextFormField(
+                          controller: usernameController,
+                          labelText: 'Name',
+                          suffixIcon: Icons.person,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your Username';
+                            }
+                            return null;
+                          },
+                        ),
+                        buildTextFormField(
+                          controller: emailController,
+                          labelText: 'Email',
+                          suffixIcon: Icons.email_outlined,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your Email';
+                            } else if (!RegExp(r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
+                                .hasMatch(value)) {
+                              return 'Please enter a valid email address';
+                            }
+                            return null;
+                          },
+                        ),
+                        buildTextFormField(
+                          controller: passwordController,
+                          labelText: 'Password',
+                          suffixIcon: isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          obscureText: !isPasswordVisible,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.length < 8 ||
+                                !RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
+                                    .hasMatch(value)) {
+                              return 'Password must be at least 8 characters with a mix of uppercase, lowercase, and numbers';
+                            }
+                            return null;
+                          },
+                          onTapSuffix: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                          },
+                        ),
+                        buildTextFormField(
+                          controller: dateOfBirthController,
+                          labelText: 'Date of Birth',
+                          suffixIcon: Icons.date_range_outlined,
+                          keyboardType: TextInputType.datetime,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your birth date';
+                            }
+                            return null;
+                          },
+                          onTapSuffix: () async {
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now(),
+                            );
+
+                            if (selectedDate != null &&
+                                selectedDate != DateTime.now()) {
+                              setState(() {
+                                dateOfBirthController.text =
+                                selectedDate.toLocal().toString().split(' ')[0];
+                              });
+                            }
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Row(
+                            children: [
+                              Text('Gender'),
+                              Checkbox(
+                                value: isMale,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    isMale = newValue!;
+                                    if (isMale) {
+                                      isFemale = false;
+                                    }
+                                  });
+                                },
+                              ),
+                              Text('Male'),
+                              Checkbox(
+                                value: isFemale,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    isFemale = newValue!;
+                                    if (isFemale) {
+                                      isMale = false;
+                                    }
+                                  });
+                                },
+                              ),
+                              Text('Female'),
+                            ],
+                          ),
+                        ),
+                        buildTextFormField(
+                          controller: contactInformationController,
+                          labelText: 'Contact Info',
+                          suffixIcon: Icons.phone,
+                          keyboardType: TextInputType.phone,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your number';
+                            } else if (value.length != 11) {
+                              return 'Phone number must be 11 digits';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: Container(
+                            width: double.infinity,
+                            height: 55,
+                            decoration: BoxDecoration(
+                              color: Color(0xff7c77d1),
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: MaterialButton(
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  signUp(context);
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Have an account?"),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Login(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Log in',
+                                style: TextStyle(color: Color(0xFF7165D6)),
                               ),
                             ),
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                signUp(context);
-                              }
-                            },
-                          ),
+                          ],
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Have an account?"),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Login(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'Log in',
-                              style: TextStyle(color: Color(0xFF7165D6)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

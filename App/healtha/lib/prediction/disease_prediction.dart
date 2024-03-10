@@ -154,7 +154,7 @@ class _DiseaseState extends State<Disease> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: myPurple,
         elevation: 0,
         leading: IconButton(
@@ -163,7 +163,7 @@ class _DiseaseState extends State<Disease> {
             Navigator.pop(context);
           },
         ),
-      ),
+      ),*/
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -172,10 +172,20 @@ class _DiseaseState extends State<Disease> {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.25,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: myPurple,
+                   // color: myPurple,
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xff7c77d1).withOpacity(0.5),
+                        Color(0xff7c77d1).withOpacity(0.7),
+                        Color(0xff7c77d1).withOpacity(0.9),
+                        Color(0xff7c77d1),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),
@@ -308,7 +318,7 @@ class _DiseaseState extends State<Disease> {
                                 _toggleSymptom(symptomsFromServer[i]);
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: _isSymptomSelected(symptomsFromServer[i])
+                                backgroundColor: _isSymptomSelected(symptomsFromServer[i])
                                     ? myPurple
                                     : Color(0XFF7E79B7FF),
                                 shape: RoundedRectangleBorder(

@@ -174,8 +174,7 @@ class _ReportState extends State<Report> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: myPurple,
-                  onPrimary: _isTranslating ? Colors.grey : Colors.white,
+                  foregroundColor: _isTranslating ? Colors.grey : Colors.white, backgroundColor: myPurple,
                 ),
                 child: _isTranslating
                     ? CircularProgressIndicator(

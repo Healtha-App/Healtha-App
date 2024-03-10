@@ -64,7 +64,17 @@ class _UploadPageState extends State<UploadPage> {
                   height: MediaQuery.of(context).size.height * 0.25,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: myPurple,
+                   // color: myPurple,
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xff7c77d1).withOpacity(0.5),
+                        Color(0xff7c77d1).withOpacity(0.7),
+                        Color(0xff7c77d1).withOpacity(0.9),
+                        Color(0xff7c77d1),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),
