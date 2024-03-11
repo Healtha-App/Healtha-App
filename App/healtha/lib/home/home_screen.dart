@@ -378,8 +378,8 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: Container(
-          width: 90.0,
-          height: 90.0,
+          width: MediaQuery.of(context).size.width * 0.21,
+          height: MediaQuery.of(context).size.height * 0.21,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [
@@ -458,24 +458,18 @@ class TestsPoster extends StatelessWidget {
                   child: Text(
                     description,
                     style: const TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            color: Colors.grey,
-                            blurRadius: 12,
-                            // offset: Offset(-2, 2),
-                          )
-                        ]),
+                        ),
                   ),
                 ),
               ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    MyApp.myPurple.withOpacity(0.5),
-                    Colors.white.withOpacity(0.3),
+                    Colors.black45.withOpacity(.8),
+                    Colors.white.withOpacity(0.1),
                   ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,

@@ -110,7 +110,7 @@ class requestedReports extends StatelessWidget {
                 SizedBox(height: screenSize.height * 0.2),
                 Container(
                   width: double.infinity,
-                  height: screenSize.height * 0.1,
+                 // height: screenSize.height * 0.1,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.05)),
@@ -118,53 +118,47 @@ class requestedReports extends StatelessWidget {
                       BoxShadow(
                         color: Colors.white70.withOpacity(0.8),
                         blurRadius: 1,
-                        offset: Offset(0, screenSize.width * 0.04),
+                      //  offset: Offset(0, screenSize.width * 0.04),
                       ),
                     ],
                   ),
                   child: Padding(
                     padding:  EdgeInsets.all(screenSize.width * 0.02),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Rahma Khaled",style: TextStyle(
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF7C77D1)
-                                ),),
-                                Text("Golocoz analysis",style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w100,
-                                    color: Colors.black87
-                                ),),
-                              ],
-                            ),
-                          ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16),
+                      title: Text(
+                        "Rahma Khaled",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF7C77D1),
                         ),
-                        SizedBox(width: 40), // Add spacing
-                        RawMaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => openReport()));
-                          },
-                          elevation: 2.0,
-                          fillColor: Color(0xFF7C77D1), // Set button color
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.white, // Set icon color to white
-                            size: 24.0,
-                          ),
-                          padding: EdgeInsets.all(screenSize.width * 0.05),
-                          shape: CircleBorder(),
+                      ),
+                      subtitle: Text(
+                        "Golocoz analysis",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.black87,
                         ),
-                      ],
+                      ),
+                      trailing: RawMaterialButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => openReport()),
+                          );
+                        },
+                        elevation: 2.0,
+                        fillColor: Color(0xFF7C77D1),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.white,
+                          size: MediaQuery.of(context).size.width * 0.065,
+                        ),
+                        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+                        shape: CircleBorder(),
+                      ),
                     ),
                   ),
                 ),
