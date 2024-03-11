@@ -74,6 +74,8 @@ class _drProfileState extends State<drProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: _isLoading
           ? Center(child: CircularProgressIndicator()) // Show loading indicator if data is still loading
@@ -83,8 +85,8 @@ class _drProfileState extends State<drProfile> {
             Stack(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 2.1,
+                  width: screenSize.width,
+                  height: screenSize.height / 2.1,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("images/dr.PNG"),
@@ -110,7 +112,7 @@ class _drProfileState extends State<drProfile> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.2,
+                  height: screenSize.height / 1.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -187,11 +189,11 @@ class _drProfileState extends State<drProfile> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(screenSize.width * 0.05),
                   child: Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 2.1,
+                        height: screenSize.height / 2.1,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -234,7 +236,7 @@ class _drProfileState extends State<drProfile> {
                       // New customContainers to display skills and qualifications
                       skills != null
                           ? Padding(
-                        padding: const EdgeInsets.all(7.0),
+                        padding: EdgeInsets.all(screenSize.width * 0.02),
                         child: customContainer(
                           title: "Skills",
                           icon1: Image.asset("images/skill.png"),
@@ -250,7 +252,7 @@ class _drProfileState extends State<drProfile> {
                       )
                           : SizedBox(height: 30),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(screenSize.width * 0.02),
                         child: ElevatedButton.icon(
                           onPressed: () {
                             showDialog(
@@ -315,13 +317,13 @@ class _drProfileState extends State<drProfile> {
                                                 Navigator.of(context).pop();
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Color(0xff7c77d1),
-                                                  //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                                  ),
+                                                backgroundColor: Color(0xff7c77d1),
+                                                //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                              ),
                                               child: Text("Save",style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w600
+                                                  color: Colors.white,
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w600
                                               ),),
                                             ),
                                             SizedBox(width: 10.0),
