@@ -2,6 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const multer = require('multer');
+const { uploadToS3 } = require('./utils/s3');
+
+// Load environment variables from .env file
+dotenv.config();
 
 
 const specialistDoctorsRoutes = require('./routers/specialistDoctorsRouters');
@@ -12,7 +17,7 @@ const diseasesEncyclopediaRouters = require('./routers/diseasesEncyclopediaRoute
 const diseaseReportsRouters = require('./routers/diseaseReportsRouters');
 const labTestReportsRouters = require('./routers/labTestReportsRouters');
 const loggedUsersRouters = require('./routers/loggedUsersRouters');
-const reportRouters = require('./routers/reportRouters'); 
+const reportRouters = require('./routers/reportRouters');
 
 
 const app = express();
@@ -28,6 +33,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect(uri)
     .then(() => {
         console.log('Connected to MongoDB');
+
+
+        const storage = multer.memoryStorage();
+        const upload = multer({ storage: storage });
+
+        app.post('/images', upload.single("image"), async (req, res) => {
+            const file = req.file;
+            const image_url = await uploadToS3(file);
+            const response = {
+                image_url: image_url
+            };
+            res.status(200).send(response);
+        })
+
 
         // Use the specialist doctor routes
         app.use('/api', specialistDoctorsRoutes);
@@ -65,5 +84,4 @@ mongoose.connect(uri)
     .catch((error) => {
         console.error('Error connecting to MongoDB:', error.message);
     });
-    
-   
+
