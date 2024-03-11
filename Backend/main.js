@@ -2,8 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const multer = require('multer');
-const { uploadToS3 } = require('./utils/s3');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -33,20 +31,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect(uri)
     .then(() => {
         console.log('Connected to MongoDB');
-
-
-        const storage = multer.memoryStorage();
-        const upload = multer({ storage: storage });
-
-        app.post('/images', upload.single("image"), async (req, res) => {
-            const file = req.file;
-            const image_url = await uploadToS3(file);
-            const response = {
-                image_url: image_url
-            };
-            res.status(200).send(response);
-        })
-
 
         // Use the specialist doctor routes
         app.use('/api', specialistDoctorsRoutes);

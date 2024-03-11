@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const multer = require('multer');
+const { uploadToS3 } = require('../utils/s3');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 
 const loggedUsersSchema = new mongoose.Schema({
     userid: {
@@ -18,6 +24,11 @@ const loggedUsersSchema = new mongoose.Schema({
     loggingTime: {
         type: Date,
         default: Date.now
+    },
+    avatar: {
+        type: String,
+        required: false,
+        default: ""
     }
 });
 
@@ -56,20 +67,27 @@ router.post('/healtha/loggedusers', async (req, res) => {
     }
 });
 
-router.put('/healtha/loggedusers/:id', async (req, res) => {
+router.put('/healtha/loggedusers/:id', upload.single('avatar'), async (req, res) => {
     try {
         const { id } = req.params;
         const { userid, username, password } = req.body;
+        let avatar = req.file
 
         // Validate that the required fields are present
         if (!userid || !username || !password) {
             return res.status(400).json({ error: 'UserId, username, and password are required fields' });
         }
 
+        if (avatar) {
+            avatar = await uploadToS3(avatar);
+        } else {
+            avatar = "";
+        }
+
         // Find and update the logged user in the database
         const updatedLoggedUser = await LoggedUser.findOneAndUpdate(
             { _id: id },
-            { userid, username, password },
+            { userid, username, password, avatar },
             { new: true }
         );
 
