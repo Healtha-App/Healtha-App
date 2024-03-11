@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: SplashScreen()
+      home: EncyclopediaTypes()
     );
 
   }

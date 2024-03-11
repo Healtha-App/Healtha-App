@@ -42,7 +42,7 @@ class EncyclopediaTypes extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     width: MediaQuery.of(context).size.width * 0.9,
-                    height: 120,
+
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -62,7 +62,7 @@ class EncyclopediaTypes extends StatelessWidget {
                         Text(
                           "Dive into medical wisdom!",
                           style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 21,
                               fontWeight: FontWeight.bold,
                               color: MyApp.myPurple),
                         ),
@@ -99,7 +99,7 @@ class EncyclopediaTypes extends StatelessWidget {
               },
               child: MyContainer2('Lab Tests Encyclopedia','assets/flask.png'),
             ),
-            SizedBox(height: 100,),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -109,8 +109,8 @@ class EncyclopediaTypes extends StatelessWidget {
               },
               child: Container(
                 alignment: Alignment.center,
-                height: 50,
-                width: 230,
+                height: MediaQuery.of(context).size.height * 0.060,
+                width: MediaQuery.of(context).size.width * 0.6,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                    color: Color(0xff7c77d1),
@@ -128,7 +128,7 @@ class EncyclopediaTypes extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 20,
                     ),
                     Icon(
                       Icons.arrow_forward,

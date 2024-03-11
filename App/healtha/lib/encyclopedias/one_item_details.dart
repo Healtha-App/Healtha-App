@@ -44,7 +44,7 @@ class LabTestDetailsPage extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.8,
-                  height: 80,
+
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
