@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:healtha/main.dart';
 import '../chatbot/chat_screen.dart';
 import '../encyclopedias/encyclopedia_types.dart';
 import '../lab_analysis/upload_analysis.dart';
@@ -13,24 +14,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/navigator.dart';
 
 List LabTestsAssets = [
-  'images/poster1.jfif',
-  'images/poster2.jfif',
+  'images/poster1.jpg',
+  'images/poster2.jpg',
   'images/poster3.jpg',
   'images/poster4.jpg',
   'images/poster5.jpg',
   'images/poster6.jpg',
   'images/poster7.jpg',
-  'images/poster8.jpeg',
+  'images/poster8.jpg',
 ];
 
 List LabTestsDiscription = [
-  "CBC, Complete Blood Count \nMeasures the number, size, and maturity of your red blood cells, white blood cells, and platelets. ",
-  "Urinalysis \nA test that analyzes the physical, chemical, and microscopic properties of your urine.",
-  "TSH, Thyroid Stimulating Hormone \n A hormone produced by the pituitary gland that regulates the function of the thyroid gland.",
+  "CBC, Complete Blood Count \nMeasures your red blood cells, white blood cells, and platelets.",
+  "Urinalysis \nAnalyzes all of the properties of your urine.",
+  "TSH, Thyroid Stimulating Hormone \n A hormone that regulates the function of the thyroid gland.",
   "Glucose \nA sugar molecule that is the body's main source of energy",
-  "Liver function \nA group of tests that measure the levels of enzymes and other substances produced by the liver",
-  "Thyroid function\n A group of tests that measure the levels of thyroid hormones in the blood.",
-  "Calcium \nA mineral that is important for building and maintaining strong bones and teeth.",
+  "Liver function \nMeasure the levels of enzymes and other substances produced by the liver",
+  "Thyroid function\nMeasure the levels of thyroid hormones in the blood.",
+  "Calcium \nImportant for building and maintaining strong bones and teeth.",
   "Pregnancy \nA state in which a woman has a developing fetus inside her uterus.",
 ];
 
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            " \nHealtha",
+                            "\nHealtha",
                             style: GoogleFonts.dancingScript(
                               textStyle: TextStyle(
                                 fontSize: 25,
@@ -110,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                 CarouselSlider(
                   items: LabTestsList(),
                   options: CarouselOptions(
-                    height: 250,
+                    height: MediaQuery.of(context).size.height * 0.25,
                     padEnds: false,
                     initialPage: 0,
                     enableInfiniteScroll: true,
@@ -124,7 +125,6 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                   ),
                 ),
-
                 /* SizedBox(
                   height: 70,
                   child: ListView.builder(
@@ -458,8 +458,8 @@ class TestsPoster extends StatelessWidget {
                   child: Text(
                     description,
                     style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
+                        color: Colors.black,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         shadows: [
                           Shadow(
@@ -474,9 +474,8 @@ class TestsPoster extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Colors.black87.withOpacity(0.9),
-                    Colors.black38.withOpacity(0.5),
-                    Colors.black26.withOpacity(0.3),
+                    MyApp.myPurple.withOpacity(0.5),
+                    Colors.white.withOpacity(0.3),
                   ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
