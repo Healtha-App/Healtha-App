@@ -130,6 +130,7 @@ class _AnimatedBackgroundState extends State<option>
                             onPressed: () {
                               Navigator.push(
                                 context,
+
                                 MaterialPageRoute(builder: (context) => EncyclopediaTypes()),
                               );
                             },
