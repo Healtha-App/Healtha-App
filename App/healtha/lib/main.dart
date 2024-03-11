@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:healtha/doctor_ui/requested-reports.dart';
 import 'package:healtha/register_login/join_as.dart';
+import 'package:healtha/start/option.dart';
 import 'chatbot/chat_screen.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: SplashScreen()
+      home: option()
     );
 
   }
