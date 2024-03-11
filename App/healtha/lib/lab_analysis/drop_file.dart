@@ -84,7 +84,11 @@ class _FileDropWidgetState extends State<FileDropWidget> {
                         // margin: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.all(0)), // Set margin to zero
                       ),
 
-                      child: Text('Browse File'),
+                      child: Text('Browse File',style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        color: Colors.white
+                      ),),
                     ),
                   ],
                 );

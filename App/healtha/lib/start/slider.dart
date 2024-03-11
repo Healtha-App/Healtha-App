@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../encyclopedias/encyclopedia_types.dart';
 import '../register_login/sign_up.dart';
+import 'option.dart';
 
 
 class slider extends StatefulWidget {
@@ -147,7 +147,7 @@ class _sliderState extends State<slider> {
                 Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                        builder: (context) => EncyclopediaTypes()));
+                        builder: (context) => option()));
               },
               child: Container(
                 alignment: Alignment.center,

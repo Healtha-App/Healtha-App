@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:healtha/doctor_ui/requested-reports.dart';
+import 'package:healtha/register_login/join_as.dart';
 import 'chatbot/chat_screen.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/encyclopedias/one_encyclopedia.dart';
@@ -16,6 +18,10 @@ import 'package:healtha/start/splash.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:healtha/start/slider.dart';
 import 'package:healtha/start/splash.dart';
+import 'doctor_ui/doc-profile.dart';
+import 'doctor_ui/doc_login.dart';
+import 'doctor_ui/doc_signUp.dart';
+import 'doctor_ui/open-report.dart';
 import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
@@ -36,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: Report()
+      home: ChatScreen()
     );
 
   }

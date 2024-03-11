@@ -117,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                     reverse: false,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                    autoPlayAnimationDuration:  Duration(milliseconds: 800),
                     autoPlayCurve: Curves.fastOutSlowIn,
                     enlargeCenterPage: true,
                     enlargeFactor: 0.3,
@@ -176,7 +176,17 @@ class HomeScreen extends StatelessWidget {
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Color(0xff7c77d1),
+                         // color: Color(0xff7c77d1),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff7c77d1).withOpacity(0.5),
+                              Color(0xff7c77d1).withOpacity(0.7),
+                              Color(0xff7c77d1).withOpacity(0.9),
+                              Color(0xff7c77d1),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -194,6 +204,7 @@ class HomeScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
+
                               ),
                               child: ImageIcon(
                                 AssetImage("images/body.png"),
@@ -206,9 +217,9 @@ class HomeScreen extends StatelessWidget {
                             Text(
                               "Explore healtha encyclopedias",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             SizedBox(height: 5),
@@ -264,9 +275,9 @@ class HomeScreen extends StatelessWidget {
                             Text(
                               "Generate Laboratory Test Report ",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
                                 color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             SizedBox(height: 5),
@@ -292,7 +303,17 @@ class HomeScreen extends StatelessWidget {
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Color(0xff7c77d1),
+                        //  color: Color(0xff7c77d1),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff7c77d1).withOpacity(0.5),
+                              Color(0xff7c77d1).withOpacity(0.7),
+                              Color(0xff7c77d1).withOpacity(0.9),
+                              Color(0xff7c77d1),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -322,9 +343,9 @@ class HomeScreen extends StatelessWidget {
                             Text(
                               "Track your symptomes",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             SizedBox(height: 5),
@@ -357,38 +378,37 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: Container(
-          width: 80.0,
-          height: 80.0,
+          width: 90.0,
+          height: 90.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0xff7c77d1).withOpacity(0.5),
+                spreadRadius: 3,
+                blurRadius: 12,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
           child: Padding(
             padding: const EdgeInsets.all(4.0),
-            child: FloatingActionButton(
+            child: RawMaterialButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ChatScreen()),
                 );
               },
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white,
-                      blurRadius: 6.0,
-                      offset: Offset(0.0, 2.0),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(24.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: iconBot,
-                ),
-              ),
-              backgroundColor: Colors.white,
+              elevation: 7.0,
+              fillColor: Colors.white, // Set button color
+              child: iconBot,
+              padding: EdgeInsets.all(12.0),
+              shape: CircleBorder(),
             ),
           ),
         ),
+
 
       ),
     );
@@ -430,23 +450,36 @@ class TestsPoster extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 12.0, bottom: 12.0),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Text(
-                  description,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      shadows: [
-                        Shadow(
-                          color: Color(0xff2b265c),
-                          blurRadius: 12,
-                          // offset: Offset(-2, 2),
-                        )
-                      ]),
+            Container(
+              child: Padding(
+                padding:  EdgeInsets.all(12),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    description,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                            color: Colors.grey,
+                            blurRadius: 12,
+                            // offset: Offset(-2, 2),
+                          )
+                        ]),
+                  ),
+                ),
+              ),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black87.withOpacity(0.9),
+                    Colors.black38.withOpacity(0.5),
+                    Colors.black26.withOpacity(0.3),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
                 ),
               ),
             ),
