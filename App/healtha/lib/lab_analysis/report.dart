@@ -129,6 +129,8 @@ class _ReportState extends State<Report> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -175,6 +177,7 @@ class _ReportState extends State<Report> {
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: _isTranslating ? Colors.grey : Colors.white, backgroundColor: myPurple,
+                  minimumSize: Size(screenSize.width * 0.8, 50), // Adjust button width and height
                 ),
                 child: _isTranslating
                     ? CircularProgressIndicator(
