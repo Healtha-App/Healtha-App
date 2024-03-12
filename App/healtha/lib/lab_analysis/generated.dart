@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/doctor_ui/doc-profile.dart';
+import 'report.dart';
 
-import 'open-report.dart';
-
-class requestedReports extends StatelessWidget {
+class GeneratedReports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -92,7 +91,7 @@ class requestedReports extends StatelessWidget {
                 children: [
                   SizedBox(height: screenSize.height * 0.13), // Adjust as needed
                   Text(
-                    'Requested Reports', // Your healthcare app name
+                    'Generated Reports', // Your healthcare app name
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -111,7 +110,7 @@ class requestedReports extends StatelessWidget {
                   SizedBox(height: screenSize.height * 0.2),
                   Container(
                     width: double.infinity,
-                   // height: screenSize.height * 0.1,
+                    // height: screenSize.height * 0.1,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.05)),
@@ -119,7 +118,7 @@ class requestedReports extends StatelessWidget {
                         BoxShadow(
                           color: Colors.white70.withOpacity(0.8),
                           blurRadius: 1,
-                        //  offset: Offset(0, screenSize.width * 0.04),
+                          //  offset: Offset(0, screenSize.width * 0.04),
                         ),
                       ],
                     ),
@@ -147,7 +146,7 @@ class requestedReports extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => OpenReport()),
+                              MaterialPageRoute(builder: (context) => Report()),
                             );
                           },
                           elevation: 2.0,

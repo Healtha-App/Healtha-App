@@ -6,6 +6,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'drop_file.dart';
+import 'generated.dart';
 import 'report.dart';
 
 class UploadPage extends StatefulWidget {
@@ -56,15 +57,34 @@ class _UploadPageState extends State<UploadPage> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+
+          elevation: 0,// Set the background color to transparent
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  myPurple.withOpacity(0.5),
+                  myPurple.withOpacity(0.7),
+                  myPurple.withOpacity(0.9),
+                  myPurple,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.topRight,
+              ),
+            ),
+          ),
+
+        ),
+        drawer: Drawer(
+          child: ListView(
+          //  padding: EdgeInsets.zero,
             children: [
-              Container(
-                height: screenSize.height * 0.25,
-                width: screenSize.width,
+              DrawerHeader(
+
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -76,159 +96,223 @@ class _UploadPageState extends State<UploadPage> {
                     begin: Alignment.topLeft,
                     end: Alignment.topRight,
                   ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  ),
                 ),
+                child: Center(child: Text('Your reports',style: TextStyle(color: Colors.white,fontSize: 20),)),
+
               ),
-              Positioned(
-                bottom: -50,
-                left: screenSize.width * 0.05,
-                right: screenSize.width * 0.05,
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  width: screenSize.width * 0.9,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: myPurple,
-                        offset: Offset(0.0, 2.0),
-                        blurRadius: 1.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Proactive health starts here!",
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: myPurple),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Unlocking insights with smart reports",
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ),
+              ListTile(
+                title: Text('Generated Reports'),
+                onTap: () {
+                  // Navigate to the GeneratedReport class when the item is tapped
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GeneratedReports()),
+                  );
+                },
               ),
+              ListTile(
+                title: Text('Saved Reports'),
+                onTap: () {
+                  // Navigate to the GeneratedReport class when the item is tapped
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GeneratedReports()),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text('History'),
+                onTap: () {
+                  // Navigate to the GeneratedReport class when the item is tapped
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GeneratedReports()),
+                  );
+                },
+              ),
+              // Add more items as needed
             ],
           ),
-          Padding(
-            padding: EdgeInsets.all(screenSize.width * 0.1),
-            child: Column(
+        ),
+
+        body: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
               children: [
-                SizedBox(height: 30.0),
-                Text(
-                  'Upload your lab analysis results',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+
+                Container(
+                  height: screenSize.height * 0.2,
+                  width: screenSize.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        myPurple.withOpacity(0.5),
+                        myPurple.withOpacity(0.7),
+                        myPurple.withOpacity(0.9),
+                        myPurple,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
+
+                Positioned(
+                  bottom: -50,
+                  left: screenSize.width * 0.05,
+                  right: screenSize.width * 0.05,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    width: screenSize.width * 0.9,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: myPurple,
+                          offset: Offset(0.0, 2.0),
+                          blurRadius: 1.0,
+                          spreadRadius: 0.0,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Proactive health starts here!",
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: myPurple),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Unlocking insights with smart reports",
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                FileDropWidget(),
-                SizedBox(height: 10,),
-                Divider(
-                  height: .50, // Customize the thickness
-                  color: Colors.grey, // Customize the color
-                ),
-                SizedBox(height: 10.0),
-                if (_isEnabled == false)
-                  AnimatedTextKit(
-                    animatedTexts: [
-                      TypewriterAnimatedText(
-                        """Your healtha report is being generated with care...
+
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.all(screenSize.width * 0.1),
+              child: Column(
+                children: [
+                  SizedBox(height: 30.0),
+                  Text(
+                    'Upload your lab analysis results',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  FileDropWidget(),
+                  SizedBox(height: 10,),
+                  Divider(
+                    height: .50, // Customize the thickness
+                    color: Colors.grey, // Customize the color
+                  ),
+                  SizedBox(height: 10.0),
+                  if (_isEnabled == false)
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                          """Your healtha report is being generated with care...
 We will notify you as soon as it is ready
 Thank you for allowing us the time to ensure accuracy!""",
-                        textStyle: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black87,
+                          textStyle: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87,
+                          ),
+                          speed: Duration(milliseconds: 40),
                         ),
-                        speed: Duration(milliseconds: 40),
-                      ),
-                    ],
-                    isRepeatingAnimation: false,
-                    totalRepeatCount: 1,
-                    displayFullTextOnTap: true,
-                    stopPauseOnTap: true,
-                    repeatForever: false,
-                    onFinished: () {
-                      setState(() {
-                        showAfterAnimation = true;
-                      });
-                    },
-                  ),
-                if(showAfterAnimation)
-                  Column(
-                    children: [
-                      SizedBox(height: 10,),
-                      ElevatedButton(
-                        onPressed: _isEnabled
-                            ? () {
-                          setState(() {
-                            _isEnabled = false;
-                          });
-                        }
-                            : null,
-                        child: Text('Generate another report'),
-                        style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                          backgroundColor: MaterialStateProperty.all<Color>(myPurple),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                      ],
+                      isRepeatingAnimation: false,
+                      totalRepeatCount: 1,
+                      displayFullTextOnTap: true,
+                      stopPauseOnTap: true,
+                      repeatForever: false,
+                      onFinished: () {
+                        setState(() {
+                          showAfterAnimation = true;
+                        });
+                      },
+                    ),
+                  if(showAfterAnimation)
+                    Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        ElevatedButton(
+                          onPressed: _isEnabled
+                              ? () {
+                            setState(() {
+                              _isEnabled = false;
+                            });
+                          }
+                              : null,
+                          child: Text('Generate another report'),
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(myPurple),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(' or '),
-                          Text('return home',style: TextStyle(fontWeight: FontWeight.bold),),
-                        ],
-                      ),
-                    ],
-                  ),
-                ElevatedButton(
-                  onPressed: _isEnabled
-                      ? () {
-                    setState(() {
-                      _isEnabled = false;
-                    });
-                  }
-                      : null,
-                  child: Text('Generate'),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(' or '),
+                            Text('return home',style: TextStyle(fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      ],
                     ),
-                    foregroundColor: MaterialStateProperty.all(
-                        _isEnabled ? Colors.white : myPurple.withOpacity(0)),
-                    backgroundColor: MaterialStateProperty.all(
-                        _isEnabled ? myPurple : myPurple.withOpacity(0)),
+                  ElevatedButton(
+                    onPressed: _isEnabled
+                        ? () {
+                      setState(() {
+                        _isEnabled = false;
+                      });
+                    }
+                        : null,
+                    child: Text('Generate'),
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      foregroundColor: MaterialStateProperty.all(
+                          _isEnabled ? Colors.white : myPurple.withOpacity(0)),
+                      backgroundColor: MaterialStateProperty.all(
+                          _isEnabled ? myPurple : myPurple.withOpacity(0)),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+
+

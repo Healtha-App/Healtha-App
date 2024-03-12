@@ -78,215 +78,194 @@ class _OpenReportState extends State<OpenReport> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // Background Gradient
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFE0E7EA), // Light blue
-                  Color(0xff7c77d1).withOpacity(0.2), // Light grey
-                ],
-              ),
-            ),
-          ),
-          // Abstract Shapes
-          Positioned(
-            top: -screenSize.width * 0.3,
-            right: -screenSize.width * 0.1,
-            child: Container(
-              width: screenSize.width * 0.6,
-              height: screenSize.width * 0.6,
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            // Background Gradient
+            Container(
               decoration: BoxDecoration(
-                color: Color(0xFF7C77D1), // Purple
-                borderRadius: BorderRadius.circular(screenSize.width * 0.3),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFFE0E7EA), // Light blue
+                    Color(0xff7c77d1).withOpacity(0.2), // Light grey
+                  ],
+                ),
               ),
             ),
-          ),
-          Positioned(
-            top: screenSize.height * 0.3,
-            left: -screenSize.width * 0.2,
-            child: Container(
-              width: screenSize.width * 0.4,
-              height: screenSize.width * 0.4,
-              decoration: BoxDecoration(
-                color: Color(0xFF7C77D1), // Purple
-                borderRadius: BorderRadius.circular(screenSize.width * 0.2),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: screenSize.height * 0.01,
-            right: screenSize.width * 0.01,
-            child: Container(
-              width: screenSize.width * 0.2,
-              height: screenSize.width * 0.2,
-              decoration: BoxDecoration(
-                color: Color(0xFF7C77D1), // Purple
-                borderRadius: BorderRadius.circular(screenSize.width * 0.1),
-              ),
-            ),
-          ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            // Abstract Shapes
+            Positioned(
+              top: -screenSize.width * 0.3,
+              right: -screenSize.width * 0.1,
               child: Container(
-                color: Colors.white.withOpacity(0.1),
-                width: double.infinity,
-                height: 100,
+                width: screenSize.width * 0.6,
+                height: screenSize.width * 0.6,
+                decoration: BoxDecoration(
+                  color: Color(0xFF7C77D1), // Purple
+                  borderRadius: BorderRadius.circular(screenSize.width * 0.3),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(screenSize.width * 0.05),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
+            Positioned(
+              top: screenSize.height * 0.3,
+              left: -screenSize.width * 0.2,
+              child: Container(
+                width: screenSize.width * 0.4,
+                height: screenSize.width * 0.4,
+                decoration: BoxDecoration(
+                  color: Color(0xFF7C77D1), // Purple
+                  borderRadius: BorderRadius.circular(screenSize.width * 0.2),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: screenSize.height * 0.01,
+              right: screenSize.width * 0.01,
+              child: Container(
+                width: screenSize.width * 0.2,
+                height: screenSize.width * 0.2,
+                decoration: BoxDecoration(
+                  color: Color(0xFF7C77D1), // Purple
+                  borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  color: Colors.white.withOpacity(0.1),
                   width: double.infinity,
-                  height: 700,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white70.withOpacity(0.6),
-                        blurRadius: 1,
-                        offset: Offset(0, 7),
+                  height: 100,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(screenSize.width * 0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: screenSize.height * 0.8,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white70.withOpacity(0.6),
+                          blurRadius: 1,
+                          offset: Offset(0, 7),
+                        ),
+                      ],
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              "Healtha Report",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff7c77d1),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            //  decoration: BoxDecoration(
+                            // color: Colors.grey[200],
+                            //   borderRadius: BorderRadius.circular(15),
+                            //),
+                            child: Text(
+                              _translatedReport ?? '',
+                              style: TextStyle(fontSize: 14,),
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+
+                          InkWell(
+                            onTap: () {
+                              if (!_isTranslating) {
+                                _translateReport();
+                              }
+                            },
+                            child: Text(
+                              "Translate to ${_isTranslated ? 'English' : 'Arabic'}",
+                              style: TextStyle(
+                                color: Color(0xff7c77d1),
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+
+                        ],
+
+                      ),
+                    ),
+                  ),
+                  Spacer(
+
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Handle first button press
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF7C77D1), // Set button color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          child: Text(
+                            'Edit',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10), // Add some space between buttons
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Handle second button press
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF7C77D1), // Set button color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          child: Text(
+                            'Confirm',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Text(
-                            "Healtha Report",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff7c77d1),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          //  decoration: BoxDecoration(
-                          // color: Colors.grey[200],
-                          //   borderRadius: BorderRadius.circular(15),
-                          //),
-                          child: Text(
-                            _translatedReport ?? '',
-                            style: TextStyle(fontSize: 14,),
-                          ),
-                        ),
-                        SizedBox(height: 10,),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (!_isTranslating) {
-                              // Save the report without triggering translation
-                              // Replace `patientId` with the actual patient ID
-                              postReport(patientId!, _translatedReport ?? '');
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: _isTranslating ? Colors.grey : Colors.white, backgroundColor: Color(0xFF7C77D1),
-                            minimumSize: Size(screenSize.width * 0.8, 50), // Adjust button width and height
-                          ),
-                          child: _isTranslating
-                              ? CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          )
-                              : Text(
-                            _isTranslated ? "حفظ" : "Save",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        InkWell(
-                          onTap: () {
-                            if (!_isTranslating) {
-                              _translateReport();
-                            }
-                          },
-                          child: Text(
-                            "Translate to ${_isTranslated ? 'English' : 'Arabic'}",
-                            style: TextStyle(
-                              color: Color(0xff7c77d1),
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-
-                      ],
-
-                    ),
-                  ),
-                ),
-                Spacer(
-
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle first button press
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF7C77D1), // Set button color
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                        ),
-                        child: Text(
-                          'Edit',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10), // Add some space between buttons
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle second button press
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF7C77D1), // Set button color
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                        ),
-                        child: Text(
-                          'Confirm',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
