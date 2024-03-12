@@ -9,7 +9,9 @@ class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
-int ? patientId;
+
+int? patientId;
+
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
@@ -25,7 +27,8 @@ class _SignUpState extends State<SignUp> {
   bool isPasswordVisible = false;
 
   Future<int?> signUp(BuildContext context) async {
-    String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
+    String healthaIP =
+        'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
 
     final url = healthaIP;
     try {
@@ -43,7 +46,6 @@ class _SignUpState extends State<SignUp> {
       );
 
       if (response.statusCode == 201) {
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: SizedBox(
@@ -84,7 +86,6 @@ class _SignUpState extends State<SignUp> {
               (route) => false,
         );
         return patientId;
-
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -104,11 +105,11 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
-      //backgroundColor: Color(0xff7c77d1),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -126,24 +127,24 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: screenSize.height * 0.02),
               Padding(
-                padding: const EdgeInsets.all(70),
+                padding: EdgeInsets.all(screenSize.width * 0.15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       'images/healtha1.png',
                       color: Colors.white,
-                      width: 70.0,
-                      height: 70.0,
+                      width: screenSize.width * 0.1,
+                      height: screenSize.width * 0.1,
                     ),
-                    SizedBox(width: 10.0),
+                    SizedBox(width: screenSize.width * 0.02),
                     Text(
                       'Healtha',
                       style: GoogleFonts.dancingScript(
                         textStyle: TextStyle(
-                          fontSize: 40,
+                          fontSize: screenSize.width * 0.08,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
@@ -152,14 +153,13 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-           //   SizedBox(height: 20),
               Container(
-                height: 1000,
+                height: screenSize.height * 0.9,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(screenSize.width * 0.05),
+                    topRight: Radius.circular(screenSize.width * 0.05),
                   ),
                 ),
                 child: SingleChildScrollView(
@@ -168,16 +168,16 @@ class _SignUpState extends State<SignUp> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: 40),
+                        SizedBox(height: screenSize.height * 0.04),
                         Text(
                           'Sign Up',
                           style: TextStyle(
-                            fontSize: 30.0,
+                            fontSize: screenSize.width * 0.07,
                             fontWeight: FontWeight.w700,
                             color: Color(0xff7c77d1),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: screenSize.height * 0.02),
                         buildTextFormField(
                           controller: usernameController,
                           labelText: 'Name',
@@ -197,7 +197,8 @@ class _SignUpState extends State<SignUp> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter your Email';
-                            } else if (!RegExp(r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
+                            } else if (!RegExp(
+                                r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
                                 .hasMatch(value)) {
                               return 'Please enter a valid email address';
                             }
@@ -214,7 +215,8 @@ class _SignUpState extends State<SignUp> {
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value!.length < 8 ||
-                                !RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
+                                !RegExp(
+                                    r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
                                     .hasMatch(value)) {
                               return 'Password must be at least 8 characters with a mix of uppercase, lowercase, and numbers';
                             }
@@ -255,7 +257,9 @@ class _SignUpState extends State<SignUp> {
                           },
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenSize.height * 0.01,
+                              horizontal: screenSize.width * 0.05),
                           child: Row(
                             children: [
                               Text('Gender'),
@@ -300,22 +304,23 @@ class _SignUpState extends State<SignUp> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: screenSize.height * 0.02),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenSize.height * 0.01,
+                              horizontal: screenSize.width * 0.05),
                           child: Container(
                             width: double.infinity,
-                            height: 55,
+                            height: screenSize.height * 0.07,
                             decoration: BoxDecoration(
                               color: Color(0xff7c77d1),
-                              borderRadius: BorderRadius.circular(50.0),
+                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                             ),
                             child: MaterialButton(
                               child: Text(
                                 'Sign Up',
                                 style: TextStyle(
-                                  fontSize: 20.0,
+                                  fontSize: screenSize.width * 0.06,
                                   color: Colors.white,
                                 ),
                               ),
@@ -369,7 +374,9 @@ class _SignUpState extends State<SignUp> {
     VoidCallback? onTapSuffix,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.01,
+          horizontal: MediaQuery.of(context).size.width * 0.05),
       child: TextFormField(
         controller: controller,
         validator: validator,
@@ -381,7 +388,8 @@ class _SignUpState extends State<SignUp> {
             child: Icon(suffixIcon),
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50.0),
+            borderRadius: BorderRadius.circular(
+                MediaQuery.of(context).size.width * 0.1),
           ),
           labelText: labelText,
         ),

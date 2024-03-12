@@ -5,155 +5,154 @@ import '../doctor_ui/doc_signUp.dart';
 class joinAs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xff7c77d1).withOpacity(0.5),
-                  Color(0xff7c77d1).withOpacity(0.7),
-                  Color(0xff7c77d1).withOpacity(0.9),
-                  Color(0xff7c77d1),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.topRight,
-              ),
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 100),
-                Text(
-                  'Join as :',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 30,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 70),
-                Container(
-                  height: 700,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      topRight: Radius.circular(50),
-                    ),
-                  ),
-                  child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 70,),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (context) => docSignUpPage(),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 200,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Doctor",
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(width: 70),
-                                Container(
-                                  margin: EdgeInsets.all(12),
-                                  width: 160,
-                                  height: 200,
-                                  child: Image(image: AssetImage("images/doc.jpg")),
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  blurRadius: 9,
-                                  offset: Offset(0, 5), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (context) => SignUp(),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 200,
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.all(12),
-                                  width: 160,
-                                  height: 200,
-                                  child: Image(image: AssetImage("images/patient.jpg")),
-                                ),
-                                SizedBox(width: 70),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Patient",
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  blurRadius: 9,
-                                  offset: Offset(0, 5), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xff7c77d1).withOpacity(0.5),
+                Color(0xff7c77d1).withOpacity(0.7),
+                Color(0xff7c77d1).withOpacity(0.9),
+                Color(0xff7c77d1),
               ],
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
             ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: screenSize.height * 0.1),
+              Text(
+                'Join as :',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: screenSize.width * 0.08,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: screenSize.height * 0.05),
+              Container(
+                height: screenSize.height * 0.7,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(screenSize.width * 0.1),
+                    topRight: Radius.circular(screenSize.width * 0.1),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: screenSize.height * 0.1),
+                    Padding(
+                      padding: EdgeInsets.all(screenSize.width * 0.03),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => docSignUpPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: screenSize.height * 0.2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Doctor",
+                                    style: TextStyle(
+                                      fontSize: screenSize.width * 0.06,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(width: screenSize.width * 0.1),
+                              Container(
+                                //margin: EdgeInsets.all(screenSize.width * 0.025),
+                                width: screenSize.width * 0.4,
+                                height: screenSize.height * 0.2,
+                                child: Image(image: AssetImage("images/doc.jpg")),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.03)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                blurRadius: screenSize.width * 0.018,
+                                offset: Offset(0, screenSize.width * 0.025), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(screenSize.width * 0.03),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => SignUp(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: screenSize.height * 0.2,
+                          child: Row(
+                            children: [
+                              Container(
+                                //margin: EdgeInsets.all(screenSize.width * 0.025),
+                                width: screenSize.width * 0.4,
+                                height: screenSize.height * 0.2,
+                                child: Image(image: AssetImage("images/patient.jpg")),
+                              ),
+                              SizedBox(width: screenSize.width * 0.1),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "Patient",
+                                    style: TextStyle(
+                                      fontSize: screenSize.width * 0.06,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.03)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                blurRadius: screenSize.width * 0.018,
+                                offset: Offset(0, screenSize.width * 0.025), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),

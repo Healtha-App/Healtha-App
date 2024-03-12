@@ -70,9 +70,9 @@ class docLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //backgroundColor: Color(0xff7c77d1),
+    final Size screenSize = MediaQuery.of(context).size;
 
+    return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -91,125 +91,122 @@ class docLogin extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 80,
+                height: screenSize.height * 0.1,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 70),              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'images/healtha1.png',
-                    color: Colors.white,
-                    width: 70.0,
-                    height: 70.0,
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Healtha',
-                    style: GoogleFonts.dancingScript(
-                      textStyle: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'images/healtha1.png',
+                      color: Colors.white,
+                      width: screenSize.width * 0.14,
+                      height: screenSize.width * 0.14,
+                    ),
+                    SizedBox(width: screenSize.width * 0.02),
+                    Text(
+                      'Healtha',
+                      style: GoogleFonts.dancingScript(
+                        textStyle: TextStyle(
+                          fontSize: screenSize.width * 0.1,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               ),
               SizedBox(
-                height: 60,
+                height: screenSize.height * 0.1,
               ),
               Container(
-                height: 650,
+                height: screenSize.height * 0.85,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
+                    topLeft: Radius.circular(screenSize.width * 0.1),
+                    topRight: Radius.circular(screenSize.width * 0.1),
                   ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-
                   children: [
                     SizedBox(
-                      height: 80,
+                      height: screenSize.height * 0.1,
                     ),
                     Text(
                       'Log In',
                       style: TextStyle(
-                        fontSize: 30.0,
+                        fontSize: screenSize.width * 0.08,
                         fontWeight: FontWeight.w700,
                         color: Color(0xff7c77d1),
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: screenSize.height * 0.05,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.04),
                       child: TextFormField(
                         controller: emailController,
-                        decoration:  InputDecoration(
-                          // prefixIcon: Icon(Icons.email_outlined),
+                        decoration: InputDecoration(
                           suffixIcon: Icon(Icons.email_outlined),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50.0)),
+                              borderRadius: BorderRadius.circular(screenSize.width * 0.1)),
                           labelText: 'Email',
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 10),                    child: TextFormField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        // prefixIcon: Icon(Icons.email_outlined),
-                        suffixIcon: Icon(Icons.remove_red_eye_outlined),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50.0)),
-                        labelText: 'password',
+                      padding: EdgeInsets.symmetric(vertical: screenSize.width * 0.05, horizontal: screenSize.width * 0.04),
+                      child: TextFormField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          suffixIcon: Icon(Icons.remove_red_eye_outlined),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(screenSize.width * 0.1)),
+                          labelText: 'password',
+                        ),
+                        obscureText: true,
                       ),
-                      obscureText: true,
-                    ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),                    child: Container(
-                      width: double.infinity,
-                      height: 55,
-                      decoration: BoxDecoration(
-                          color: Color(0xff7c77d1),
-                          borderRadius: BorderRadius.circular(50.0)),
-                      child: MaterialButton(
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                              fontSize: 20.0, color: Colors.white),
+                      padding: EdgeInsets.symmetric(vertical: screenSize.width * 0.05, horizontal: screenSize.width * 0.04),
+                      child: Container(
+                        width: double.infinity,
+                        height: screenSize.width * 0.13,
+                        decoration: BoxDecoration(
+                            color: Color(0xff7c77d1),
+                            borderRadius: BorderRadius.circular(screenSize.width * 0.1)),
+                        child: MaterialButton(
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                                fontSize: screenSize.width * 0.06, color: Colors.white),
+                          ),
+                          onPressed: () {
+                            login(context).then((success) {
+                              if (success) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => requestedReports(),
+                                  ),
+                                );
+                              }
+                            });
+                          },
                         ),
-                        onPressed: () {
-                          login(context).then((success) {
-                            if (success) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => requestedReports(),
-                                ),
-                              );
-                            }
-                          });
-                        },
-
                       ),
-                    ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Don't have an account?"),
                         SizedBox(
-                          width: 10.0,
+                          width: screenSize.width * 0.02,
                         ),
                         TextButton(
                             onPressed: () {
@@ -228,9 +225,6 @@ class docLogin extends StatelessWidget {
                   ],
                 ),
               ),
-
-
-
             ],
           ),
         ),

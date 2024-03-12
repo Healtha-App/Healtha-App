@@ -7,7 +7,6 @@ import '../encyclopedias/encyclopedia_types.dart';
 import '../register_login/sign_up.dart';
 import 'option.dart';
 
-
 class slider extends StatefulWidget {
   const slider({Key? key}) : super(key: key);
 
@@ -19,161 +18,171 @@ class _sliderState extends State<slider> {
   final _controller = LiquidController();
 
   int currentPage = 1;
+
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: [
           LiquidSwipe(
-              enableLoop: false,
-              liquidController: _controller,
-              onPageChangeCallback: (index) => setState(() {
-                    currentPage = index;
-                  }),
-              pages: [
-                buildPage(
-                    Color(0xff6e54ab)!,
-                    [
-                      'welcome to',
-                      'Healtha',
-                      '',
-                      'Medical knowledge in your pocket. Explore medical encyclopedias',
-                    ],
-                    'images/search.json'),
-                buildPage(
-                    Color(0xFF7165D6),
-                    ['', 'Healtha', '', 'Laboratory tests analysis made easy'],
-                    'images/ency.json'),
-                buildPage(
-                    Color(0xff7c77d1)!,
-                    [
-                      '',
-                      'Healtha',
-                      '',
-                      'Diseases prediction made easy.consultation with specialists '
-                    ],
-                    'images/test.json'),
-                buildPage(
-                    Color(0xffa79ef9)!,
-                    [
-                      '',
-                      'Healtha',
-                      '',
-                      'Proactive health starts here.insights with smart reports'
-                    ],
-                    'images/report1.json'),
-              ]),
+            enableLoop: false,
+            liquidController: _controller,
+            onPageChangeCallback: (index) => setState(() {
+              currentPage = index;
+            }),
+            pages: [
+              buildPage(
+                Color(0xff6e54ab)!,
+                [
+                  'welcome to',
+                  'Healtha',
+                  '',
+                  'Medical knowledge in your pocket. Explore medical encyclopedias',
+                ],
+                'images/search.json',
+                screenSize,
+              ),
+              buildPage(
+                Color(0xFF7165D6),
+                ['', 'Healtha', '', 'Laboratory tests analysis made easy'],
+                'images/ency.json',
+                screenSize,
+              ),
+              buildPage(
+                Color(0xff7c77d1)!,
+                [
+                  '',
+                  'Healtha',
+                  '',
+                  'Diseases prediction made easy.consultation with specialists '
+                ],
+                'images/test.json',
+                screenSize,
+              ),
+              buildPage(
+                Color(0xffa79ef9)!,
+                [
+                  '',
+                  'Healtha',
+                  '',
+                  'Proactive health starts here.insights with smart reports'
+                ],
+                'images/report1.json',
+                screenSize,
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 
   buildPage(
-    Color color,
-    List<String> texts,
-    String animationJson,
-  ) {
-    controller:
+      Color color,
+      List<String> texts,
+      String animationJson,
+      Size screenSize,
+      ) {
     return Container(
       color: color,
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
+      height: screenSize.height,
+      width: screenSize.width,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 50,
-            ),
+            SizedBox(height: screenSize.height * 0.05),
             Lottie.asset(
               animationJson,
-              width: 350,
-              height: 350,
+              width: screenSize.width * 0.7,
+              height: screenSize.width * 0.7,
               fit: BoxFit.fill,
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: screenSize.height * 0.02),
             RichText(
-                text: TextSpan(
-              text: texts[0],
-              style: TextStyle(
-                fontSize: 40,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+              text: TextSpan(
+                text: texts[0],
+                style: TextStyle(
+                  fontSize: screenSize.width * 0.1,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            )),
+            ),
             Row(
               children: [
                 RichText(
-                    text: TextSpan(
-                  text: texts[1],
-                  style: GoogleFonts.dancingScript(
-                    textStyle: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
+                  text: TextSpan(
+                    text: texts[1],
+                    style: GoogleFonts.dancingScript(
+                      textStyle: TextStyle(
+                        fontSize: screenSize.width * 0.1,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: texts[2],
+                    style: TextStyle(
+                      fontSize: screenSize.width * 0.05,
                       color: Colors.white,
                     ),
                   ),
-                )),
-                RichText(
-                    text: TextSpan(
-                  text: texts[2],
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    //   fontWeight: FontWeight.bold,
-                  ),
-                )),
+                ),
               ],
             ),
-            SizedBox(
-              height: 15,
-            ),
+            SizedBox(height: screenSize.height * 0.015),
             RichText(
-                text: TextSpan(
-              text: texts[3],
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
+              text: TextSpan(
+                text: texts[3],
+                style: TextStyle(
+                  fontSize: screenSize.width * 0.05,
+                  color: Colors.white,
+                ),
               ),
-            )),
-            SizedBox(height: 150),
+            ),
+            SizedBox(height: screenSize.height * 0.18),
             InkWell(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                        builder: (context) => option()));
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => option(),
+                  ),
+                );
               },
               child: Container(
                 alignment: Alignment.center,
-                height: 50,
-                width: 230,
+                height: screenSize.height * 0.075,
+                width: screenSize.width * 0.5,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    color: Colors.white),
+                  borderRadius: BorderRadius.circular(18),
+                  color: Colors.white,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Get Started",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: screenSize.width * 0.05,
                         color: Color(0xff7c77d1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: screenSize.width * 0.02),
                     Icon(
                       Icons.arrow_forward,
                       color: Color(0xff7c77d1),
-                    )
+                    ),
                   ],
                 ),
               ),
