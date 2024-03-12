@@ -5,6 +5,7 @@ import 'package:healtha/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
 
 import '../home/home_screen.dart';
+import '../navigation.dart';
 
 class Login extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -200,7 +201,7 @@ class Login extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomeScreen(),
+                                    builder: (context) => YourWidget(),
                                   ),
                                 );
                               }

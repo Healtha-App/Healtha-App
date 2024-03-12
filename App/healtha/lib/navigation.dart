@@ -1,3 +1,4 @@
+// your_widget.dart
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
@@ -5,8 +6,8 @@ import 'package:healtha/profile/home.dart';
 import 'package:healtha/home/home_screen.dart';
 import 'package:line_icons/line_icons.dart';
 
-import 'lab_doctor/lab_doctor.dart'; // Make sure to import the flutter_gnav package
-
+import 'lab_analysis/saved_reports.dart';
+import 'lab_doctor/lab_doctor.dart';
 
 class YourWidget extends StatefulWidget {
   @override
@@ -23,10 +24,10 @@ class _YourWidgetState extends State<YourWidget> {
       body: PageView(
         controller: _pageController,
         children: [
-          HomeScreen(), // Use HomeScreen widget instead of HomePage()
-          EncyclopediaTypes(), // Replace with your actual LikesPage widget
-          HomeScreen(), // Replace with your actual SearchPage widget
-          ProfileScreen(), // Replace with your actual ProfilePage widget
+          HomeScreen(),
+          EncyclopediaTypes(),
+          SavedReports(),
+          ProfileScreen(),
         ],
         onPageChanged: (index) {
           setState(() {
@@ -35,6 +36,7 @@ class _YourWidgetState extends State<YourWidget> {
         },
       ),
       bottomNavigationBar: Container(
+
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
           child: GNav(
@@ -50,9 +52,9 @@ class _YourWidgetState extends State<YourWidget> {
             gap: 5,
             color: Colors.grey[700],
             activeColor: myPurple,
-            iconSize: 24,
+            iconSize: 26,
             tabBackgroundColor: myPurple.withOpacity(0.1),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             tabs: [
               GButton(
                 icon: LineIcons.home,

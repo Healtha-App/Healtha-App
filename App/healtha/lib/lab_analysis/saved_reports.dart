@@ -1,150 +1,174 @@
-import 'package:line_icons/line_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:healtha/doctor_ui/doc-profile.dart';
 
-class SavedReport extends StatefulWidget {
-  @override
-  _SavedReportState createState() => _SavedReportState();
-}
+import 'report.dart';
 
-class _SavedReportState extends State<SavedReport> {
-  String _fileName = 'No file chosen';
-  bool showAfterAnimation= false;
-  bool _isEnabled = true;
-
-  int _selectedIndex = 0;
-  static const Color myPurple = Color(0xff7c77d1);
-
+class SavedReports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  Column(
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
+    final Size screenSize = MediaQuery.of(context).size;
+
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
           children: [
+            // Background Gradient
             Container(
-              height: MediaQuery.of(context).size.height*.20,
-              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: myPurple,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFFE0E7EA), // Light blue
+                    Color(0xff7c77d1).withOpacity(0.2), // Light grey
+                  ],
+                ),
+              ),
+            ),
+            // Abstract Shapes
+            Positioned(
+              top: -screenSize.width * 0.3,
+              right: -screenSize.width * 0.1,
+              child: Container(
+                width: screenSize.width * 0.6,
+                height: screenSize.width * 0.6,
+                decoration: BoxDecoration(
+                  color: Color(0xFF7C77D1), // Purple
+                  borderRadius: BorderRadius.circular(screenSize.width * 0.3),
                 ),
               ),
             ),
             Positioned(
-              bottom: -30,
-              left: MediaQuery.of(context).size.width * 0.20,
-              right: MediaQuery.of(context).size.width * 0.20,
+              top: screenSize.height * 0.3,
+              left: -screenSize.width * 0.2,
               child: Container(
-                padding: EdgeInsets.all(20),
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: 60,
+                width: screenSize.width * 0.4,
+                height: screenSize.width * 0.4,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xff7c77d1),
-                      offset: Offset(0.0, 2.0),
-                      blurRadius: 1.0,
-                      spreadRadius: 0.0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Your saved reports",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: myPurple),
-                    ),
-
-                  ],
+                  color: Color(0xFF7C77D1), // Purple
+                  borderRadius: BorderRadius.circular(screenSize.width * 0.2),
                 ),
               ),
             ),
-          ],
-        ),
-
-        Expanded(child:
-        SingleChildScrollView(
-        child: Column(
-        children: [
-        // List of cards for saved reports
-          ListView.builder(
-            shrinkWrap: true, // Use if inside a Column
-            physics: NeverScrollableScrollPhysics(), // Use if inside a SingleChildScrollView
-            itemCount: savedReports.length,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.all(8.0),
+            // Small circle at the bottom right
+            Positioned(
+              bottom: screenSize.height * 0.01,
+              right: screenSize.width * 0.01,
+              child: Container(
+                width: screenSize.width * 0.2,
+                height: screenSize.width * 0.2,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xff7c77d1),
-                      offset: Offset(0.0, 2.0),
-                      blurRadius: 1.0,
-                      spreadRadius: 0.0,
-                    ),
-                  ],
+                  color: Color(0xFF7C77D1), // Purple
+                  borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                 ),
-                child: Card(
-                  elevation: 0.0, // Set elevation to 0 as the shadow is provided by the BoxDecoration
-                  child: ListTile(
-                    title: Text(savedReports[index]),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        // Handle the 'View' button tap
-                        // You can navigate to the details page or show a dialog, etc.
-                        // For now, let's print a message to the console.
-                        print('Viewing details for ${savedReports[index]}');
-                      },
-                      style: ButtonStyle(
-                        //foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            // Content
+            Padding(
+              padding: EdgeInsets.all(screenSize.width * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkResponse(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => drProfile()),
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: screenSize.width * 0.1,
+                      backgroundImage: AssetImage("images/dr.PNG"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(screenSize.width * 0.05),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: screenSize.height * 0.13), // Adjust as needed
+                  Text(
+                    'Your Saved Reports', // Your healthcare app name
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black, // Dark blue
+                    ),
+                  ),
+                  SizedBox(height: screenSize.height * 0.02),
+                  // Add more widgets as needed
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(screenSize.width * 0.01),
+              child: Column(
+                children: [
+                  SizedBox(height: screenSize.height * 0.2),
+                  Container(
+                    width: double.infinity,
+                    // height: screenSize.height * 0.1,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.05)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white70.withOpacity(0.8),
+                          blurRadius: 1,
+                          //  offset: Offset(0, screenSize.width * 0.04),
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding:  EdgeInsets.all(screenSize.width * 0.02),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(16),
+                        title: Text(
+                          "Um Mohamed Elshazly",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF7C77D1),
                           ),
                         ),
-                        foregroundColor: MaterialStateProperty.all(
-                            _isEnabled ? Colors.white : myPurple.withOpacity(0)),
-                        backgroundColor: MaterialStateProperty.all(
-                            _isEnabled ? myPurple : myPurple.withOpacity(0)),
+                        subtitle: Text(
+                          "CBC",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w100,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        trailing: RawMaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Report()),
+                            );
+                          },
+                          elevation: 2.0,
+                          fillColor: Color(0xFF7C77D1),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: MediaQuery.of(context).size.width * 0.065,
+                          ),
+                          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+                          shape: CircleBorder(),
+                        ),
                       ),
-                      child: Text('View Report'),
                     ),
-                    // Customize ListTile content as needed
                   ),
-                ),
-              );
-            },
-          )
-
-        ],
-    ),
-    ),
-        )
-
-      ],
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
-final List<String> savedReports = [
-  'S.Cholesterol (11-11-2020)',
-  'TSH (10-10-2020)',
-  'S.Calcium (10-10-2020)',
-  'S.Cholesterol (10-10-2020)',
-  'TSH (9-9-2020)',
-  'S.Calcium (9-9-2020)',
-  // Add more report names as needed
-];
