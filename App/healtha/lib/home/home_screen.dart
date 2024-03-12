@@ -1,8 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:healtha/register_login/log_in.dart';
+import 'package:healtha/register_login/sign_up.dart';
+import 'package:http/http.dart' as http;
 import 'package:healtha/main.dart';
 import '../chatbot/chat_screen.dart';
 import '../encyclopedias/encyclopedia_types.dart';
@@ -10,12 +12,9 @@ import '../lab_analysis/upload_analysis.dart';
 import '../navigation.dart';
 import '../prediction/disease_prediction.dart';
 import '../profile/home.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/navigator.dart';
-import 'package:http/http.dart' as http;
 
+import 'cbc.dart';
 
 List LabTestsAssets = [
   'images/poster1.jpg',
@@ -74,13 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
         // Update the state variables with the retrieved user data
         setState(() {
           name = userData['username'];
-
         });
       } else {
         print("error");
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -147,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 CarouselSlider(
-                  items: LabTestsList(),
+                  items: LabTestsList(context),
                   options: CarouselOptions(
                     height: MediaQuery.of(context).size.height * 0.25,
                     padEnds: false,
@@ -163,42 +162,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                   ),
                 ),
-                /* SizedBox(
-                  height: 70,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: symptoms.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        padding: EdgeInsets.symmetric(horizontal: 25),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF4F6FA),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 4,
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            symptoms[index],
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFF7165D6),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ), */
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -214,7 +177,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                         // color: Color(0xff7c77d1),
                           gradient: LinearGradient(
                             colors: [
                               Color(0xff7c77d1).withOpacity(0.5),
@@ -242,13 +204,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
-
                               ),
                               child: ImageIcon(
                                 AssetImage("images/body.png"),
-                                size: 35.0, // Adjust size as needed
-                                color:
-                                    Color(0xff7c77d1), // Modify color if desired
+                                size: 35.0,
+                                color: Color(0xff7c77d1),
                               ),
                             ),
                             SizedBox(height: 30),
@@ -304,9 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: ImageIcon(
                                 AssetImage("images/ency2.png"),
-                                size: 35.0, // Adjust size as needed
-                                color:
-                                    Color(0xff7c77d1), // Modify color if desired
+                                size: 35.0,
+                                color: Color(0xff7c77d1),
                               ),
                             ),
                             SizedBox(height: 30),
@@ -341,7 +300,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                        //  color: Color(0xff7c77d1),
                           gradient: LinearGradient(
                             colors: [
                               Color(0xff7c77d1).withOpacity(0.5),
@@ -372,14 +330,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: ImageIcon(
                                 AssetImage("images/symbtoms.png"),
-                                size: 35.0, // Adjust size as needed
-                                color:
-                                    Color(0xff7c77d1), // Modify color if desired
+                                size: 35.0,
+                                color: Color(0xff7c77d1),
                               ),
                             ),
                             SizedBox(height: 30),
                             Text(
-                              "Track your symptomes",
+                              "Track your symptoms",
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -400,22 +357,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 SizedBox(height: 25),
-                /* Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    "Popular lab analysis",
-                    style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ), */
               ],
             ),
           ),
         ),
-
         floatingActionButton: Container(
           width: MediaQuery.of(context).size.width * 0.21,
           height: MediaQuery.of(context).size.height * 0.21,
@@ -440,83 +385,109 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               elevation: 7.0,
-              fillColor: Colors.white, // Set button color
+              fillColor: Colors.white,
               child: iconBot,
               padding: EdgeInsets.all(12.0),
               shape: CircleBorder(),
             ),
           ),
         ),
-
       ),
     );
   }
 }
 
-List<Widget> LabTestsList() {
+List<Widget> LabTestsList(BuildContext context) {
   List<Widget> posters = [];
   for (var i = 0; i < LabTestsAssets.length; i++) {
-    posters.add(TestsPoster(
-        description: LabTestsDiscription[i], imageAsset: LabTestsAssets[i]));
+    posters.add(
+      TestsPoster(
+        description: LabTestsDiscription[i],
+        imageAsset: LabTestsAssets[i],
+        onTap: () {
+          switch (i) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CBC()),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUp()),
+              );
+              break;
+          // Add more cases for each image
+          }
+        },
+      ),
+    );
   }
   return posters;
 }
 
 class TestsPoster extends StatelessWidget {
   const TestsPoster({
-    super.key,
+    Key? key,
     required this.description,
     required this.imageAsset,
-  });
+    required this.onTap,
+  }) : super(key: key);
 
   final String description;
   final String imageAsset;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(18),
-          child: Stack(children: [
-            SizedBox(
-              height: 250,
-              width: 350,
-              child: Image.asset(
-                imageAsset,
-                fit: BoxFit.cover,
+          child: Stack(
+            children: [
+              SizedBox(
+                height: 250,
+                width: 350,
+                child: Image.asset(
+                  imageAsset,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Container(
-              child: Padding(
-                padding:  EdgeInsets.all(12),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Text(
-                    description,
-                    style: const TextStyle(
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      description,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black45.withOpacity(.8),
+                      Colors.white.withOpacity(0.1),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
                   ),
                 ),
               ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black45.withOpacity(.8),
-                    Colors.white.withOpacity(0.1),
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
-              ),
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
