@@ -12,6 +12,8 @@ import 'doc_signUp.dart';
 class docLogin extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+
 
   Future<bool> login(BuildContext context) async {
     String healthaIP='http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors';
@@ -32,6 +34,8 @@ class docLogin extends StatelessWidget {
         );
 
         if (user != null) {
+          usernameController.text = user['username'];
+
           // Login successful
           return true;
         } else {
@@ -189,6 +193,33 @@ class docLogin extends StatelessWidget {
                           onPressed: () {
                             login(context).then((success) {
                               if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: SizedBox(
+                                      height: 60, // Adjust the height as needed
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.check_circle, color: Colors.green),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              'Login successful, \n '
+                                                  'Welcome Dr.${usernameController.text} to HEALTHA!',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    elevation: 8,
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -198,6 +229,7 @@ class docLogin extends StatelessWidget {
                               }
                             });
                           },
+
                         ),
                       ),
                     ),

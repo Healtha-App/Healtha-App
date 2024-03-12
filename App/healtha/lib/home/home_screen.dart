@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +14,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/navigator.dart';
+import 'package:http/http.dart' as http;
+
 
 List LabTestsAssets = [
   'images/poster1.jpg',
@@ -42,7 +46,41 @@ final iconBot = Image.asset(
   height: 60.0, // Adjust icon height
 );
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  String? name;
+
+  void initState() {
+    super.initState();
+    // Call the function to fetch user data when the page loads
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    // Make an HTTP request to fetch user data
+    final response = await http.get(Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
+
+    if (response.statusCode == 200) {
+      // If the request is successful, parse the JSON response
+      List<dynamic> doctorsData = jsonDecode(response.body);
+      if (doctorsData.isNotEmpty) {
+        // Retrieve the data for the last doctor signed up
+        Map<String, dynamic> userData = doctorsData.last;
+        // Update the state variables with the retrieved user data
+        setState(() {
+          name = userData['username'];
+
+        });
+      } else {
+        print("error");
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "Hello Habiba! \nWelcome to",
+                            "Hello ${name}! \nWelcome to",
                             style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                 fontSize: 20,
@@ -377,6 +415,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
+
         floatingActionButton: Container(
           width: MediaQuery.of(context).size.width * 0.21,
           height: MediaQuery.of(context).size.height * 0.21,

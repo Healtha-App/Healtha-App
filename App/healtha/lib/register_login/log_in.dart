@@ -7,14 +7,22 @@ import 'package:http/http.dart' as http;
 import '../home/home_screen.dart';
 import '../navigation.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
+  final TextEditingController usernameController = TextEditingController();
   Future<bool> login(BuildContext context) async {
     String healthaIP = 'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
 
     final url = healthaIP;
+
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -31,6 +39,7 @@ class Login extends StatelessWidget {
         );
 
         if (user != null) {
+          usernameController.text = user['username'];
           // Login successful
           return true;
         } else {
@@ -198,6 +207,33 @@ class Login extends StatelessWidget {
                           onPressed: () {
                             login(context).then((success) {
                               if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: SizedBox(
+                                      height: 60, // Adjust the height as needed
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.check_circle, color: Colors.green),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              'Login successful, \n '
+                                                  'Welcome ${usernameController.text} to HEALTHA!',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    elevation: 8,
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -207,6 +243,7 @@ class Login extends StatelessWidget {
                               }
                             });
                           },
+
                         ),
                       ),
                     ),
