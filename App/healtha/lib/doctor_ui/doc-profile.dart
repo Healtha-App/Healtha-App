@@ -76,300 +76,299 @@ class _drProfileState extends State<drProfile> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator()) // Show loading indicator if data is still loading
-          : SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: screenSize.width,
-                  height: screenSize.height / 2.1,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("images/dr.PNG"),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                  ),
-                  child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator()) // Show loading indicator if data is still loading
+            : SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    width: screenSize.width,
+                    height: screenSize.height / 2.1,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xff7c77d1).withOpacity(1),
-                          Color(0xff7c77d1).withOpacity(0.3),
-                          Color(0xff7c77d1).withOpacity(0),
-                        ],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
+                      image: DecorationImage(
+                        image: AssetImage("images/dr.PNG"),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xff7c77d1).withOpacity(1),
+                            Color(0xff7c77d1).withOpacity(0.3),
+                            Color(0xff7c77d1).withOpacity(0),
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: screenSize.height / 1.2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Patients",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                  SizedBox(
+                    height: screenSize.height / 1.2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Patients",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "20",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white70,
+                            SizedBox(height: 5),
+                            Text(
+                              "20",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white70,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      // Experience widget
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Experience",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "5 Years",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Specialization widget
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Specialization",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            spec ?? "Loading ..",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(screenSize.width * 0.05),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: screenSize.height / 2.1,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Dr. ",
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            name ?? "Loading...",
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black.withOpacity(0.7),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      customContainer(
-                        title: "email",
-                        icon1: Image.asset("assets/at.png"),
-                        data: email ?? "Loading...", // Display "Loading..." if email is null
-                      ),
-                      SizedBox(height: 15),
-                      customContainer(
-                        title: "Phone Number",
-                        icon1: Image.asset("assets/phone-call.png"),
-                        data: phone ?? 'loading ..',
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      // New customContainers to display skills and qualifications
-                      skills != null
-                          ? Padding(
-                        padding: EdgeInsets.all(screenSize.width * 0.02),
-                        child: customContainer(
-                          title: "Skills",
-                          icon1: Image.asset("images/skill.png"),
-                          data: skills!,
+                          ],
                         ),
-                      )
-                          : SizedBox(height: 10),
-                      qualifications != null
-                          ? customContainer(
-                        title: "Qualifications",
-                        icon1: Image.asset("images/certificate2.png"),
-                        data: qualifications!,
-                      )
-                          : SizedBox(height: 30),
-                      Padding(
-                        padding: EdgeInsets.all(screenSize.width * 0.02),
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.all(20.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          "Complete Your Info",
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(height: 20.0),
-                                        TextField(
-                                          keyboardType: TextInputType.multiline,
-                                          minLines: 1,
-                                          maxLines: 5,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              skills = value;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            labelText: "Skills",
-                                            hintText: "Enter your skills",
-                                            border: OutlineInputBorder(),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        TextField(
-                                          keyboardType: TextInputType.multiline,
-                                          minLines: 1,
-                                          maxLines: 5,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              qualifications = value;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            labelText: "Qualifications",
-                                            hintText: "Enter your qualifications",
-                                            border: OutlineInputBorder(),
-                                          ),
-                                        ),
-                                        SizedBox(height: 20.0),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                // Save skills and qualifications
-                                                // You can handle saving the data to your database here
-                                                Navigator.of(context).pop();
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Color(0xff7c77d1),
-                                                //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                              ),
-                                              child: Text("Save",style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.w600
-                                              ),),
-                                            ),
-                                            SizedBox(width: 10.0),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.white,
-                                                //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                              ),
-                                              child: Text("Cancel",style: TextStyle(
-                                                  color: Color(0xff7c77d1),
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.w600
-                                              ),),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                        // Experience widget
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Experience",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "5 Years",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Specialization widget
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Specialization",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              spec ?? "Loading ..",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(screenSize.width * 0.05),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: screenSize.height / 2.1,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Dr. ",
+                              style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              name ?? "Loading...",
+                              style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black.withOpacity(0.7),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        customContainer(
+                          title: "email",
+                          icon1: Image.asset("assets/at.png"),
+                          data: email ?? "Loading...", // Display "Loading..." if email is null
+                        ),
+                        SizedBox(height: 15),
+                        customContainer(
+                          title: "Phone Number",
+                          icon1: Image.asset("assets/phone-call.png"),
+                          data: phone ?? 'loading ..',
+                        ),
+                        // New customContainers to display skills and qualifications
+                        skills != null
+                            ? Padding(
+                          padding: EdgeInsets.all(screenSize.width * 0.02),
+                          child: customContainer(
+                            title: "Skills",
+                            icon1: Image.asset("images/skill.png"),
+                            data: skills!,
+                          ),
+                        )
+                            : SizedBox(height: 10),
+                        qualifications != null
+                            ? customContainer(
+                          title: "Qualifications",
+                          icon1: Image.asset("images/certificate2.png"),
+                          data: qualifications!,
+                        )
+                            : SizedBox(height: 30),
+                        Padding(
+                          padding: EdgeInsets.all(screenSize.width * 0.02),
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          icon: Icon(Icons.edit, color: Colors.white),
-                          label: Text(
-                            "Complete your info",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                                    child: Container(
+                                      padding: EdgeInsets.all(20.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "Complete Your Info",
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(height: 20.0),
+                                          TextField(
+                                            keyboardType: TextInputType.multiline,
+                                            minLines: 1,
+                                            maxLines: 5,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                skills = value;
+                                              });
+                                            },
+                                            decoration: InputDecoration(
+                                              labelText: "Skills",
+                                              hintText: "Enter your skills",
+                                              border: OutlineInputBorder(),
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          TextField(
+                                            keyboardType: TextInputType.multiline,
+                                            minLines: 1,
+                                            maxLines: 5,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                qualifications = value;
+                                              });
+                                            },
+                                            decoration: InputDecoration(
+                                              labelText: "Qualifications",
+                                              hintText: "Enter your qualifications",
+                                              border: OutlineInputBorder(),
+                                            ),
+                                          ),
+                                          SizedBox(height: 20.0),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  // Save skills and qualifications
+                                                  // You can handle saving the data to your database here
+                                                  Navigator.of(context).pop();
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Color(0xff7c77d1),
+                                                  //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                                ),
+                                                child: Text("Save",style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w600
+                                                ),),
+                                              ),
+                                              SizedBox(width: 10.0),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.white,
+                                                  //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                                ),
+                                                child: Text("Cancel",style: TextStyle(
+                                                    color: Color(0xff7c77d1),
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w600
+                                                ),),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            icon: Icon(Icons.edit, color: Colors.white),
+                            label: Text(
+                              "Complete your info",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7c77d1)),
                             ),
                           ),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7c77d1)),
-                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

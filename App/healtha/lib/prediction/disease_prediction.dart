@@ -153,262 +153,259 @@ class _DiseaseState extends State<Disease> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      /*appBar: AppBar(
-        backgroundColor: myPurple,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),*/
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                   // color: myPurple,
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xff7c77d1).withOpacity(0.5),
-                        Color(0xff7c77d1).withOpacity(0.7),
-                        Color(0xff7c77d1).withOpacity(0.9),
-                        Color(0xff7c77d1),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: -50,
-                  left: MediaQuery.of(context).size.width * 0.05,
-                  right: MediaQuery.of(context).size.width * 0.05,
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: myPurple,
-                          offset: Offset(0.0, 2.0),
-                          blurRadius: 1.0,
-                          spreadRadius: 0.0,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Your health, our priority!",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: myPurple,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Disease prediction made easy",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 60,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(13.0),
-              child: Row(
-                children: [
-                  Text(
-                    'What are you feeling?',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
+    return SafeArea(
+      child: Scaffold(
+        /*appBar: AppBar(
+          backgroundColor: myPurple,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),*/
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Container(
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(12),
-                          width: 90,
-                          height: 40,
-                          child: Image(
-                              image: AssetImage("assets/mental-health.png")),
-                        ),
-                        Text(
-                          'Show symptoms',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: myPurple,
-                          ),
-                        ),
-                        Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: GestureDetector(
-                            onTap: toggleExpanded,
-                            child: Icon(
-                              isExpanded
-                                  ? Icons.arrow_drop_up
-                                  : Icons.arrow_drop_down,
-                              size: 32.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 9,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
+                     // color: myPurple,
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff7c77d1).withOpacity(0.5),
+                          Color(0xff7c77d1).withOpacity(0.7),
+                          Color(0xff7c77d1).withOpacity(0.9),
+                          Color(0xff7c77d1),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
+                      ),
                     ),
                   ),
-                  if (isExpanded)
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
-                      child: Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
+                  Positioned(
+                    bottom: -50,
+                    left: MediaQuery.of(context).size.width * 0.05,
+                    right: MediaQuery.of(context).size.width * 0.05,
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: myPurple,
+                            offset: Offset(0.0, 2.0),
+                            blurRadius: 1.0,
+                            spreadRadius: 0.0,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          for (int i = 0; i < symptomsFromServer.length; i++)
-                            ElevatedButton(
-                              onPressed: () {
-                                _toggleSymptom(symptomsFromServer[i]);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: _isSymptomSelected(symptomsFromServer[i])
-                                    ? myPurple
-                                    : Color(0XFF7E79B7FF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              child: Text(
-                                symptomsFromServer[i],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-                              ),
+                          Text(
+                            "Your health, our priority!",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: myPurple,
                             ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Disease prediction made easy",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 15),
+                          ),
                         ],
                       ),
                     ),
+                  ),
                 ],
               ),
-            ),
-            if (_isEnabled == false)
-              Column(
-                children: [
-                  if (showAfterAnimation)
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          """ The predicted disease is : $predictedDisease
-Your health disease report is being generated with care...
-
-We will notify you as soon as it is ready
-
-Thank you for allowing us the time to ensure accuracy!""",
-                          textStyle: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
-                          ),
-                          speed: Duration(milliseconds: 40),
-                        ),
-                      ],
-                      isRepeatingAnimation: false,
-                      totalRepeatCount: 1,
-                      displayFullTextOnTap: true,
-                      stopPauseOnTap: true,
-                      repeatForever: false,
-                      onFinished: () {
-                        setState(() {
-                          printSelectedSymptoms(); // Print selected symptoms when animation finishes
-                        });
-                      },
-                    ),
-                ],
+              SizedBox(
+                height: 60,
               ),
-            Container(
-              width: double.infinity,
-              height: 300,
-              child: Padding(
-                padding: const EdgeInsets.all(100.0),
+              Padding(
+                padding: const EdgeInsets.all(13.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: _isEnabled
-                          ? () {
-                        _predictDisease(context);
-                        setState(() {
-                          _isEnabled = false;
-                        });
-
-                      }
-                          : null,
-                      child: Text('Generate'),
-                      style: ButtonStyle(
-                        shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        foregroundColor:
-                        MaterialStateProperty.all(_isEnabled ? Colors.white : myPurple.withOpacity(0)),
-                        backgroundColor:
-                        MaterialStateProperty.all(_isEnabled ? myPurple : myPurple.withOpacity(0)),
-                      ),
+                    Text(
+                      'What are you feeling?',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(12),
+                            width: 90,
+                            height: 40,
+                            child: Image(
+                                image: AssetImage("assets/mental-health.png")),
+                          ),
+                          Text(
+                            'Show symptoms',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: myPurple,
+                            ),
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: GestureDetector(
+                              onTap: toggleExpanded,
+                              child: Icon(
+                                isExpanded
+                                    ? Icons.arrow_drop_up
+                                    : Icons.arrow_drop_down,
+                                size: 32.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            blurRadius: 9,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (isExpanded)
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Wrap(
+                          spacing: 8.0,
+                          runSpacing: 8.0,
+                          children: [
+                            for (int i = 0; i < symptomsFromServer.length; i++)
+                              ElevatedButton(
+                                onPressed: () {
+                                  _toggleSymptom(symptomsFromServer[i]);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: _isSymptomSelected(symptomsFromServer[i])
+                                      ? myPurple
+                                      : Color(0XFF7E79B7FF),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                child: Text(
+                                  symptomsFromServer[i],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              if (_isEnabled == false)
+                Column(
+                  children: [
+                    if (showAfterAnimation)
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            """ The predicted disease is : $predictedDisease """,
+                            textStyle: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black87,
+                            ),
+                            speed: Duration(milliseconds: 40),
+                          ),
+                        ],
+                        isRepeatingAnimation: false,
+                        totalRepeatCount: 1,
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
+                        repeatForever: false,
+                        onFinished: () {
+                          setState(() {
+                            printSelectedSymptoms(); // Print selected symptoms when animation finishes
+                          });
+                        },
+                      ),
+                  ],
+                ),
+              Container(
+                width: double.infinity,
+                height: 300,
+                child: Padding(
+                  padding: const EdgeInsets.all(100.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _isEnabled
+                            ? () {
+                          _predictDisease(context);
+                          setState(() {
+                            _isEnabled = false;
+                          });
+
+                        }
+                            : null,
+                        child: Text('Generate'),
+                        style: ButtonStyle(
+                          shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          foregroundColor:
+                          MaterialStateProperty.all(_isEnabled ? Colors.white : myPurple.withOpacity(0)),
+                          backgroundColor:
+                          MaterialStateProperty.all(_isEnabled ? myPurple : myPurple.withOpacity(0)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
