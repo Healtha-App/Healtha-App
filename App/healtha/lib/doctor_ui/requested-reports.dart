@@ -4,7 +4,24 @@ import 'package:healtha/doctor_ui/doc-profile.dart';
 
 import 'open-report.dart';
 
-class requestedReports extends StatelessWidget {
+class requestedReports extends StatefulWidget {
+  final bool isReportConfirmed; // Add this line
+
+  requestedReports({Key? key, required this.isReportConfirmed}) : super(key: key);
+
+  @override
+  _requestedReportsState createState() => _requestedReportsState();
+}
+
+class _requestedReportsState extends State<requestedReports> {
+  bool _isReportConfirmed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isReportConfirmed = widget.isReportConfirmed; // Initialize with the provided value
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -147,13 +164,13 @@ class requestedReports extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => OpenReport()),
+                              MaterialPageRoute(builder: (context) => OpenReport(onConfirm: _handleConfirm)),
                             );
                           },
                           elevation: 2.0,
-                          fillColor: Color(0xFF7C77D1),
+                          fillColor:_isReportConfirmed ? Colors.green : Color(0xFF7C77D1),
                           child: Icon(
-                            Icons.arrow_forward_ios,
+                            _isReportConfirmed ? Icons.check : Icons.arrow_forward_ios, // Change this line
                             color: Colors.white,
                             size: MediaQuery.of(context).size.width * 0.065,
                           ),
@@ -170,5 +187,10 @@ class requestedReports extends StatelessWidget {
         ),
       ),
     );
+  }
+  void _handleConfirm(bool confirmed) {
+    setState(() {
+      _isReportConfirmed = confirmed;
+    });
   }
 }

@@ -77,8 +77,9 @@ class _docSignUpPageState extends State<docSignUpPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => requestedReports(),
+              builder: (context) => requestedReports(isReportConfirmed: false),
             ),
+
           );
         });
       } else {

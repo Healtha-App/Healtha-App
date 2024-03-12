@@ -37,7 +37,7 @@ class _ReportState extends State<Report> {
         "3. Medical advices and tips for managing these values to take care of their health"
         "write all under 250 words"
         'after the final warm regards write (Healtha team)'
-        'write the whole report in Arabic language';
+        'write the whole report';
 
     final response = await http.post(
       Uri.parse('https://api.chatpdf.com/v1/chats/message'),

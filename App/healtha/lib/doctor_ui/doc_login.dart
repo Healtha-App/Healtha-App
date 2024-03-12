@@ -223,8 +223,9 @@ class docLogin extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => requestedReports(),
+                                    builder: (context) => requestedReports(isReportConfirmed: false),
                                   ),
+
                                 );
                               }
                             });

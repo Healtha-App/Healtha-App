@@ -2,9 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:healtha/register_login/sign_up.dart';
 
 class OpenReport extends StatefulWidget {
+  final Function(bool) onConfirm; // Define the onConfirm function
+
+  OpenReport({Key? key, required this.onConfirm}) : super(key: key);
+
   @override
   _OpenReportState createState() => _OpenReportState();
 }
@@ -13,6 +16,9 @@ class _OpenReportState extends State<OpenReport> {
   String _translatedReport = '';
   bool _isTranslated = false;
   bool _isTranslating = false;
+  TextEditingController _textEditingController = TextEditingController();
+  bool _isEditing = false; // Define _isEditing variable
+
   static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
 
   Future<void> _translateReport() async {
@@ -27,7 +33,7 @@ class _OpenReportState extends State<OpenReport> {
         "We have conducted a comprehensive analysis to assess your health. "
         "1. Test name and definition 2. Interpretations about each important value result"
         "3. Medical advices and tips for managing these values to take care of their health"
-        "write all under 250 words"
+        "write all under 250 words in Arabic language"
         'after the final warm regards write (Healtha team)'
         : 'Write a user-friendly lab analysis report about this lab test in this formats '
         'in points and each point list of items, in this report write'
@@ -37,7 +43,7 @@ class _OpenReportState extends State<OpenReport> {
         "3. Medical advices and tips for managing these values to take care of their health"
         "write all under 250 words"
         'after the final warm regards write (Healtha team)'
-        'write the whole report in Arabic language';
+        'write the whole report';
 
     final response = await http.post(
       Uri.parse('https://api.chatpdf.com/v1/chats/message'),
@@ -61,6 +67,7 @@ class _OpenReportState extends State<OpenReport> {
         _translatedReport = json.decode(response.body)['content'];
         _isTranslated = !_isTranslated;
         _isTranslating = false;
+        _textEditingController.text = _translatedReport; // Set text in TextEditingController
       });
     } else {
       throw Exception('Failed to translate report');
@@ -70,7 +77,6 @@ class _OpenReportState extends State<OpenReport> {
   @override
   void initState() {
     super.initState();
-    // Fetch initial report data
     _translateReport();
   }
 
@@ -181,13 +187,18 @@ class _OpenReportState extends State<OpenReport> {
                           ),
                           Container(
                             padding: const EdgeInsets.all(20),
-                            //  decoration: BoxDecoration(
-                            // color: Colors.grey[200],
-                            //   borderRadius: BorderRadius.circular(15),
-                            //),
-                            child: Text(
+                            // Wrap Text widget with TextField
+                            child: _isEditing
+                                ? TextField(
+                              controller: _textEditingController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Enter report text',
+                              ),
+                            )
+                                : Text(
                               _translatedReport ?? '',
-                              style: TextStyle(fontSize: 14,),
+                              style: TextStyle(fontSize: 14),
                             ),
                           ),
                           SizedBox(height: 20,),
@@ -199,7 +210,7 @@ class _OpenReportState extends State<OpenReport> {
                               }
                             },
                             child: Text(
-                              "Translate to ${_isTranslated ? 'English' : 'Arabic'}",
+                              "Translate to ${_isTranslated ? 'Arabic' : 'English'}",
                               style: TextStyle(
                                 color: Color(0xff7c77d1),
                                 decoration: TextDecoration.underline,
@@ -221,7 +232,7 @@ class _OpenReportState extends State<OpenReport> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            // Handle first button press
+                            _toggleEdit(); // Toggle editing mode
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFF7C77D1), // Set button color
@@ -230,7 +241,7 @@ class _OpenReportState extends State<OpenReport> {
                             ),
                           ),
                           child: Text(
-                            'Edit',
+                            _isEditing ? 'Save' : 'Edit', // Change button text based on editing state
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -243,6 +254,15 @@ class _OpenReportState extends State<OpenReport> {
                         child: ElevatedButton(
                           onPressed: () {
                             // Handle second button press
+                            if (!_isTranslating) {
+                              _translateReport();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Report confirmed successfully'),
+                                ),
+                              );
+                              widget.onConfirm(true); // Notify the parent widget about confirmation
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFF7C77D1), // Set button color
@@ -268,6 +288,12 @@ class _OpenReportState extends State<OpenReport> {
         ),
       ),
     );
+  }
+
+  void _toggleEdit() {
+    setState(() {
+      _isEditing = !_isEditing; // Toggle editing mode
+    });
   }
 }
 
