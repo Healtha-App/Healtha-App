@@ -110,7 +110,7 @@ class requestedReports extends StatelessWidget {
                 SizedBox(height: screenSize.height * 0.2),
                 Container(
                   width: double.infinity,
-                  // height: screenSize.height * 0.1,
+                 // height: screenSize.height * 0.1,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.05)),
@@ -118,7 +118,7 @@ class requestedReports extends StatelessWidget {
                       BoxShadow(
                         color: Colors.white70.withOpacity(0.8),
                         blurRadius: 1,
-                        //  offset: Offset(0, screenSize.width * 0.04),
+                      //  offset: Offset(0, screenSize.width * 0.04),
                       ),
                     ],
                   ),
@@ -146,7 +146,7 @@ class requestedReports extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => openReport()),
+                            MaterialPageRoute(builder: (context) => OpenReport()),
                           );
                         },
                         elevation: 2.0,

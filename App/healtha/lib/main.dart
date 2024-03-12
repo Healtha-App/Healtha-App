@@ -23,6 +23,7 @@ import 'doctor_ui/doc-profile.dart';
 import 'doctor_ui/doc_login.dart';
 import 'doctor_ui/doc_signUp.dart';
 import 'doctor_ui/open-report.dart';
+import 'doctor_ui/test.dart';
 import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home:ProfileScreen()
+      home:requestedReports()
     );
 
   }
