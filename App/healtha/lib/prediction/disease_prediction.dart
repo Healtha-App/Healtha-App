@@ -341,32 +341,35 @@ class _DiseaseState extends State<Disease> {
                 ),
               ),
               if (_isEnabled == false)
-                Column(
-                  children: [
-                    if (showAfterAnimation)
-                      AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                            """ The predicted disease is : $predictedDisease """,
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black87,
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      if (showAfterAnimation)
+                        AnimatedTextKit(
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                              """$predictedDisease""",
+                              textStyle: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black87,
+                              ),
+                              speed: Duration(milliseconds: 40),
                             ),
-                            speed: Duration(milliseconds: 40),
-                          ),
-                        ],
-                        isRepeatingAnimation: false,
-                        totalRepeatCount: 1,
-                        displayFullTextOnTap: true,
-                        stopPauseOnTap: true,
-                        repeatForever: false,
-                        onFinished: () {
-                          setState(() {
-                            printSelectedSymptoms(); // Print selected symptoms when animation finishes
-                          });
-                        },
-                      ),
-                  ],
+                          ],
+                          isRepeatingAnimation: false,
+                          totalRepeatCount: 1,
+                          displayFullTextOnTap: true,
+                          stopPauseOnTap: true,
+                          repeatForever: false,
+                          onFinished: () {
+                            setState(() {
+                              printSelectedSymptoms(); // Print selected symptoms when animation finishes
+                            });
+                          },
+                        ),
+                    ],
+                  ),
                 ),
               Container(
                 width: double.infinity,
