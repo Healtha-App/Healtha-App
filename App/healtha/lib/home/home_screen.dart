@@ -14,6 +14,7 @@ import '../prediction/disease_prediction.dart';
 import '../profile/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Urinalysis.dart';
 import 'cbc.dart';
 
 List LabTestsAssets = [
@@ -415,7 +416,7 @@ List<Widget> LabTestsList(BuildContext context) {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SignUp()),
+                MaterialPageRoute(builder: (context) => Urinalysis()),
               );
               break;
           // Add more cases for each image

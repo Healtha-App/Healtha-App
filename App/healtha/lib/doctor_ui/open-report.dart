@@ -1,7 +1,8 @@
+import 'dart:convert';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class OpenReport extends StatefulWidget {
   final Function(bool) onConfirm; // Define the onConfirm function
@@ -167,7 +168,11 @@ class _OpenReportState extends State<OpenReport> {
                         ),
                       ],
                     ),
-                    child: SingleChildScrollView(
+                    child: _isTranslating
+                        ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                        : SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -202,7 +207,6 @@ class _OpenReportState extends State<OpenReport> {
                             ),
                           ),
                           SizedBox(height: 20,),
-
                           InkWell(
                             onTap: () {
                               if (!_isTranslating) {
@@ -218,15 +222,11 @@ class _OpenReportState extends State<OpenReport> {
                             ),
                           ),
                           SizedBox(height: 10),
-
                         ],
-
                       ),
                     ),
                   ),
-                  Spacer(
-
-                  ),
+                  Spacer(),
                   Row(
                     children: [
                       Expanded(
@@ -294,34 +294,5 @@ class _OpenReportState extends State<OpenReport> {
     setState(() {
       _isEditing = !_isEditing; // Toggle editing mode
     });
-  }
-}
-
-// Function to post the report
-Future<void> postReport(int userID, String content) async {
-  const String postReportUrl = 'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports';
-
-  try {
-    final response = await http.post(
-      Uri.parse(postReportUrl),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'userid': userID,
-        'content': content,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // Report successfully posted
-      print('Report successfully posted');
-    } else {
-      // Handle errors here
-      print('Failed to post report. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
-    }
-  } catch (error) {
-    print('Error posting report: $error');
   }
 }
