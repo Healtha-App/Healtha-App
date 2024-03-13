@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
         splashTransition: SplashTransition.scaleTransition,
         splash: const CircleAvatar(
           radius: 100,
-          backgroundImage: AssetImage("images/logo.png"),
+          backgroundImage: AssetImage("images/healthaSplash.jpeg"),
           backgroundColor: Colors.white,
         ),
         nextScreen: const slider(),
