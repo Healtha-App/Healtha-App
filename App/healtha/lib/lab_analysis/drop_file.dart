@@ -24,7 +24,7 @@ class _FileDropWidgetState extends State<FileDropWidget> {
           color: Colors.grey,
           child: Container(
             width: MediaQuery.of(context).size.width * 0.6, // 60% of the screen width
-            height: MediaQuery.of(context).size.height * 0.15,
+            height: MediaQuery.of(context).size.height * 0.195,
 
             child: DragTarget<List<String>>(
               onWillAccept: (data) {
@@ -67,7 +67,7 @@ class _FileDropWidgetState extends State<FileDropWidget> {
                         minimumSize: MaterialStateProperty.all<Size>(
                           Size(
                             MediaQuery.of(context).size.width * 0.6,
-                            MediaQuery.of(context).size.height * 0.05,
+                            MediaQuery.of(context).size.height * 0.055,
                           ), // Set the width and height as needed
                         ),
                         backgroundColor: MaterialStateProperty.all<Color>(

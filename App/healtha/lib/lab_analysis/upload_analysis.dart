@@ -169,7 +169,7 @@ class _UploadPageState extends State<UploadPage> {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     width: screenSize.width * 0.9,
-                    height: 120,
+
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -211,7 +211,7 @@ class _UploadPageState extends State<UploadPage> {
               padding: EdgeInsets.all(screenSize.width * 0.1),
               child: Column(
                 children: [
-                  SizedBox(height: 30.0),
+                  SizedBox(height: 20.0),
                   Text(
                     'Upload your lab analysis results',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -220,7 +220,7 @@ class _UploadPageState extends State<UploadPage> {
                     height: 20,
                   ),
                   FileDropWidget(),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 20,),
                   Divider(
                     height: .50, // Customize the thickness
                     color: Colors.grey, // Customize the color

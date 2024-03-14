@@ -36,6 +36,7 @@ class _OpenReportState extends State<OpenReport> {
         "3. Medical advices and tips for managing these values to take care of their health"
         "write all under 250 words in Arabic language"
         'after the final warm regards write (Healtha team)'
+
         : 'Write a user-friendly lab analysis report about this lab test in this formats '
         'in points and each point list of items, in this report write'
         "start with Dear (patient name from the report), We hope this report finds you in good health. "
@@ -214,7 +215,7 @@ class _OpenReportState extends State<OpenReport> {
                               }
                             },
                             child: Text(
-                              "Translate to ${_isTranslated ? 'Arabic' : 'English'}",
+                              "Translate this Report",
                               style: TextStyle(
                                 color: Color(0xff7c77d1),
                                 decoration: TextDecoration.underline,
