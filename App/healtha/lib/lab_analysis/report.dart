@@ -1,8 +1,8 @@
+import 'dart:convert';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:healtha/register_login/sign_up.dart';
 
 class Report extends StatefulWidget {
   @override
@@ -21,24 +21,8 @@ class _ReportState extends State<Report> {
     });
 
     String promptWithLanguage = _isTranslated
-        ? 'Write a user-friendly lab analysis report about this lab test in this formats '
-        'in points and each point list of items, in this report write'
-        "start with Dear (patient name from the report), We hope this report finds you in good health. "
-        "We have conducted a comprehensive analysis to assess your health. "
-        "1. Test name and definition 2. Interpretations about each important value result"
-        "3. Medical advices and tips for managing these values to take care of their health"
-        "write all under 250 words in arabic language"
-        'after the final warm regards write (Healtha team)'
-
-        : 'Write a user-friendly lab analysis report about this lab test in this formats '
-        'in points and each point list of items, in this report write'
-        "start with Dear (patient name from the report), We hope this report finds you in good health. "
-        "We have conducted a comprehensive analysis to assess your health. "
-        "1. Test name and definition 2. Interpretations about each important value result"
-        "3. Medical advices and tips for managing these values to take care of their health"
-        "write all under 250 words"
-        'after the final warm regards write (Healtha team)'
-        'write the whole report';
+        ? _getTranslatedPrompt()
+        : _getOriginalPrompt();
 
     final response = await http.post(
       Uri.parse('https://api.chatpdf.com/v1/chats/message'),
@@ -66,6 +50,31 @@ class _ReportState extends State<Report> {
     } else {
       throw Exception('Failed to translate report');
     }
+  }
+
+  String _getOriginalPrompt() {
+    return 'Write a user-friendly lab analysis report about this lab test in this formats '
+        'in points and each point list of items, in this report write'
+        "start with Dear (patient name from the report), We hope this report finds you in good health. "
+        "We have conducted a comprehensive analysis to assess your health. "
+        "1. Test name and definition 2. Interpretations about each important value result"
+        "3. Medical advices and tips for managing these values to take care of their health"
+        "customize the numbered headlines to be suitable for the user"
+        "write all under 250 words"
+        'after the final warm regards write (Healtha team)'
+        'write the whole report';
+  }
+
+  String _getTranslatedPrompt() {
+    return 'Write a user-friendly lab analysis report about this lab test in this formats '
+        'in points and each point list of items, in this report write'
+        "start with Dear (patient name from the report), We hope this report finds you in good health. "
+        "We have conducted a comprehensive analysis to assess your health. "
+        "1. Test name and definition 2. Interpretations about each important value result"
+        "3. Medical advices and tips for managing these values to take care of their health"
+        "customize the numbered headlines to be suitable for the user"
+        "write all under 250 words in arabic language"
+        'after the final warm regards write (Healtha team)';
   }
 
   @override
@@ -180,6 +189,7 @@ class _ReportState extends State<Report> {
                               ),
                             ),
                           ),
+                          Divider(),
                           Container(
                             padding: const EdgeInsets.all(20),
                             //  decoration: BoxDecoration(
@@ -197,7 +207,7 @@ class _ReportState extends State<Report> {
                               if (!_isTranslating) {
                                 // Save the report without triggering translation
                                 // Replace `patientId` with the actual patient ID
-                                postReport(patientId!, _translatedReport ?? '');
+                                // postReport(patientId!, _translatedReport ?? '');
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -245,34 +255,5 @@ class _ReportState extends State<Report> {
         ),
       ),
     );
-  }
-}
-
-// Function to post the report
-Future<void> postReport(int userID, String content) async {
-  const String postReportUrl = 'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports';
-
-  try {
-    final response = await http.post(
-      Uri.parse(postReportUrl),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'userid': userID,
-        'content': content,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // Report successfully posted
-      print('Report successfully posted');
-    } else {
-      // Handle errors here
-      print('Failed to post report. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
-    }
-  } catch (error) {
-    print('Error posting report: $error');
   }
 }

@@ -21,6 +21,7 @@ class Disease {
     );
   }
 }
+
 class LabTest {
   final String id;
   final String name;

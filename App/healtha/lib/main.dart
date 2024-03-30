@@ -9,7 +9,6 @@ import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/lab_analysis/fetch.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
 import 'package:healtha/prediction/disease_prediction.dart';
-import 'package:healtha/prediction/test_prediction.dart';
 import 'package:healtha/profile/home.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:healtha/home/home_screen.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home:requestedReports(isReportConfirmed: false,),
+      home:HomeScreen(),
 
     );
 
