@@ -220,7 +220,7 @@ class _UploadPageState extends State<UploadPage> {
                     height: 20,
                   ),
                   FileDropWidget(),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 10,),
                   Divider(
                     height: .50, // Customize the thickness
                     color: Colors.grey, // Customize the color

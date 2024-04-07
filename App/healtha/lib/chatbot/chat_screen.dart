@@ -6,7 +6,7 @@ import 'dart:convert';
 
 class APIKey {
   static const apiKey =
-      "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";
+      "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";
 }
 
 

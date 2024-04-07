@@ -15,6 +15,43 @@ class _ReportState extends State<Report> {
   bool _isTranslating = false;
   static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
 
+  Future<void> _saveReport(String userId, String filePath, String reportContent) async {
+    setState(() {
+      _isTranslating = true;
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'userId': userId,
+          'filePath': filePath,
+          'reportContent': reportContent, // Adding report content to the request body
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        setState(() {
+          _isTranslated = true; // Assuming report is saved successfully
+          _isTranslating = false;
+        });
+      } else {
+        throw Exception('Failed to save report');
+      }
+    } catch (error) {
+      print('Error saving report: $error');
+      setState(() {
+        _isTranslating = false;
+      });
+    }
+  }
+
+
+
+
   Future<void> _translateReport() async {
     setState(() {
       _isTranslating = true;
@@ -47,10 +84,17 @@ class _ReportState extends State<Report> {
         _isTranslated = !_isTranslated;
         _isTranslating = false;
       });
+
+      // Save the translated report
+      _saveReport('user_id', 'file_path', _translatedReport);
     } else {
-      throw Exception('Failed to translate report');
+      print('Failed to translate report');
+      setState(() {
+        _isTranslating = false;
+      });
     }
   }
+
 
   String _getOriginalPrompt() {
     return 'Write a user-friendly lab analysis report about this lab test in this formats '
@@ -192,10 +236,6 @@ class _ReportState extends State<Report> {
                           Divider(),
                           Container(
                             padding: const EdgeInsets.all(20),
-                            //  decoration: BoxDecoration(
-                            // color: Colors.grey[200],
-                            //   borderRadius: BorderRadius.circular(15),
-                            //),
                             child: Text(
                               _translatedReport ?? '',
                               style: TextStyle(fontSize: 14,),
@@ -203,22 +243,18 @@ class _ReportState extends State<Report> {
                           ),
                           SizedBox(height: 10,),
                           ElevatedButton(
-                            onPressed: () {
-                              if (!_isTranslating) {
-                                // Save the report without triggering translation
-                                // Replace `patientId` with the actual patient ID
-                                // postReport(patientId!, _translatedReport ?? '');
-                              }
-                            },
+                            onPressed: !_isTranslating
+                                ? () {
+                              // Save the report without triggering translation
+                              _saveReport('user_id', 'file_path', _translatedReport); // Pass report content
+                            }
+                                : null, // Disable button if translation is ongoing
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: _isTranslating ? Colors.grey : Colors.white, backgroundColor: Color(0xFF7C77D1),
-                              minimumSize: Size(screenSize.width * 0.8, 50), // Adjust button width and height
+                              foregroundColor: Colors.white,
+                              backgroundColor: Color(0xFF7C77D1),
+                              minimumSize: Size(screenSize.width * 0.8, 50),
                             ),
-                            child: _isTranslating
-                                ? CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                            )
-                                : Text(
+                            child: Text(
                               _isTranslated ? "Save" : "حفظ",
                               style: TextStyle(
                                 color: Colors.white,
@@ -241,13 +277,10 @@ class _ReportState extends State<Report> {
                             ),
                           ),
                           SizedBox(height: 10),
-
                         ],
-
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -256,4 +289,5 @@ class _ReportState extends State<Report> {
       ),
     );
   }
+
 }
