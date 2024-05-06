@@ -14,36 +14,64 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
 
-  final TextEditingController usernameController = TextEditingController();
+
   Future<bool> login(BuildContext context) async {
     String healthaIP = 'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
-
-    final url = healthaIP;
-
+    String loginIP = 'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patient-login';
 
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(healthaIP));
 
       if (response.statusCode == 200) {
-        List<dynamic> specialistDoctors = jsonDecode(response.body);
+        List<dynamic> patients = jsonDecode(response.body);
 
-        // Check if there is a user with the provided username and password
-        var user = specialistDoctors.firstWhere(
-              (doctor) =>
-          doctor['email'] == emailController.text &&
-              doctor['password'] == passwordController.text,
+        // Check if there is a user with the provided email
+        var user = patients.firstWhere(
+              (patient) => patient['email'] == emailController.text,
           orElse: () => null,
         );
 
         if (user != null) {
-          usernameController.text = user['username'];
-          // Login successful
-          return true;
+          // Check if the password matches
+          if (user['password'] == passwordController.text) {
+            // Store login data in the "patient-login" collection
+            await http.post(
+              Uri.parse(loginIP),
+              body: jsonEncode({
+                'email': emailController.text,
+                'password': passwordController.text,
+              }),
+              headers: {'Content-Type': 'application/json'},
+            );
+
+            // Login successful
+            return true;
+          } else {
+            // Password doesn't match
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(
+                  'Error',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                ),
+                content: Text('Invalid password'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            return false;
+          }
         } else {
-          // No user found with the provided username and password
+          // No user found with the provided email
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -53,7 +81,7 @@ class _LoginState extends State<Login> {
                   color: Colors.red,
                 ),
               ),
-              content: Text('Invalid email or password'),
+              content: Text('Invalid email'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
@@ -74,6 +102,7 @@ class _LoginState extends State<Login> {
       return false;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -217,8 +246,7 @@ class _LoginState extends State<Login> {
                                           SizedBox(width: 10),
                                           Expanded(
                                             child: Text(
-                                              'Login successful, \n '
-                                                  'Welcome ${usernameController.text} to HEALTHA!',
+                                              'Login successful!',
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
@@ -243,7 +271,6 @@ class _LoginState extends State<Login> {
                               }
                             });
                           },
-
                         ),
                       ),
                     ),

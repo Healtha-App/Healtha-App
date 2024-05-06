@@ -1,7 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healtha/register_login/log_in.dart';
+import '../register_login/log_in.dart';
 import 'editPage.dart';
 import 'package:http/http.dart' as http;
 import 'headerContainer.dart';
@@ -20,14 +21,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? phone;
   String? DoB;
   bool _isLoading = true; // Add a flag to track loading state
-
   @override
   void initState() {
     super.initState();
     // Call the function to fetch user data when the page loads
     fetchUserData();
   }
-
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
     final response = await http.get(Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
