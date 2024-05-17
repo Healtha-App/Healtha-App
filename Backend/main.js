@@ -6,61 +6,43 @@ const dotenv = require('dotenv');
 // Load environment variables from .env file
 dotenv.config();
 
-
-const specialistDoctorsRoutes = require('./routers/specialistDoctorsRouters');
-const labDoctorsRouters = require('./routers/labDoctorsRouters');
-const patientsRoutes = require('./routers/patientsRoutes');
-const labsEncyclopediaRouters = require('./routers/labsEncyclopediaRouters');
-const diseasesEncyclopediaRouters = require('./routers/diseasesEncyclopediaRouters');
-const diseaseReportsRouters = require('./routers/diseaseReportsRouters');
-const labTestReportsRouters = require('./routers/labTestReportsRouters');
-const loggedUsersRouters = require('./routers/loggedUsersRouters');
-const reportRouters = require('./routers/reportRouters');
-
-
 const app = express();
-
-// Access environment variables
-const uri = 'mongodb+srv://esraamaged:Healtha2024@healtha.omutrrl.mongodb.net/healtha?retryWrites=true&w=majority'
 const port = 4000;
 
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to MongoDB
-mongoose.connect(uri)
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log('Connected to MongoDB');
 
-        // Use the specialist doctor routes
+        // Routes
+        const specialistDoctorsRoutes = require('./routers/specialistDoctorsRouters');
+        const labDoctorsRouters = require('./routers/labDoctorsRouters');
+        const patientsRoutes = require('./routers/patientsRoutes');
+        const labsEncyclopediaRouters = require('./routers/labsEncyclopediaRouters');
+        const diseasesEncyclopediaRouters = require('./routers/diseasesEncyclopediaRouters');
+        const diseaseReportsRouters = require('./routers/diseaseReportsRouters');
+        const labTestReportsRouters = require('./routers/labTestReportsRouters');
+        const loggedUsersRouters = require('./routers/loggedUsersRouters');
+        const reportRouters = require('./routers/reportRouters');
+        const patientLoginRouter = require('./routers/patientLogin');
+
+        // Use routes
         app.use('/api', specialistDoctorsRoutes);
-
-        // Use the lab doctor routes
         app.use('/api', labDoctorsRouters);
-
-        // Use the patient routes
         app.use('/api', patientsRoutes);
-
-        // Use the logged users routes
         app.use('/api', loggedUsersRouters);
-
-        // Use the lab encyclopedia routes
         app.use('/api', labsEncyclopediaRouters);
-
-        // Use the disease encyclopedia routes
         app.use('/api', diseasesEncyclopediaRouters);
-
-        // Use the disease reports routes
         app.use('/api', diseaseReportsRouters);
-
-        // Use the lab tests reports routes
         app.use('/api', labTestReportsRouters);
-
-        // Use the report routes
         app.use('/api', reportRouters);
+        app.use('/api', patientLoginRouter);
 
-
-        // Start the server after successfully connecting to MongoDB
+        // Start the server
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });
@@ -69,3 +51,4 @@ mongoose.connect(uri)
         console.error('Error connecting to MongoDB:', error.message);
     });
 
+module.exports = app;

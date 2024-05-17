@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:healtha/home/Lipid-Panel.dart';
 import 'package:healtha/register_login/log_in.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +15,11 @@ import '../prediction/disease_prediction.dart';
 import '../profile/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'ACE.dart';
+import 'Calcium.dart';
+import 'Liver-function.dart';
+import 'Pregnancy.dart';
+import 'Thyroid -function.dart';
 import 'Urinalysis.dart';
 import 'cbc.dart';
 
@@ -31,8 +37,8 @@ List LabTestsAssets = [
 List LabTestsDiscription = [
   "CBC, Complete Blood Count \nMeasures your red blood cells, white blood cells, and platelets.",
   "Urinalysis \nAnalyzes all of the properties of your urine.",
-  "TSH, Thyroid Stimulating Hormone \n A hormone that regulates the function of the thyroid gland.",
-  "Glucose \nA sugar molecule that is the body's main source of energy",
+  "Lipid Panel \n blood test that measures various types of cholesterol and triglycerides in the bloodstream.",
+  "ACE, Angiotensin-Converting Enzyme \nan enzyme primarily found in the lungs and blood vessels",
   "Liver function \nMeasure the levels of enzymes and other substances produced by the liver",
   "Thyroid function\nMeasure the levels of thyroid hormones in the blood.",
   "Calcium \nImportant for building and maintaining strong bones and teeth.",
@@ -419,7 +425,42 @@ List<Widget> LabTestsList(BuildContext context) {
                 MaterialPageRoute(builder: (context) => Urinalysis()),
               );
               break;
-          // Add more cases for each image
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LipidPanel()),
+              );
+              break;
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ACE()),
+              );
+              break;
+            case 4:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Liver()),
+              );
+              break;
+            case 5:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Thyroid()),
+              );
+              break;
+            case 6:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Calcium()),
+              );
+              break;
+            case 7:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Pregnancy()),
+              );
+              break;
           }
         },
       ),
