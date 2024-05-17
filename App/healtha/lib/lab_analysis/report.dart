@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,21 +14,28 @@ class _ReportState extends State<Report> {
   bool _isTranslating = false;
   static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
 
-  Future<void> _saveReport(String userId, String filePath, String reportContent) async {
+  Future<void> _saveReport(int userId, String filePath, String reportContent) async {
+    if (_translatedReport.isEmpty) {
+      // If translated report is not available yet, wait for translation to complete
+      return;
+    }
+
+    print(_translatedReport);
     setState(() {
       _isTranslating = true;
     });
 
     try {
       final response = await http.post(
-        Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
+        Uri.parse('http://192.168.56.1:4000/api/healtha/reports'),
         headers: {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
           'userId': userId,
           'filePath': filePath,
-          'reportContent': reportContent, // Adding report content to the request body
+          'reportContent': _translatedReport,
+          'confirmed': false, // Set confirmed to false by default
         }),
       );
 
@@ -48,9 +54,6 @@ class _ReportState extends State<Report> {
       });
     }
   }
-
-
-
 
   Future<void> _translateReport() async {
     setState(() {
@@ -86,7 +89,7 @@ class _ReportState extends State<Report> {
       });
 
       // Save the translated report
-      _saveReport('user_id', 'file_path', _translatedReport);
+      _saveReport(1, 'file_path', _translatedReport);
     } else {
       print('Failed to translate report');
       setState(() {
@@ -94,7 +97,6 @@ class _ReportState extends State<Report> {
       });
     }
   }
-
 
   String _getOriginalPrompt() {
     return 'Write a user-friendly lab analysis report about this lab test in this formats '
@@ -246,7 +248,7 @@ class _ReportState extends State<Report> {
                             onPressed: !_isTranslating
                                 ? () {
                               // Save the report without triggering translation
-                              _saveReport('user_id', 'file_path', _translatedReport); // Pass report content
+                              _saveReport(1, 'file_path', _translatedReport); // Pass report content
                             }
                                 : null, // Disable button if translation is ongoing
                             style: ElevatedButton.styleFrom(
@@ -289,5 +291,4 @@ class _ReportState extends State<Report> {
       ),
     );
   }
-
 }

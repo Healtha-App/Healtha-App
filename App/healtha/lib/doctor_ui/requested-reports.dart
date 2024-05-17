@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'report_details.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/doctor_ui/doc-profile.dart';
-
 import 'open-report.dart';
 
-class requestedReports extends StatefulWidget {
-  final bool isReportConfirmed; // Add this line
-
-  requestedReports({Key? key, required this.isReportConfirmed}) : super(key: key);
-
+class RequestedReports extends StatefulWidget {
   @override
-  _requestedReportsState createState() => _requestedReportsState();
+  _RequestedReportsState createState() => _RequestedReportsState();
 }
 
-class _requestedReportsState extends State<requestedReports> {
-  bool _isReportConfirmed = false;
+class _RequestedReportsState extends State<RequestedReports> {
+  List<dynamic> _reports = [];
 
   @override
   void initState() {
     super.initState();
-    _isReportConfirmed = widget.isReportConfirmed; // Initialize with the provided value
+    _fetchReports();
+  }
+
+  Future<void> _fetchReports() async {
+    try {
+      final response = await http.get(Uri.parse('http://192.168.56.1:4000/api/healtha/reports?confirmed=false'));
+      if (response.statusCode == 200) {
+        setState(() {
+          _reports = json.decode(response.body);
+        });
+      } else {
+        throw Exception('Failed to fetch reports');
+      }
+    } catch (error) {
+      print('Error fetching reports: $error');
+    }
   }
 
   @override
@@ -117,80 +131,77 @@ class _requestedReportsState extends State<requestedReports> {
                     ),
                   ),
                   SizedBox(height: screenSize.height * 0.02),
-                  // Add more widgets as needed
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(screenSize.width * 0.01),
-              child: Column(
-                children: [
-                  SizedBox(height: screenSize.height * 0.2),
-                  Container(
-                    width: double.infinity,
-                   // height: screenSize.height * 0.1,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.05)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white70.withOpacity(0.8),
-                          blurRadius: 1,
-                        //  offset: Offset(0, screenSize.width * 0.04),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding:  EdgeInsets.all(screenSize.width * 0.02),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(16),
-                        title: Text(
-                          "Um Mohamed Elshazly",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF7C77D1),
+                  // Reports List
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _reports.length,
+                      itemBuilder: (context, index) {
+                        final report = _reports[index];
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: screenSize.width * 0.02),
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.05)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.white70.withOpacity(0.8),
+                                  blurRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(screenSize.width * 0.02),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.all(16),
+                                title: Text(
+                                  "Report ID: ${report['reportid']}",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF7C77D1),
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  "${report['reportType']}",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w100,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                trailing: RawMaterialButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => ReportDetails(reportId: report['reportid'].toString(), onConfirm: (bool confirmed) { /* Handle confirmation logic here */ },)),
+                                    );
+                                  },
+
+                                  elevation: 2.0,
+                                  fillColor: Color(0xFF7C77D1),
+                                  child: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                    size: MediaQuery.of(context).size.width * 0.065,
+                                  ),
+                                  padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+                                  shape: CircleBorder(),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          "CBC",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w100,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        trailing: RawMaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => OpenReport(onConfirm: _handleConfirm)),
-                            );
-                          },
-                          elevation: 2.0,
-                          fillColor:_isReportConfirmed ? Colors.green : Color(0xFF7C77D1),
-                          child: Icon(
-                            _isReportConfirmed ? Icons.check : Icons.arrow_forward_ios, // Change this line
-                            color: Colors.white,
-                            size: MediaQuery.of(context).size.width * 0.065,
-                          ),
-                          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
-                          shape: CircleBorder(),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
     );
-  }
-  void _handleConfirm(bool confirmed) {
-    setState(() {
-      _isReportConfirmed = confirmed;
-    });
   }
 }

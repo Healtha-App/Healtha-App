@@ -60,7 +60,7 @@ dependencies:
   http: ^1.1.0
   flutter_launcher_icons: ^0.13.1
   intl: ^0.19.0
-
+  flutter_translate: ^3.1.0
 
 
 

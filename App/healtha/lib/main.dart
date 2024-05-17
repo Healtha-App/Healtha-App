@@ -26,8 +26,12 @@ import 'lab_analysis/drop_file.dart';
 import 'lab_analysis/report.dart';
 import 'lab_analysis/upload_analysis.dart';
 import 'lab_doctor/lab_doctor.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter/material.dart';
+
 
 void main() {
+
   runApp(const MyApp());
 }
 
@@ -42,9 +46,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home:UploadPage(),
-
+      home: RequestedReports(),
     );
 
   }
 }
+
