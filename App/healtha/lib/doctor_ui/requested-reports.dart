@@ -23,7 +23,7 @@ class _RequestedReportsState extends State<RequestedReports> {
 
   Future<void> _fetchReports() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.56.1:4000/api/healtha/reports?confirmed=false'));
+      final response = await http.get(Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
       if (response.statusCode == 200) {
         setState(() {
           _reports = json.decode(response.body);

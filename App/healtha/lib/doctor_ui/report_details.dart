@@ -30,7 +30,7 @@ class _ReportDetailsState extends State<ReportDetails> {
   Future<void> _fetchReportContent() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.56.1:4000/api/healtha/reports?id=${widget.reportId}'),
+        Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?id=${widget.reportId}'),
       );
       if (response.statusCode == 200) {
         setState(() {
@@ -49,7 +49,7 @@ class _ReportDetailsState extends State<ReportDetails> {
   Future<void> _confirmReport() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.56.1:4000/api/healtha/reports/${widget.reportId}/confirm'),
+        Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}/confirm'),
       );
       if (response.statusCode == 200) {
         // Update UI or take necessary actions upon successful confirmation
