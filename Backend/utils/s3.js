@@ -21,7 +21,7 @@ const uploadToS3 = (file) => {
 		region: bucketRegion,
 	});
 
-	let fileName = file.originalname;
+	let fileName ="image_"+Date.now();
 	let params = {
 		Bucket: bucketName,
 		Key: fileName,
