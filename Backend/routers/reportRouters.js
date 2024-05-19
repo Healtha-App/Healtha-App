@@ -7,28 +7,30 @@ router.use(express.json());
 
 // Schema definition
 const reportSchema = new mongoose.Schema({
-    reportid: {
-      type: Number,
-      default: 0
-    },
-    userId: {
-      type: Number,
-    },
-    filePath: {
-      type: String,
-    },
-    reportContent: {
-      type: String,
-    },
-    confirmed: {
-      type: Boolean,
-      default: false
-    },
-    uploadTime: {
-      type: Date,
-      default: Date.now
-    },
-    
+  reportid: {
+    type: Number,
+    default: 0
+  },
+  userId: {
+    type: Number,
+  },
+  filePath: {
+    type: String,
+  },
+  testName: {
+    type: String,
+  },
+  reportContent: {
+    type: String,
+  },
+  confirmed: {
+    type: Boolean,
+    default: false
+  },
+  uploadTime: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 // Middleware to automatically increment reportid field
@@ -98,7 +100,8 @@ router.post('/healtha/reports', async (req, res) => {
             userId: parseInt(req.body.userId),
             filePath: req.body.filePath,
             reportContent: req.body.reportContent,
-            confirmed: req.body.confirmed
+            confirmed: req.body.confirmed,
+            testName: req.body.testName // Include the testName field
         });
 
         await newReport.save();
@@ -107,6 +110,29 @@ router.post('/healtha/reports', async (req, res) => {
         console.error('Error creating a new report', err);
         res.status(500).json({ error: 'Could not create a new report' });
     }
+});
+
+// PUT route to update the report content
+router.put('/healtha/reports/:id', async (req, res) => {
+  try {
+    const reportId = req.params.id;
+    const updatedReportContent = req.body.reportContent;
+    
+    const report = await Report.findOneAndUpdate(
+      { reportid: reportId },
+      { reportContent: updatedReportContent },
+      { new: true }
+    );
+
+    if (!report) {
+      return res.status(404).json({ error: 'Report not found' });
+    }
+
+    res.status(200).json({ message: 'Report updated successfully', report });
+  } catch (error) {
+    console.error('Error updating report', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 module.exports = router;

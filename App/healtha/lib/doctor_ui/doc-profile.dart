@@ -32,7 +32,7 @@ class _drProfileState extends State<drProfile> {
 
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
-    final response = await http.get(Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors'));
+    final response = await http.get(Uri.parse('http://192.168.56.1:4000/api/healtha/specialistdoctors'));
 
     if (response.statusCode == 200) {
       // If the request is successful, parse the JSON response

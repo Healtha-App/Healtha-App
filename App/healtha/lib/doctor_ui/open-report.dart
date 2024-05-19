@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class OpenReport extends StatefulWidget {
-  final Function(bool) onConfirm; // Define the onConfirm function
+  final Function(bool) onConfirm;
 
   OpenReport({Key? key, required this.onConfirm}) : super(key: key);
 
@@ -15,29 +15,19 @@ class OpenReport extends StatefulWidget {
 
 class _OpenReportState extends State<OpenReport> {
   String _translatedReport = '';
-  bool _isTranslated = false;
   bool _isTranslating = false;
   TextEditingController _textEditingController = TextEditingController();
-  bool _isEditing = false; // Define _isEditing variable
-
+  bool _isEditing = false;
   static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
+  static const String _backendUrl = 'http://your_backend_url/healtha/reports'; // Change to your actual backend URL
+  int reportId = 1; // Example report ID, replace with actual ID
 
   Future<void> _translateReport() async {
     setState(() {
       _isTranslating = true;
     });
 
-    String promptWithLanguage = _isTranslated
-        ? 'Write a user-friendly lab analysis report about this lab test in this formats '
-        'in points and each point list of items, in this report write'
-        "start with Dear (patient name from the report), We hope this report finds you in good health. "
-        "We have conducted a comprehensive analysis to assess your health. "
-        "1. Test name and definition 2. Interpretations about each important value result"
-        "3. Medical advices and tips for managing these values to take care of their health"
-        "write all under 250 words in Arabic language"
-        'after the final warm regards write (Healtha team)'
-
-        : 'Write a user-friendly lab analysis report about this lab test in this formats '
+    String promptWithLanguage = 'Write a user-friendly lab analysis report about this lab test in this formats '
         'in points and each point list of items, in this report write'
         "start with Dear (patient name from the report), We hope this report finds you in good health. "
         "We have conducted a comprehensive analysis to assess your health. "
@@ -67,12 +57,36 @@ class _OpenReportState extends State<OpenReport> {
     if (response.statusCode == 200) {
       setState(() {
         _translatedReport = json.decode(response.body)['content'];
-        _isTranslated = !_isTranslated;
         _isTranslating = false;
-        _textEditingController.text = _translatedReport; // Set text in TextEditingController
+        _textEditingController.text = _translatedReport;
       });
     } else {
       throw Exception('Failed to translate report');
+    }
+  }
+
+  Future<void> _updateReport() async {
+    try {
+      final response = await http.put(
+        Uri.parse('$_backendUrl/$reportId'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'reportContent': _textEditingController.text}),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          _translatedReport = _textEditingController.text;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Report updated successfully')),
+        );
+      } else {
+        throw Exception('Failed to update report');
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error updating report: $error')),
+      );
     }
   }
 
@@ -90,20 +104,18 @@ class _OpenReportState extends State<OpenReport> {
       child: Scaffold(
         body: Stack(
           children: [
-            // Background Gradient
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFFE0E7EA), // Light blue
-                    Color(0xff7c77d1).withOpacity(0.2), // Light grey
+                    Color(0xFFE0E7EA),
+                    Color(0xff7c77d1).withOpacity(0.2),
                   ],
                 ),
               ),
             ),
-            // Abstract Shapes
             Positioned(
               top: -screenSize.width * 0.3,
               right: -screenSize.width * 0.1,
@@ -111,7 +123,7 @@ class _OpenReportState extends State<OpenReport> {
                 width: screenSize.width * 0.6,
                 height: screenSize.width * 0.6,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: Color(0xFF7C77D1),
                   borderRadius: BorderRadius.circular(screenSize.width * 0.3),
                 ),
               ),
@@ -123,7 +135,7 @@ class _OpenReportState extends State<OpenReport> {
                 width: screenSize.width * 0.4,
                 height: screenSize.width * 0.4,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: Color(0xFF7C77D1),
                   borderRadius: BorderRadius.circular(screenSize.width * 0.2),
                 ),
               ),
@@ -135,7 +147,7 @@ class _OpenReportState extends State<OpenReport> {
                 width: screenSize.width * 0.2,
                 height: screenSize.width * 0.2,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: Color(0xFF7C77D1),
                   borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                 ),
               ),
@@ -193,13 +205,20 @@ class _OpenReportState extends State<OpenReport> {
                           ),
                           Container(
                             padding: const EdgeInsets.all(20),
-                            // Wrap Text widget with TextField
+                            constraints: BoxConstraints(
+                              maxHeight: screenSize.height * 0.5,
+                            ),
                             child: _isEditing
-                                ? TextField(
-                              controller: _textEditingController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Enter report text',
+                                ? Container(
+                              height: screenSize.height * 0.5,
+                              child: TextField(
+                                controller: _textEditingController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Enter report text',
+                                ),
+                                maxLines: null,
+                                expands: true,
                               ),
                             )
                                 : Text(
@@ -207,22 +226,6 @@ class _OpenReportState extends State<OpenReport> {
                               style: TextStyle(fontSize: 14),
                             ),
                           ),
-                          SizedBox(height: 20,),
-                          InkWell(
-                            onTap: () {
-                              if (!_isTranslating) {
-                                _translateReport();
-                              }
-                            },
-                            child: Text(
-                              "Translate this Report",
-                              style: TextStyle(
-                                color: Color(0xff7c77d1),
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
                         ],
                       ),
                     ),
@@ -232,17 +235,20 @@ class _OpenReportState extends State<OpenReport> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
-                            _toggleEdit(); // Toggle editing mode
+                          onPressed: () async {
+                            if (_isEditing) {
+                              await _updateReport(); // Save changes to the database
+                            }
+                            _toggleEdit();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF7C77D1), // Set button color
+                            backgroundColor: Color(0xFF7C77D1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
                           child: Text(
-                            _isEditing ? 'Save' : 'Edit', // Change button text based on editing state
+                            _isEditing ? 'Save' : 'Edit',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -250,23 +256,21 @@ class _OpenReportState extends State<OpenReport> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10), // Add some space between buttons
+                      SizedBox(width: 10),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            // Handle second button press
                             if (!_isTranslating) {
-                              _translateReport();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('Report confirmed successfully'),
                                 ),
                               );
-                              widget.onConfirm(true); // Notify the parent widget about confirmation
+                              widget.onConfirm(true);
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF7C77D1), // Set button color
+                            backgroundColor: Color(0xFF7C77D1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -293,7 +297,10 @@ class _OpenReportState extends State<OpenReport> {
 
   void _toggleEdit() {
     setState(() {
-      _isEditing = !_isEditing; // Toggle editing mode
+      if (_isEditing) {
+        _translatedReport = _textEditingController.text;
+      }
+      _isEditing = !_isEditing;
     });
   }
 }

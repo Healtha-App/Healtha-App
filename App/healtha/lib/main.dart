@@ -31,10 +31,8 @@ import 'package:flutter/material.dart';
 
 
 void main() {
-
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   static const Color myPurple = Color(0xff7c77d1);
@@ -46,9 +44,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: RequestedReports(),
+      home: Report(),
     );
-
   }
 }
 

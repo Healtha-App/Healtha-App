@@ -8,7 +8,8 @@ class ReportDetails extends StatefulWidget {
   final String reportId;
   final Function(bool) onConfirm;
 
-  ReportDetails({Key? key, required this.reportId, required this.onConfirm}) : super(key: key);
+  ReportDetails({Key? key, required this.reportId, required this.onConfirm})
+      : super(key: key);
 
   @override
   _ReportDetailsState createState() => _ReportDetailsState();
@@ -17,7 +18,6 @@ class ReportDetails extends StatefulWidget {
 class _ReportDetailsState extends State<ReportDetails> {
   String _reportContent = '';
   bool _isLoading = true;
-  bool _isTranslating= false;
   TextEditingController _textEditingController = TextEditingController();
   bool _isEditing = false;
 
@@ -30,7 +30,8 @@ class _ReportDetailsState extends State<ReportDetails> {
   Future<void> _fetchReportContent() async {
     try {
       final response = await http.get(
-        Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?id=${widget.reportId}'),
+        Uri.parse(
+            'http://192.168.56.1:4000/api/healtha/reports?id=${widget.reportId}'),
       );
       if (response.statusCode == 200) {
         setState(() {
@@ -46,10 +47,36 @@ class _ReportDetailsState extends State<ReportDetails> {
     }
   }
 
+  Future<void> _updateReport() async {
+    try {
+      final response = await http.put(
+        Uri.parse(
+            'http://192.168.56.1:4000/api/healtha/reports/${widget.reportId}'),
+        body: {'reportContent': _textEditingController.text},
+      );
+      if (response.statusCode == 200) {
+        setState(() {
+          _reportContent = _textEditingController.text;
+          _isEditing = false; // Exit editing mode after saving
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Report updated successfully'),
+          ),
+        );
+      } else {
+        throw Exception('Failed to update report');
+      }
+    } catch (error) {
+      print('Error updating report: $error');
+    }
+  }
+
   Future<void> _confirmReport() async {
     try {
       final response = await http.post(
-        Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}/confirm'),
+        Uri.parse(
+            'http://192.168.56.1:4000/api/healtha/reports/${widget.reportId}/confirm'),
       );
       if (response.statusCode == 200) {
         // Update UI or take necessary actions upon successful confirmation
@@ -150,63 +177,62 @@ class _ReportDetailsState extends State<ReportDetails> {
                     ),
                     child: _isLoading
                         ? Center(
-                      child: CircularProgressIndicator(),
-                    )
+                            child: CircularProgressIndicator(),
+                          )
                         : SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              "Healtha Report",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff7c77d1),
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Text(
+                                    "Healtha Report",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff7c77d1),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  // Wrap Text widget with TextField
+                                  child: _isEditing
+                                      ? TextField(
+                                    controller: _textEditingController,
+                                    maxLines: null, // Allow the TextField to expand vertically
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Enter report text',
+                                    ),
+                                  )
+                                      : Text(
+                                    _reportContent ?? '',
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _fetchReportContent();
+                                  },
+                                  child: Text(
+                                    "Refresh Report",
+                                    style: TextStyle(
+                                      color: Color(0xff7c77d1),
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                              ],
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            // Wrap Text widget with TextField
-                            child: _isEditing
-                                ? TextField(
-                              controller: _textEditingController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Enter report text',
-                              ),
-                            )
-                                : Text(
-                              _reportContent ?? '',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (!_isTranslating) {
-                                _fetchReportContent();
-                              }
-                            },
-                            child: Text(
-                              "Refresh Report",
-                              style: TextStyle(
-                                color: Color(0xff7c77d1),
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
                   ),
                   Spacer(),
                   Row(
@@ -214,11 +240,15 @@ class _ReportDetailsState extends State<ReportDetails> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            _toggleEdit(); // Toggle editing mode
+                            if (_isEditing) {
+                              _updateReport();
+                            } else {
+                              _toggleEdit(); // Toggle editing mode
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                            Color(0xFF7C77D1), // Set button color
+                                Color(0xFF7C77D1), // Set button color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -228,9 +258,10 @@ class _ReportDetailsState extends State<ReportDetails> {
                                 ? 'Save'
                                 : 'Edit', // Change button text based on editing state
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -238,21 +269,20 @@ class _ReportDetailsState extends State<ReportDetails> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            if (!_isTranslating) {
+                            if (!_isEditing) {
                               _confirmReport();
-                              _fetchReportContent();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Report refreshed successfully'),
+                                  content:
+                                      Text('Report confirmed successfully'),
                                 ),
                               );
                               widget.onConfirm(true);
                             }
                           },
-
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                            Color(0xFF7C77D1), // Set button color
+                                Color(0xFF7C77D1), // Set button color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -260,9 +290,10 @@ class _ReportDetailsState extends State<ReportDetails> {
                           child: Text(
                             'Confirm',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -282,5 +313,4 @@ class _ReportDetailsState extends State<ReportDetails> {
       _isEditing = !_isEditing; // Toggle editing mode
     });
   }
-
 }

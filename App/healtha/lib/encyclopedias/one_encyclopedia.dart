@@ -79,7 +79,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   Future<List<LabTest>> fetchLabTests() async {
     try {
       String labTestEnd =
-          'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
+          'http://192.168.56.1:4000/api/healtha/lab-tests';
       final response = await http.get(Uri.parse(labTestEnd));
       print('Lab Tests Response status: ${response.statusCode}');
       print('Lab Tests Response body: ${response.body}');
@@ -97,7 +97,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   }
   Future<List<Disease>> fetchDiseases() async {
     try {
-      String diseaseEnd = 'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/disease';
+      String diseaseEnd = 'http://192.168.56.1:4000/api/healtha/disease';
       final response = await http.get(Uri.parse(diseaseEnd));
       print('Diseases Response status: ${response.statusCode}');
       print('Diseases Response body: ${response.body}');
