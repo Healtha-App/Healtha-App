@@ -2,3 +2,10 @@ services:
   healtha-auto-rebuild:
     build: .
     command: node main.js
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
