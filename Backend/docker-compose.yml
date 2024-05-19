@@ -1,0 +1,4 @@
+services:
+  healtha-auto-rebuild:
+    build: .
+    command: node main.js
