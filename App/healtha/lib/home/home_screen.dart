@@ -103,26 +103,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Hello ${name}! \nWelcome to",
-                            style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                          Column(
+                            children: [
+                              Text(
+                                "Hello ${name}!",
+                                style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          Text(
-                            "\nHealtha",
-                            style: GoogleFonts.dancingScript(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xff7c77d1),
+                              Text(
+                                "Welcome to Healtha",
+                                style: GoogleFonts.dancingScript(
+                                  textStyle: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xff7c77d1),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
+
                         ],
                       ),
                       InkResponse(
@@ -146,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     "Popular Laboratory Tests",
                     style: TextStyle(
-                      fontSize: 23,
+                      fontSize: 22,
                       fontWeight: FontWeight.w400,
                       color: Color(0xff161515),
                     ),
@@ -155,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 CarouselSlider(
                   items: LabTestsList(context),
                   options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.22,
                     padEnds: false,
                     initialPage: 0,
                     enableInfiniteScroll: true,
@@ -218,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Color(0xff7c77d1),
                               ),
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(height: 20),
                             Text(
                               "Explore healtha encyclopedias",
                               style: TextStyle(
@@ -275,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Color(0xff7c77d1),
                               ),
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(height: 20),
                             Text(
                               "Generate Laboratory Test Report ",
                               style: TextStyle(
@@ -341,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Color(0xff7c77d1),
                               ),
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(height: 20),
                             Text(
                               "Track your symptoms",
                               style: TextStyle(
@@ -391,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => ChatScreen()),
                 );
               },
-              elevation: 7.0,
+              elevation: 5.0,
               fillColor: Colors.white,
               child: iconBot,
               padding: EdgeInsets.all(12.0),

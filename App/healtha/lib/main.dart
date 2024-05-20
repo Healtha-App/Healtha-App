@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Merriweather',
       ),
-      home: Report(),
+      home: RequestedReports(),
     );
   }
 }

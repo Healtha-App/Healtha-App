@@ -195,7 +195,7 @@ class _DiseaseState extends State<Disease> {
       // Simulate fetching symptoms from the server
       // Replace the URL with the actual endpoint to fetch symptoms
       final response =
-      await http.get(Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:5000/all_symptoms'));
+      await http.get(Uri.parse('http://192.168.56.1:5000/all_symptoms'));
 
       if (response.statusCode == 200) {
         final dynamic responseData = json.decode(response.body);
@@ -389,7 +389,7 @@ class _DiseaseState extends State<Disease> {
       });
 
       final response = await http.post(
-        Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:5000/predict'),
+        Uri.parse('http://192.168.56.1:5000/predict'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

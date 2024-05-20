@@ -3,12 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class APIKey {
   static const apiKey =
-      "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";
+      "sk-proj-acnAHCzd9qBx1Grw4MAOT3BlbkFJQy5qW1ubPlC6JqYPiWLJ";
 }
-
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -104,7 +102,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 onPressed: () async {
                   if (_textEditingController.text.isNotEmpty) {
                     await _sendMessage(_textEditingController.text);
-                    _textEditingController.clear();
+                    _textEditingController.clear(); // Clear the text field here
                   }
                 },
               ),
@@ -188,8 +186,6 @@ class _ChatScreenState extends State<ChatScreen> {
       throw Exception('Failed to send message to ChatGPT. Error: $e');
     }
   }
-
-
 }
 
 class Message {
@@ -198,6 +194,3 @@ class Message {
 
   Message({required this.sender, required this.text});
 }
-
-
-

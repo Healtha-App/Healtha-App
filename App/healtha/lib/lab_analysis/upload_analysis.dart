@@ -1,3 +1,4 @@
+import 'package:healtha/home/home_screen.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -62,7 +63,7 @@ class _UploadPageState extends State<UploadPage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
 
-          elevation: 0,// Set the background color to transparent
+          elevation: 0, // Set the background color to transparent
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -77,14 +78,12 @@ class _UploadPageState extends State<UploadPage> {
               ),
             ),
           ),
-
         ),
         drawer: Drawer(
           child: ListView(
-          //  padding: EdgeInsets.zero,
+            //  padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -97,8 +96,11 @@ class _UploadPageState extends State<UploadPage> {
                     end: Alignment.topRight,
                   ),
                 ),
-                child: Center(child: Text('Your reports',style: TextStyle(color: Colors.white,fontSize: 20),)),
-
+                child: Center(
+                    child: Text(
+                  'Your reports',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                )),
               ),
               ListTile(
                 title: Text('Generated Reports'),
@@ -134,13 +136,11 @@ class _UploadPageState extends State<UploadPage> {
             ],
           ),
         ),
-
         body: Column(
           children: [
             Stack(
               clipBehavior: Clip.none,
               children: [
-
                 Container(
                   height: screenSize.height * 0.2,
                   width: screenSize.width,
@@ -161,7 +161,6 @@ class _UploadPageState extends State<UploadPage> {
                     ),
                   ),
                 ),
-
                 Positioned(
                   bottom: -50,
                   left: screenSize.width * 0.05,
@@ -169,7 +168,6 @@ class _UploadPageState extends State<UploadPage> {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     width: screenSize.width * 0.9,
-
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -204,7 +202,6 @@ class _UploadPageState extends State<UploadPage> {
                     ),
                   ),
                 ),
-
               ],
             ),
             Padding(
@@ -220,7 +217,9 @@ class _UploadPageState extends State<UploadPage> {
                     height: 20,
                   ),
                   FileDropWidget(),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Divider(
                     height: .50, // Customize the thickness
                     color: Colors.grey, // Customize the color
@@ -251,23 +250,28 @@ Thank you for allowing us the time to ensure accuracy!""",
                         });
                       },
                     ),
-                  if(showAfterAnimation)
+                  if (showAfterAnimation)
                     Column(
                       children: [
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         ElevatedButton(
-                          onPressed: _isEnabled
-                              ? () {
-                            setState(() {
-                              _isEnabled = false;
-                            });
-                          }
-                              : null,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UploadPage()),
+                            );
+                          },
                           child: Text('Generate another report'),
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor: MaterialStateProperty.all<Color>(myPurple),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(myPurple),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -279,7 +283,19 @@ Thank you for allowing us the time to ensure accuracy!""",
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(' or '),
-                            Text('return home',style: TextStyle(fontWeight: FontWeight.bold),),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()),
+                                );
+                              },
+                              child: Text(
+                                'return home',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -287,10 +303,10 @@ Thank you for allowing us the time to ensure accuracy!""",
                   ElevatedButton(
                     onPressed: _isEnabled
                         ? () {
-                      setState(() {
-                        _isEnabled = false;
-                      });
-                    }
+                            setState(() {
+                              _isEnabled = false;
+                            });
+                          }
                         : null,
                     child: Text('Generate'),
                     style: ButtonStyle(
@@ -314,5 +330,3 @@ Thank you for allowing us the time to ensure accuracy!""",
     );
   }
 }
-
-

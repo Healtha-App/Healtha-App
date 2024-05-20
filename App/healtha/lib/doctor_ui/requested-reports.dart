@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'report_details.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/doctor_ui/doc-profile.dart';
 import 'open-report.dart';
@@ -96,44 +95,43 @@ class _RequestedReportsState extends State<RequestedReports> {
               ),
             ),
             // Content
-            Padding(
-              padding: EdgeInsets.all(screenSize.width * 0.05),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkResponse(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => drProfile()),
-                      );
-                    },
-                    child: CircleAvatar(
-                      radius: screenSize.width * 0.1,
-                      backgroundImage: AssetImage("images/dr.PNG"),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(screenSize.width * 0.05),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkResponse(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => drProfile()),
+                            );
+                          },
+                          child: CircleAvatar(
+                            radius: screenSize.width * 0.1,
+                            backgroundImage: AssetImage("images/dr.PNG"),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(screenSize.width * 0.05),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: screenSize.height * 0.13), // Adjust as needed
-                  Text(
-                    'Requested Reports', // Your healthcare app name
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black, // Dark blue
+                    SizedBox(height: screenSize.height * 0.13), // Adjust as needed
+                    Text(
+                      'Requested Reports', // Your healthcare app name
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black, // Dark blue
+                      ),
                     ),
-                  ),
-                  SizedBox(height: screenSize.height * 0.02),
-                  // Reports List
-                  Expanded(
-                    child: ListView.builder(
+                    SizedBox(height: screenSize.height * 0.02),
+                    // Reports List
+                    ListView.builder(
+                      shrinkWrap: true, // Important to wrap in a scrollable parent
+                      physics: NeverScrollableScrollPhysics(), // Disable inner scrolling
                       itemCount: _reports.length,
                       itemBuilder: (context, index) {
                         final report = _reports[index];
@@ -164,7 +162,7 @@ class _RequestedReportsState extends State<RequestedReports> {
                                   ),
                                 ),
                                 subtitle: Text(
-                                  "${report['reportType']}",
+                                  "CBC Test",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w100,
@@ -178,7 +176,6 @@ class _RequestedReportsState extends State<RequestedReports> {
                                       MaterialPageRoute(builder: (context) => ReportDetails(reportId: report['reportid'].toString(), onConfirm: (bool confirmed) { /* Handle confirmation logic here */ },)),
                                     );
                                   },
-
                                   elevation: 2.0,
                                   fillColor: Color(0xFF7C77D1),
                                   child: Icon(
@@ -195,8 +192,8 @@ class _RequestedReportsState extends State<RequestedReports> {
                         );
                       },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

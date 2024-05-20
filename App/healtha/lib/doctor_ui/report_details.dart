@@ -94,6 +94,7 @@ class _ReportDetailsState extends State<ReportDetails> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             // Background Gradient
@@ -177,62 +178,49 @@ class _ReportDetailsState extends State<ReportDetails> {
                     ),
                     child: _isLoading
                         ? Center(
-                            child: CircularProgressIndicator(),
-                          )
+                      child: CircularProgressIndicator(),
+                    )
                         : SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Text(
-                                    "Healtha Report",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff7c77d1),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  // Wrap Text widget with TextField
-                                  child: _isEditing
-                                      ? TextField(
-                                    controller: _textEditingController,
-                                    maxLines: null, // Allow the TextField to expand vertically
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      hintText: 'Enter report text',
-                                    ),
-                                  )
-                                      : Text(
-                                    _reportContent ?? '',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    _fetchReportContent();
-                                  },
-                                  child: Text(
-                                    "Refresh Report",
-                                    style: TextStyle(
-                                      color: Color(0xff7c77d1),
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                              ],
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              "Healtha Report",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff7c77d1),
+                              ),
                             ),
                           ),
+
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            // Wrap Text widget with TextField
+                            child: _isEditing
+                                ? TextField(
+                              controller: _textEditingController,
+                              maxLines: null, // Allow the TextField to expand vertically
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Enter report text',
+                              ),
+                            )
+                                : Text(
+                              _reportContent,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ),
+
+                          SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
                   ),
                   Spacer(),
                   Row(
@@ -247,8 +235,7 @@ class _ReportDetailsState extends State<ReportDetails> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Color(0xFF7C77D1), // Set button color
+                            backgroundColor: Color(0xFF7C77D1), // Set button color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -273,16 +260,14 @@ class _ReportDetailsState extends State<ReportDetails> {
                               _confirmReport();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content:
-                                      Text('Report confirmed successfully'),
+                                  content: Text('Report confirmed successfully'),
                                 ),
                               );
                               widget.onConfirm(true);
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Color(0xFF7C77D1), // Set button color
+                            backgroundColor: Color(0xFF7C77D1), // Set button color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
