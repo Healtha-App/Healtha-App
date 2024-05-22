@@ -19,7 +19,7 @@ class _LoginState extends State<Login> {
 
   final TextEditingController usernameController = TextEditingController();
   Future<bool> login(BuildContext context) async {
-    String healthaIP = 'http://192.168.56.1:4000/api/healtha/patients';
+    String healthaIP = 'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
 
     final url = healthaIP;
 

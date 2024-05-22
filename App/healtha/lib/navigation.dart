@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
+import 'package:healtha/notification/notification_center.dart';
 import 'package:healtha/profile/home.dart';
 import 'package:healtha/home/home_screen.dart';
 import 'package:line_icons/line_icons.dart';
@@ -26,7 +27,7 @@ class _YourWidgetState extends State<YourWidget> {
         children: [
           HomeScreen(),
           EncyclopediaTypes(),
-          SavedReports(),
+          NotificationCenter(),
           ProfileScreen(),
         ],
         onPageChanged: (index) {
@@ -65,8 +66,8 @@ class _YourWidgetState extends State<YourWidget> {
                 text: 'Encyclopedia',
               ),
               GButton(
-                icon: Icons.bookmark_outline_outlined,
-                text: 'Saved',
+                icon: Icons.notifications_none_rounded,
+                text: 'Notifications',
               ),
               GButton(
                 icon: LineIcons.user,

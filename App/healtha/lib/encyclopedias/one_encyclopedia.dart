@@ -79,7 +79,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   Future<List<LabTest>> fetchLabTests() async {
     try {
       String labTestEnd =
-          'http://192.168.56.1:4000/api/healtha/lab-tests';
+          'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests';
       final response = await http.get(Uri.parse(labTestEnd));
       print('Lab Tests Response status: ${response.statusCode}');
       print('Lab Tests Response body: ${response.body}');
@@ -97,7 +97,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   }
   Future<List<Disease>> fetchDiseases() async {
     try {
-      String diseaseEnd = 'http://192.168.56.1:4000/api/healtha/disease';
+      String diseaseEnd = 'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/disease';
       final response = await http.get(Uri.parse(diseaseEnd));
       print('Diseases Response status: ${response.statusCode}');
       print('Diseases Response body: ${response.body}');
@@ -177,8 +177,10 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
             ],
           ),
           SizedBox(height: 50),
+          widget.category == 'Lab Test'?
           Expanded(
-            child: FutureBuilder<List<LabTest>>(
+            child:
+             FutureBuilder<List<LabTest>>(
               future: labTestsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -216,7 +218,6 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                           ),
                           trailing: RawMaterialButton(
                             onPressed: () {
-                              if (widget.category == 'Lab Tests') {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -225,16 +226,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                                     ),
                                   ),
                                 );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LabTestDetailsPage(
-                                      labTest: snapshot.data![index],
-                                    ),
-                                  ),
-                                );
-                              }
+
                             },
                             elevation: 2.0,
                             fillColor: Color(0xFF7C77D1),
@@ -252,8 +244,75 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                   );
                 }
               },
-            ),
-          ),
+            )
+
+          )
+              : Expanded(child:
+          FutureBuilder<List<Disease>>(
+            future: diseasesFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(MyApp.myPurple),),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Failed to load data'),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      color: Colors.white,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 25),
+                        leading: Image.asset(
+                          widget.image,
+                          width: 35,
+                          height: 35,
+                        ),
+                        title: Text(
+                          snapshot.data![index].name ?? '',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        trailing: RawMaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>DiseaseDetailsPage(
+                                  disease: snapshot.data![index],
+                                ),
+                              ),
+                            );
+
+                          },
+                          elevation: 2.0,
+                          fillColor: Color(0xFF7C77D1),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: 17.0,
+                          ),
+                          padding: EdgeInsets.all(12.0),
+                          shape: CircleBorder(),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+            },
+          ))
         ],
       ),
     );

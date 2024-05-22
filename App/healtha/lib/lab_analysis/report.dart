@@ -27,7 +27,7 @@ class _ReportState extends State<Report> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.56.1:4000/api/healtha/reports'),
+        Uri.parse('http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
         headers: {
           'Content-Type': 'application/json',
         },

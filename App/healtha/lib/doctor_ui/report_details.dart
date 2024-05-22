@@ -31,7 +31,7 @@ class _ReportDetailsState extends State<ReportDetails> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.56.1:4000/api/healtha/reports?id=${widget.reportId}'),
+            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?id=${widget.reportId}'),
       );
       if (response.statusCode == 200) {
         setState(() {
@@ -51,7 +51,7 @@ class _ReportDetailsState extends State<ReportDetails> {
     try {
       final response = await http.put(
         Uri.parse(
-            'http://192.168.56.1:4000/api/healtha/reports/${widget.reportId}'),
+            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}'),
         body: {'reportContent': _textEditingController.text},
       );
       if (response.statusCode == 200) {
@@ -76,7 +76,7 @@ class _ReportDetailsState extends State<ReportDetails> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.56.1:4000/api/healtha/reports/${widget.reportId}/confirm'),
+            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}/confirm'),
       );
       if (response.statusCode == 200) {
         // Update UI or take necessary actions upon successful confirmation

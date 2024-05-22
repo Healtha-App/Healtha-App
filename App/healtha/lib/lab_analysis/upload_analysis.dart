@@ -258,26 +258,26 @@ Thank you for allowing us the time to ensure accuracy!""",
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => UploadPage()),
+                              MaterialPageRoute(builder: (context) => UploadPage()),
                             );
                           },
                           child: Text('Generate another report'),
                           style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(myPurple),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(myPurple),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ),
                         ),
+
+
+
+
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,

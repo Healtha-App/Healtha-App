@@ -45,7 +45,7 @@ class ACE extends StatelessWidget {
 
   Future<LabTest> fetchLabTest() async {
     final response = await http.get(Uri.parse(
-        'http://192.168.56.1:4000/api/healtha/lab-tests'));
+        'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
       if (labTests.isNotEmpty && labTests.length >= 6) { // Check if there are at least 3 lab tests
