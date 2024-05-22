@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healtha/home/Lipid-Panel.dart';
+import 'package:healtha/home/title_item.dart';
 import 'package:healtha/register_login/log_in.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
 import 'package:healtha/main.dart';
 import '../chatbot/chat_screen.dart';
+import '../doctor_ui/doc-profile.dart';
 import '../encyclopedias/encyclopedia_types.dart';
 import '../lab_analysis/upload_analysis.dart';
 import '../navigation.dart';
@@ -52,6 +54,44 @@ final iconBot = Image.asset(
   height: 60.0, // Adjust icon height
 );
 
+List<String> doctorImages = [
+  'images/doctor1.jpg',
+  'images/doctor2.jpg',
+  'images/doctor3.jpg',
+  'images/doctor4.jpg',
+  'images/doctor5.jpg',
+  'images/doctor6.jpg',
+  'images/doctor7.jpg',
+  'images/doctor8.jpg',
+  'images/doctor9.jpg',
+  'images/doctor10.jpg',
+];
+
+List<String> doctorNames = [
+  "Dr.Eman Magdy",
+  "Dr.Hossam Mohammed",
+  "Dr.Rahma Khaled",
+  "Dr.Mohammed Ali",
+  "Dr.Sara Samir",
+  "Dr.Ahmed Nour",
+  "Dr.Aya Elmallah",
+  "Dr.John Smith",
+  "Dr.Emily Davis",
+  "Dr.Michael Brown",
+];
+
+final List<Doctor> Doctors = [
+  Doctor(name: 'Dr.Eman', photoAsset: 'assets/doctor1.png'),
+  Doctor(name: 'Dr.Hossam', photoAsset: 'assets/doctor4.png'),
+  Doctor(name: 'Dr.Rahma', photoAsset: 'assets/doctor3.jpg'),
+  Doctor(name: 'Dr.Mohammed', photoAsset: 'assets/doctor4.png'),
+  Doctor(name: 'Dr.Sara', photoAsset: 'assets/doctor5.jpg'),
+  Doctor(name: 'Dr.Ahmed', photoAsset: 'assets/doctor2.jpg'),
+  Doctor(name: 'Dr.Aya', photoAsset: 'assets/doctor7.png'),
+  Doctor(name: 'Dr.John', photoAsset: 'assets/doctor8.jpeg'),
+  Doctor(name: 'Dr.Emily', photoAsset: 'assets/doctor9.png'),
+  Doctor(name: 'Dr.Michael', photoAsset: 'assets/doctor10.png'),
+];
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -176,6 +216,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                   ),
                 ),
+                SizedBox(height: 20,),
+                TitleItem(
+                  mainText: 'Top Mentors',
+                  onpressed: () {},
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 130,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Expanded(
+                      child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: Doctors.length,
+                      itemBuilder: (context, index) {
+                        return DoctorCard(doctor: Doctors[index]);
+                      },
+                                      ),
+                    ),
+                  ),
+                ),
+                /*Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        // Navigate to the see all doctors screen
+                      },
+                      child: Text(
+                        "See All",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff7c77d1),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),*/
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -540,3 +623,39 @@ class TestsPoster extends StatelessWidget {
   }
 }
 
+class Doctor {
+  final String name;
+  final String photoAsset;
+
+  Doctor({required this.name, required this.photoAsset});
+}
+
+class DoctorCard extends StatelessWidget {
+  final Doctor doctor;
+
+  const DoctorCard({super.key, required this.doctor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        children: [
+          InkResponse(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => drProfile()),
+                );
+              },
+              child: CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage(doctor.photoAsset),
+              )),
+          const SizedBox(height: 8.0),
+          Text(doctor.name),
+        ],
+      ),
+    );
+  }
+}
