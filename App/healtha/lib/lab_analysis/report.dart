@@ -145,8 +145,8 @@ class _ReportState extends State<Report> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFFE0E7EA), // Light blue
-                    Color(0xff7c77d1).withOpacity(0.2), // Light grey
+                    Theme.of(context).colorScheme.primary, // Light blue
+                    Theme.of(context).colorScheme.secondary.withOpacity(0.2), // Light grey
                   ],
                 ),
               ),
@@ -159,7 +159,7 @@ class _ReportState extends State<Report> {
                 width: screenSize.width * 0.6,
                 height: screenSize.width * 0.6,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: Theme.of(context).colorScheme.secondary, // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.3),
                 ),
               ),
@@ -171,7 +171,7 @@ class _ReportState extends State<Report> {
                 width: screenSize.width * 0.4,
                 height: screenSize.width * 0.4,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: Theme.of(context).colorScheme.secondary, // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.2),
                 ),
               ),
@@ -183,7 +183,7 @@ class _ReportState extends State<Report> {
                 width: screenSize.width * 0.2,
                 height: screenSize.width * 0.2,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: Theme.of(context).colorScheme.secondary, // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                 ),
               ),
@@ -231,7 +231,7 @@ class _ReportState extends State<Report> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff7c77d1),
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                           ),
@@ -253,7 +253,7 @@ class _ReportState extends State<Report> {
                                 : null, // Disable button if translation is ongoing
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Color(0xFF7C77D1),
+                              backgroundColor: Theme.of(context).colorScheme.secondary,
                               minimumSize: Size(screenSize.width * 0.8, 50),
                             ),
                             child: Text(

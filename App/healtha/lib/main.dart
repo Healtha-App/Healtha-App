@@ -28,11 +28,15 @@ import 'lab_analysis/upload_analysis.dart';
 import 'lab_doctor/lab_doctor.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter/material.dart';
-
+//import 'package:firebase_core/firebase_core.dart';
 import 'navigation.dart';
 import 'notification/notification_center.dart';
+import 'themes/dark.dart';
+import 'themes/light.dart';
 
-void main() {
+Future<void> main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -41,12 +45,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Healtha',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Merriweather',
-      ),
-      home: YourWidget(),
+      theme: darkTheme,
+      home: Report(),
     );
   }
 }

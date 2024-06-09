@@ -14,15 +14,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
-
   final TextEditingController usernameController = TextEditingController();
+
+  bool isPasswordVisible = false;
+
   Future<bool> login(BuildContext context) async {
     String healthaIP = 'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
-
     final url = healthaIP;
-
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -173,15 +172,26 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
                       child: TextFormField(
+                        keyboardType: TextInputType.text,
                         controller: passwordController,
+                        obscureText: !isPasswordVisible, //This will obscure text dynamically
                         decoration: InputDecoration(
-                          suffixIcon: Icon(Icons.remove_red_eye_outlined),
+                          labelText: 'Password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                           ),
-                          labelText: 'Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
+                          ),
                         ),
-                        obscureText: true,
                       ),
                     ),
                     SizedBox(
@@ -237,13 +247,12 @@ class _LoginState extends State<Login> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => YourWidget(),
+                                    builder: (context) => HomeScreen(), // Replace with your home screen
                                   ),
                                 );
                               }
                             });
                           },
-
                         ),
                       ),
                     ),

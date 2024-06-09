@@ -80,11 +80,22 @@ class _ReportDetailsState extends State<ReportDetails> {
       );
       if (response.statusCode == 200) {
         // Update UI or take necessary actions upon successful confirmation
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Report confirmed and notification sent'),
+          ),
+        );
+        widget.onConfirm(true);
       } else {
         throw Exception('Failed to confirm report');
       }
     } catch (error) {
       print('Error confirming report: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to confirm report'),
+        ),
+      );
     }
   }
 

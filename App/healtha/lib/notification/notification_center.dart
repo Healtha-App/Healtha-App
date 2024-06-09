@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import '../doctor_ui/report_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/doctor_ui/doc-profile.dart';
@@ -26,6 +28,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
   void initState() {
     super.initState();
     _fetchReports();
+  //  _setupFirebaseMessaging();
   }
 
   Future<void> _fetchReports() async {
@@ -58,7 +61,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
           DateFormat('yyyy-MM-dd').format(now)) {
         _todayReports.add(report);
       } else if (reportDate
-              .isAfter(now.subtract(Duration(days: now.weekday))) &&
+          .isAfter(now.subtract(Duration(days: now.weekday))) &&
           reportDate.isBefore(now.add(Duration(days: 7 - now.weekday)))) {
         _thisWeekReports.add(report);
       } else {
@@ -73,6 +76,26 @@ class _NotificationCenterState extends State<NotificationCenter> {
     _laterReports.sort((a, b) => DateTime.parse(a['uploadTime'])
         .compareTo(DateTime.parse(b['uploadTime'])));
   }
+  //
+  // void _setupFirebaseMessaging() {
+  //   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  //
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     print('Got a message whilst in the foreground!');
+  //     print('Message data: ${message.data}');
+  //
+  //     if (message.notification != null) {
+  //       print('Message also contained a notification: ${message.notification}');
+  //     }
+  //
+  //     // Handle your logic here, for example:
+  //     _fetchReports();
+  //   });
+  //
+  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  //     print('Message clicked!');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +324,6 @@ class _NotificationCenterState extends State<NotificationCenter> {
                     );
                   },
                 ),
-
               ),
             ),
           ),
