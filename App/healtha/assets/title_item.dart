@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:healtha/doctor_ui/all-doctors.dart';
 
-import '../doctor_ui/all-doctors.dart';
 
 class TitleItem extends StatelessWidget {
   final String mainText;

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healtha/home/Lipid-Panel.dart';
-import 'package:healtha/home/title_item.dart';
 import 'package:healtha/register_login/log_in.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
@@ -217,10 +216,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 20,),
-                TitleItem(
-                  mainText: 'Top Mentors',
-                  onpressed: () {},
-                ),
                 SizedBox(
                   height: 10,
                 ),

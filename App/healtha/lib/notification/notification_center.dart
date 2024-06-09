@@ -34,7 +34,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
   Future<void> _fetchReports() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
+          'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
       if (response.statusCode == 200) {
         List<dynamic> reports = json.decode(response.body);
         setState(() {
@@ -107,55 +107,11 @@ class _NotificationCenterState extends State<NotificationCenter> {
           children: [
             // Background Gradient
             Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFFE0E7EA), // Light blue
-                    Color(0xff7c77d1).withOpacity(0.2), // Light grey
-                  ],
-                ),
-              ),
+              color: Colors.white,
+
             ),
-            // Abstract Shapes
-            Positioned(
-              top: -screenSize.width * 0.3,
-              right: -screenSize.width * 0.1,
-              child: Container(
-                width: screenSize.width * 0.6,
-                height: screenSize.width * 0.6,
-                decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
-                  borderRadius: BorderRadius.circular(screenSize.width * 0.3),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenSize.height * 0.3,
-              left: -screenSize.width * 0.07,
-              child: Container(
-                width: screenSize.width * 0.4,
-                height: screenSize.width * 0.4,
-                decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
-                  borderRadius: BorderRadius.circular(screenSize.width * 0.2),
-                ),
-              ),
-            ),
-            // Small circle at the bottom right
-            Positioned(
-              bottom: screenSize.height * 0.15,
-              right: screenSize.width * 0.15,
-              child: Container(
-                width: screenSize.width * 0.2,
-                height: screenSize.width * 0.2,
-                decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
-                  borderRadius: BorderRadius.circular(screenSize.width * 0.1),
-                ),
-              ),
-            ),
+
+
             // Content
             SingleChildScrollView(
               child: Padding(
@@ -164,7 +120,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                        height: screenSize.height * 0.1), // Adjust as needed
+                        height: screenSize.height * 0.051), // Adjust as needed
                     Text(
                       'Notification Center',
                       style: TextStyle(
@@ -284,12 +240,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.all(Radius.circular(
                     screenSize.width * 0.02)), // Reduced border radius
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.white70.withOpacity(1),
-                    blurRadius: 1,
-                  ),
-                ],
+               
               ),
               child: Padding(
                 padding: EdgeInsets.all(
@@ -309,20 +260,31 @@ class _NotificationCenterState extends State<NotificationCenter> {
                   ),
                   trailing: Padding(
                     padding: const EdgeInsets.only(right: 12.0), // Added padding
-                    child: Text(
-                      timeIndicator,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ReportDetails(reportId: report['reportid'].toString(), onConfirm: (bool confirmed) { /* Handle confirmation logic here */ },)),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor:Color(0xFF7C77D1), // Background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0), // Rounded corners
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Button padding
+                      ),
+                      child: Text(
+                        "view",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white, // Text color
+                        ),
                       ),
                     ),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ReportDetails(reportId: report['reportid'].toString(), onConfirm: (bool confirmed) { /* Handle confirmation logic here */ },)),
-                    );
-                  },
+
+
                 ),
               ),
             ),

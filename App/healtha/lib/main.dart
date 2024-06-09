@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:healtha/doctor_ui/all-doctors.dart';
 import 'package:healtha/doctor_ui/requested-reports.dart';
 import 'package:healtha/register_login/join_as.dart';
 import 'package:healtha/start/option.dart';
@@ -48,8 +49,8 @@ class MyApp extends StatelessWidget {
 
       title: 'Healtha',
       debugShowCheckedModeBanner: false,
-      theme: darkTheme,
-      home: Report(),
+     // theme: darkTheme,
+      home: NotificationCenter(),
     );
   }
 }
