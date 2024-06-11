@@ -32,7 +32,7 @@ class _drProfileState extends State<drProfile> {
 
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
-    final response = await http.get(Uri.parse('http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors'));
+    final response = await http.get(Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors'));
 
     if (response.statusCode == 200) {
       // If the request is successful, parse the JSON response
@@ -102,9 +102,9 @@ class _drProfileState extends State<drProfile> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xff7c77d1).withOpacity(1),
-                            Color(0xff7c77d1).withOpacity(0.3),
-                            Color(0xff7c77d1).withOpacity(0),
+                            Theme.of(context).colorScheme.background.withOpacity(1),
+                          Theme.of(context).colorScheme.background.withOpacity(0.3),
+                          Theme.of(context).colorScheme.background.withOpacity(0),
                           ],
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,

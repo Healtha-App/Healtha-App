@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,6 +13,9 @@ class _DiseaseState extends State<Disease> {
   static const Color myPurple = Color(0xff7c77d1);
 
   bool isExpanded = false;
+  String predictedDisease = 'Predicted Disease';
+  bool buttonPressed = false;
+
   Map<String, List<String>> symptomsCategories = {
     'Dermatological Symptoms': [
       "itching",
@@ -25,13 +27,13 @@ class _DiseaseState extends State<Disease> {
       "yellowish_skin",
       "bruising",
       "drying_and_tingling_lips",
-      "toxic_look_(typhos)",
+      "toxic_look_typhos",
       "red_spots_over_body",
       "dischromic_patches",
-      "Pus_filled_pimples",
+      "pus_filled_pimples",
       "blackheads",
       "skin_peeling",
-      "Silver_like_dusting",
+      "silver_like_dusting",
       "blister",
       "red_sore_around_nose",
       "yellow_crust_ooze",
@@ -54,177 +56,132 @@ class _DiseaseState extends State<Disease> {
       "neck_pain",
       "weakness_in_limbs",
       "back_pain",
-      "cold_hands_and_feet",
+      "cold_hands_and_feets",
       "muscle_wasting",
       "joint_pain",
       "swollen_legs",
+      "diarrhea"
     ],
     'Neurological Symptoms': [
-      "Chills",
-      "Shivering",
-      "Headache",
-      "Dizziness",
-      "Cramps",
-      "Slurred speech",
-      "Loss of balance",
-      "Unsteadiness",
-      "Weakness of one body side",
-      "Altered sensorium",
-      "Coma",
+      "chills",
+      "shivering",
+      "headache",
+      "dizziness",
+      "cramps",
+      "slurred_speech",
+      "loss_of_balance",
+      "unsteadiness",
+      "weakness_of_one_body_side",
+      "altered_sensorium",
+      "coma",
     ],
     'Gastrointestinal Symptoms': [
-      "Acidity",
-      "Ulcers on tongue",
-      "Vomiting",
-      "Indigestion",
-      "Nausea",
-      "Constipation",
-      "Abdominal pain",
-      "Diarrhea",
-      "Swelling of stomach",
-      "Pain during bowel movements",
-      "Pain in anal region",
-      "Bloody stool",
-      "Irritation in anus",
-      "Passage of gases",
-      "Belly pain",
-      "Abnormal menstruation",
-      "Stomach bleeding",
-      "Distention of abdomen",
-      "Stomach pain",
+      "acidity",
+      "ulcers_on_tongue",
+      "vomiting",
+      "indigestion",
+      "nausea",
+      "constipation",
+      "abdominal_pain",
+      "diarrhoea",
+      "swelling_of_stomach",
+      "pain_during_bowel_movements",
+      "pain_in_anal_region",
+      "bloody_stool",
+      "irritation_in_anus",
+      "passage_of_gases",
+      "belly_pain",
+      "abnormal_menstruation",
+      "stomach_bleeding",
+      "distention_of_abdomen",
+      "stomach_pain",
     ],
     'Respiratory Symptoms': [
-      "continuous sneezing",
+      "continuous_sneezing",
       "cough",
-      "Breathlessness",
-      "Phlegm",
-      "Throat irritation",
-      "redness of eyes",
-      "sinus pressure",
-      "runny nose",
+      "breathlessness",
+      "phlegm",
+      "throat_irritation",
+      "redness_of_eyes",
+      "sinus_pressure",
+      "runny_nose",
       "congestion",
-      "mucoid sputum",
-      "rusty sputum",
-      "blood in sputum",
+      "mucoid_sputum",
+      "rusty_sputum",
+      "blood_in_sputum",
     ],
     'Emotional Symptoms': [
-      "Lack of concentration",
-      "Irritability",
-      "Depression",
-      "Lethargy",
-      "Restlessness",
-      "Mood swings",
-      "Anxiety",
+      "lack_of_concentration",
+      "irritability",
+      "depression",
+      "lethargy",
+      "restlessness",
+      "mood_swings",
+      "anxiety",
     ],
     'Urinary Symptoms': [
-      "Burning micturition",
-      "spotting urination",
-      "dark urine",
-      "yellow urine",
-      "bladder discomfort",
-      "foul smell of urine",
-      "continuous feel of urine",
+      "burning_micturition",
+      "spotting_urination",
+      "dark_urine",
+      "yellow_urine",
+      "bladder_discomfort",
+      "foul_smell_of_urine",
+      "continuous_feel_of_urine",
       "polyuria",
     ],
     'Cardiovascular Symptoms': [
-      "Palpitations",
-      "Enlarged thyroid",
-      "Swollen blood vessels",
-      "Fast heart rate",
-      "chest pain",
-      "swelled lymph nodes",
+      "palpitations",
+      "enlarged_thyroid",
+      "swollen_blood_vessels",
+      "fast_heart_rate",
+      "chest_pain",
+      "swelled_lymph_nodes",
     ],
     'Physical Symptoms': [
-      "Fatigue",
-      "Weight gain",
-      "Weight loss",
-      "Irregular sugar level",
-      "High fever",
-      "Sunken eyes",
-      "Loss of appetite",
-      "Mild fever",
-      "Yellowing of eyes",
-      "Acute liver failure",
-      "Fluid overload",
+      "fatigue",
+      "weight_gain",
+      "weight_loss",
+      "irregular_sugar_level",
+      "high_fever",
+      "sunken_eyes",
+      "loss_of_appetite",
+      "mild_fever",
+      "yellowing_of_eyes",
+      "acute_liver_failure",
+      "fluid_overload",
       "malaise",
-      "Obesity",
-      "Puffy face and eyes",
-      "Extra marital contacts",
-      "Spinning movements",
-      "Internal itching",
-      "Watering from eyes",
-      "Family history",
-      "Fluid overload",
-    ],
-    'General Symptoms': [
-      "History of alcohol consumption",
-      "Receiving unsterile injections",
-      "receiving blood transfusion",
+      "obesity",
+      "puffy_face_and_eyes",
+      "extra_marital_contacts",
+      "spinning_movements",
+      "internal_itching",
+      "watering_from_eyes",
+      "family_history",
+      "history_of_alcohol_consumption",
+      "receiving_unsterile_injections",
+      "receiving_blood_transfusion",
     ],
     'Sensory Symptoms': [
-      "pain behind the eyes",
-      "blurred and distorted vision",
-      "excessive hunger",
-      "loss of smell",
-      "increased appetite",
-      "visual disturbances",
+      "pain_behind_the_eyes",
+      "blurred_and_distorted_vision",
+      "excessive_hunger",
+      "loss_of_smell",
+      "increased_appetite",
+      "visual_disturbances",
     ],
   };
 
   List<String> selectedSymptoms = [];
-  List<String> symptomsFromServer = [];
+  Map<String, bool> categoryVisibility = {};
 
-  void toggleExpanded() {
+  void toggleCategoryVisibility(String category) {
     setState(() {
-      isExpanded = !isExpanded;
+      categoryVisibility[category] = !(categoryVisibility[category] ?? false);
     });
-
-    // Load symptoms from the server when expanded
-    if (isExpanded) {
-      _fetchAllSymptoms();
-    } else {
-      // Clear symptoms when collapsed
-      setState(() {
-        symptomsFromServer.clear();
-      });
-    }
   }
 
-  Future<void> _fetchAllSymptoms() async {
-    try {
-      // Simulate fetching symptoms from the server
-      // Replace the URL with the actual endpoint to fetch symptoms
-      final response =
-      await http.get(Uri.parse('http://192.168.56.1:5000/all_symptoms'));
-
-      if (response.statusCode == 200) {
-        final dynamic responseData = json.decode(response.body);
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('all_symptoms') &&
-            responseData['all_symptoms'] is List) {
-          final List<String> symptoms =
-          List<String>.from(responseData['all_symptoms']);
-
-          setState(() {
-            symptomsFromServer = symptoms;
-          });
-        } else {
-          print(
-              'Invalid response format. "all_symptoms" not found or not a list.');
-          print('Response: $responseData');
-        }
-      } else {
-        print(
-            'Failed to fetch all symptoms. Status code: ${response.statusCode}');
-        print('Response: ${response.body}');
-      }
-    } catch (error) {
-      print('Error: $error');
-    }
-  }
-
-  bool _isSymptomSelected(String symptom) {
-    return selectedSymptoms.contains(symptom);
+  bool isCategoryVisible(String category) {
+    return categoryVisibility[category] ?? false;
   }
 
   void _toggleSymptom(String symptom) {
@@ -237,214 +194,116 @@ class _DiseaseState extends State<Disease> {
     });
   }
 
-  String predictedDisease = 'predicted'; // New variable to hold the predicted disease
 
-  Map<String, int> symptomsMapping = {
-    "itching": 0,
-    "skin_rash": 1,
-    "nodal_skin_eruptions": 2,
-    "patches_in_throat": 3,
-    "sweating": 4,
-    "dehydration": 5,
-    "yellowish_skin": 6,
-    "bruising": 7,
-    "drying_and_tingling_lips": 8,
-    "toxic_look_(typhos)": 9,
-    "red_spots_over_body": 10,
-    "dischromic_patches": 11,
-    "Pus_filled_pimples": 12,
-    "blackheads": 13,
-    "skin_peeling": 14,
-    "Silver_like_dusting": 15,
-    "blister": 16,
-    "red_sore_around_nose": 17,
-    "yellow_crust_ooze": 18,
-    "inflammatory_nails": 19,
-    "small_dents_in_nails": 20,
-    "scurring": 21,
-    "painful_walking": 22,
-    "prominent_veins_on_calf": 23,
-    "muscle_pain": 24,
-    "movement_stiffness": 25,
-    "swelling_joints": 26,
-    "stiff_neck": 27,
-    "muscle_weakness": 28,
-    "hip_joint_pain": 29,
-    "knee_pain": 30,
-    "swollen_extremities": 31,
-    "brittle_nails": 32,
-    "neck_pain": 33,
-    "weakness_in_limbs": 34,
-    "back_pain": 35,
-    "cold_hands_and_feets": 36,
-    "muscle_wasting": 37,
-    "joint_pain": 38,
-    "swollen_legs": 39,
-    "chills": 40,
-    "shivering": 41,
-    "headache": 42,
-    "dizziness": 43,
-    "cramps": 44,
-    "slurred_speech": 45,
-    "loss_of_balance": 46,
-    "unsteadiness": 47,
-    "weakness_of_one_body_side": 48,
-    "altered_sensorium": 49,
-    "coma": 50,
-    "acidity": 51,
-    "ulcers_on_tongue": 52,
-    "vomiting": 53,
-    "indigestion": 54,
-    "nausea": 55,
-    "constipation": 56,
-    "abdominal_pain": 57,
-    "diarrhea": 58,
-    "swelling_of_stomach": 59,
-    "pain_during_bowel_movements": 60,
-    "pain_in_anal_region": 61,
-    "bloody_stool": 62,
-    "irritation_in_anus": 63,
-    "passage_of_gases": 64,
-    "belly_pain": 65,
-    "abnormal_menstruation": 66,
-    "stomach_bleeding": 67,
-    "distention_of_abdomen": 68,
-    "stomach_pain": 69,
-    "continuous_sneezing": 70,
-    "cough": 71,
-    "Breathlessness": 72,
-    "Phlegm": 73,
-    "Throat_irritation": 74,
-    "redness_of_eyes": 75,
-    "sinus_pressure": 76,
-    "runny_nose": 77,
-    "congestion": 78,
-    "mucoid_sputum": 79,
-    "rusty_sputum": 80,
-    "blood_in_sputum": 81,
-    "lack_of_concentration": 82,
-    "irritability": 83,
-    "depression": 84,
-    "lethargy": 85,
-    "restlessness": 86,
-    "mood_swings": 87,
-    "anxiety": 88,
-    "burning_micturition": 89,
-    "spotting_urination": 90,
-    "dark_urine": 91,
-    "yellow_urine": 92,
-    "bladder_discomfort": 93,
-    "foul_smell_of_urine": 94,
-    "continuous_feel_of_urine": 95,
-    "polyuria": 96,
-    "palpitations": 97,
-    "enlarged_thyroid": 98,
-    "swollen_blood_vessels": 99,
-    "fast_heart_rate": 100,
-    "chest_pain": 101,
-    "swelled_lymph_nodes": 102,
-    "fatigue": 103,
-    "weight_gain": 104,
-    "weight_loss": 105,
-    "irregular_sugar_level": 106,
-    "high_fever": 107,
-    "sunken_eyes": 108,
-    "loss_of_appetite": 109,
-    "mild_fever": 110,
-    "yellowing_of_eyes": 111,
-    "acute_liver_failure": 112,
-    "fluid_overload": 113,
-    "malaise": 114,
-    "obesity": 115,
-    "puffy_face_and_eyes": 116,
-    "extra_marital_contacts": 117,
-    "spinning_movements": 118,
-    "internal_itching": 119,
-    "watering_from_eyes": 120,
-    "family_history": 121,
-    "history_of_alcohol_consumption": 122,
-    "receiving_unsterile_injections": 123,
-    "receiving_blood_transfusion": 124,
-    "pain_behind_the_eyes": 125,
-    "blurred_and_distorted_vision": 126,
-    "excessive_hunger": 127,
-    "loss_of_smell": 128,
-    "increased_appetite": 129,
-    "visual_disturbances": 130,
+  bool _isSymptomSelected(String symptom) {
+    return selectedSymptoms.contains(symptom);
+  }
+
+  Map<String, int> _generateSymptomInput() {
+    Map<String, int> input_data_for_model = {};
+    symptomsCategories.values.expand((symptoms) => symptoms).forEach((symptom) {
+      input_data_for_model[symptom] =
+      selectedSymptoms.contains(symptom) ? 1 : 0;
+    });
+
+    // Print the number of items in the generated input
+    print('Number of items in generated input: ${input_data_for_model.length}');
+
+    return input_data_for_model;
+  }
+
+
+
+
+  static const Map<int, String> disease_mapping = {
+    0: "Paroxysmal Positional Vertigo",
+    1: "AIDS",
+    2: "Acne",
+    3: "Alcoholic hepatitis",
+    4: "Allergy",
+    5: "Arthritis",
+    6: "Bronchial Asthma",
+    7: "Cervical spondylosis",
+    8: "Chickenpox",
+    9: "Chronic cholestasis",
+    10: "Common Cold",
+    11: "Dengue",
+    12: "Diabetes",
+    13: "Dimorphic hemorrhoids (piles)",
+    14: "Drug Reaction",
+    15: "Fungal infection",
+    16: "GERD (Gastroesophageal Reflux Disease)",
+    17: "Gastroenteritis",
+    18: "Heart attack",
+    19: "Hepatitis B",
+    20: "Hepatitis C",
+    21: "Hepatitis D",
+    22: "Hepatitis E",
+    23: "Hypertension",
+    24: "Hyperthyroidism",
+    25: "Hypoglycemia",
+    26: "Hypothyroidism",
+    27: "Impetigo",
+    28: "Jaundice",
+    29: "Malaria",
+    30: "Migraine",
+    31: "Osteoarthritis",
+    32: "Paralysis (brain hemorrhage)",
+    33: "Peptic ulcer disease",
+    34: "Pneumonia",
+    35: "Psoriasis",
+    36: "Tuberculosis",
+    37: "Typhoid",
+    38: "Urinary tract infection",
+    39: "Varicose veins",
+    40: "Hepatitis A"
   };
+  String mapToDisease(int prediction) {
+    return disease_mapping[prediction] ?? "Unknown";
+  }
+  Future<void> _predictDisease() async {
+    final url = 'https://model-1-bzs7.onrender.com/';
+    final input_data_for_model = _generateSymptomInput();
 
-  Future<void> _predictDiseaseFromServer(BuildContext context) async {
+    // Convert data to JSON string
+    final inputJson = jsonEncode(input_data_for_model);
+    print('Number of items in input_data_for_model: ${input_data_for_model.length}');
+    print('Input data for model: $input_data_for_model');
+
     try {
-      // Initialize symptomsIndices with zeros for all features
-      final List<int> symptomsIndices = List<int>.filled(132, 0);
-
-      // Set indices to 1 for selected symptoms
-      selectedSymptoms.forEach((symptom) {
-        final int? index = symptomsMapping[symptom];
-        if (index != null) {
-          symptomsIndices[index] = 1;
-        } else {
-          print('Symptom $symptom not found in symptomsMapping');
-        }
-      });
-
+      // Send POST request using http package
       final response = await http.post(
-        Uri.parse('http://192.168.56.1:5000/predict'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        // Send symptomsIndices as a list of 0s and 1s
-        body: jsonEncode(<String, dynamic>{'symptoms': symptomsIndices}),
+        Uri.parse(url),
+        body: inputJson,
       );
 
-      print('Request sent with symptoms: $symptomsIndices');
-
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        print('Response received: $data');
+        final predictedDiseaseIndex = jsonDecode(response.body)['disease'];
+        final predictedDisease = disease_mapping[predictedDiseaseIndex];
 
-        // Check if the 'prediction' field exists and is not null
-        if (data.containsKey('prediction') && data['prediction'] != null) {
-          final String prediction = data['prediction'];
+        // Update predictedDisease and buttonPressed
+        setState(() {
+          this.predictedDisease = predictedDisease!;
+          buttonPressed = true;
+        });
 
-          // Update the UI to display the predicted disease
-          setState(() {
-            predictedDisease = prediction;
-            buttonPressed = true; // Set buttonPressed to true when prediction is received
-          });
-        } else {
-          // If 'prediction' field is missing or null, handle it accordingly
-          setState(() {
-            predictedDisease = 'No prediction available';
-          });
-        }
+        print('Predicted Disease: $predictedDisease');
       } else {
-        throw Exception('Failed to predict disease. Status code: ${response.statusCode}');
+        // Handle error with status code
+        setState(() {
+          predictedDisease = 'Error: Prediction failed. Status code: ${response.statusCode}';
+          buttonPressed = true;
+        });
       }
     } catch (error) {
-      print('Error predicting disease: $error');
+      // Handle other exceptions (e.g., network errors)
+      setState(() {
+        predictedDisease = 'Error: Unable to get prediction. Check your internet connection.';
+        buttonPressed = true;
+      });
+      print('Error making prediction request: $error');
     }
   }
-
-  // Add a map to track the visibility of symptoms for each category
-  Map<String, bool> categoryVisibility = {};
-
-// Function to toggle visibility of symptoms for a category
-  void toggleCategoryVisibility(String category) {
-    setState(() {
-      if (categoryVisibility.containsKey(category)) {
-        categoryVisibility[category] = !categoryVisibility[category]!;
-      } else {
-        categoryVisibility[category] = true;
-      }
-    });
-  }
-
-// Function to check if symptoms of a category are visible
-  bool isCategoryVisible(String category) {
-    return categoryVisibility.containsKey(category) ? categoryVisibility[category]! : false;
-  }
-  bool buttonPressed = false; // Variable to track whether the button is pressed
 
   @override
   Widget build(BuildContext context) {
@@ -454,6 +313,7 @@ class _DiseaseState extends State<Disease> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -533,169 +393,103 @@ class _DiseaseState extends State<Disease> {
                     Text(
                       'What are you feeling?',
                       textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
-              Container(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.all(12),
-                            width: 90,
-                            height: 40,
-                            child: Image(
-                                image: AssetImage("assets/mental-health.png")),
+              ...symptomsCategories.keys.map((category) {
+                return Card(
+                  elevation: 2,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          category,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            'Show symptoms',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: myPurple,
-                            ),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            toggleCategoryVisibility(category);
+                          },
+                          icon: Icon(
+                            isCategoryVisible(category)
+                                ? Icons.expand_less
+                                : Icons.expand_more,
                           ),
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: GestureDetector(
-                              onTap: toggleExpanded,
-                              child: Icon(
-                                isExpanded
-                                    ? Icons.arrow_drop_up
-                                    : Icons.arrow_drop_down,
-                                size: 32.0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            blurRadius: 9,
-                            offset: Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (isExpanded)
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: Wrap(
-                          spacing: 8.0,
-                          runSpacing: 8.0,
-                          children: [
-                            for (var entry in symptomsCategories.entries)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      toggleCategoryVisibility(entry.key);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                      child: Text(
-                                        entry.key,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  if (isCategoryVisible(entry.key))
-                                    Wrap(
-                                      spacing: 8.0,
-                                      runSpacing: 8.0,
-                                      children: [
-                                        for (var symptom in entry.value)
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              _toggleSymptom(symptom);
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: _isSymptomSelected(symptom)
-                                                  ? myPurple
-                                                  : Color(0XFF7E79B7FF),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                            child: Text(
-                                              symptom,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                ],
-                              ),
-                          ],
                         ),
                       ),
-                  ],
-                ),
-              ),
-              // Display predicted disease only if it's not null and button is pressed
-              if (buttonPressed && predictedDisease != null)
-                Text('Predicted Disease: ${predictedDisease ?? 'No prediction available'}'),
-
-              Container(
-                width: double.infinity,
-                height: 300,
-                child: Padding(
-                  padding: const EdgeInsets.all(100.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Hide the button if buttonPressed is true
-                      if (!buttonPressed)
-                        ElevatedButton(
-                          onPressed: () {
-                            // Call function to predict disease
-                            // and pass selectedSymptoms list
-                            _predictDiseaseFromServer(context);
-                          },
-                          child: Text('Generate'),
-                          style: ButtonStyle(
-                            shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(myPurple),
+                      if (isCategoryVisible(category))
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children:
+                                symptomsCategories[category]!.map((symptom) {
+                              return CheckboxListTile(
+                                title: Text(symptom.replaceAll("_", " ")),
+                                value: _isSymptomSelected(symptom),
+                                onChanged: (_) {
+                                  _toggleSymptom(symptom);
+                                },
+                              );
+                            }).toList(),
                           ),
                         ),
                     ],
                   ),
+                );
+              }).toList(),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _predictDisease();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: myPurple,
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  'Predict Disease',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-
-
-
-
+              SizedBox(
+                height: 20,
+              ),
+              if (buttonPressed)
+                Text(
+                  'Predicted Disease: $predictedDisease',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              SizedBox(height: 50,),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: Disease(),
+  ));
 }

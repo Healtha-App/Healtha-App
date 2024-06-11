@@ -123,7 +123,7 @@ class _DoctorCardState extends State<DoctorCard> {
               IconButton(
                 icon: Icon(
                   _isFavorited ? Icons.favorite : Icons.favorite_border,
-                  color: _isFavorited ? Color(0xff7c77d1) : Colors.white,
+                  color: _isFavorited ? Color(0xff7c77d1) : Color(0xff7c77d1),
                   size: 18.0,
                 ),
                 onPressed: () {
@@ -157,7 +157,7 @@ List<Doctor> doctors = [
     assetImagePath: 'assets/doctor4.png',
   ),
   Doctor(
-    name: 'Dr.Rahma Khaled',
+    name: 'Dr.Esraa',
     location: 'El-Sadat City',
     specialty: 'Cardiologist',
     rating: 4.5,

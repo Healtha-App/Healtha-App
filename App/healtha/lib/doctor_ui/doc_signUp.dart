@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/doctor_ui/requested-reports.dart';
 import 'package:http/http.dart' as http;
 import '../home/home_screen.dart';
+import '../main.dart';
+import '../themes/dark.dart';
 import 'doc_login.dart';
 
 class docSignUpPage extends StatefulWidget {
@@ -67,7 +69,10 @@ class _docSignUpPageState extends State<docSignUpPage> {
                 ],
               ),
             ),
-            backgroundColor: Colors.white,
+
+            backgroundColor: MyApp().themeData == darkTheme
+                ? Colors.black
+                : Colors.white,
             elevation: 8,
             behavior: SnackBarBehavior.floating,
           ),
@@ -158,7 +163,9 @@ class _docSignUpPageState extends State<docSignUpPage> {
                         child: Container(
                           height: screenSize.height * 0.9,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: MyApp().themeData == darkTheme
+                                ? Colors.black
+                                : Colors.white,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(screenSize.width * 0.1),
                               topRight: Radius.circular(screenSize.width * 0.1),

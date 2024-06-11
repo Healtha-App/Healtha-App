@@ -17,7 +17,7 @@ class customContainer extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         height: 110,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(

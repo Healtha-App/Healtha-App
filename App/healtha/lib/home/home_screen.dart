@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healtha/home/Lipid-Panel.dart';
+import 'package:healtha/home/title_item.dart';
 import 'package:healtha/register_login/log_in.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
@@ -130,6 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 15),
@@ -194,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xff161515),
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -216,6 +219,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 20,),
+
+
                 SizedBox(
                   height: 10,
                 ),
@@ -335,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -450,37 +455,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 25),
               ],
-            ),
-          ),
-        ),
-        floatingActionButton: Container(
-          width: MediaQuery.of(context).size.width * 0.21,
-          height: MediaQuery.of(context).size.height * 0.21,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Color(0xff7c77d1).withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 12,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: RawMaterialButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()),
-                );
-              },
-              elevation: 5.0,
-              fillColor: Colors.white,
-              child: iconBot,
-              padding: EdgeInsets.all(12.0),
-              shape: CircleBorder(),
             ),
           ),
         ),

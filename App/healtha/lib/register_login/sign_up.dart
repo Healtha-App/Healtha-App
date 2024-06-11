@@ -82,7 +82,7 @@ class _SignUpState extends State<SignUp> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => YourWidget(),
+            builder: (context) => Navbar(),
           ),
               (route) => false,
         );

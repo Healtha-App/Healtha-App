@@ -38,19 +38,20 @@ import 'themes/light.dart';
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+  MyApp({super.key});
   static const Color myPurple = Color(0xff7c77d1);
+  final ThemeData themeData = lightTheme; // Define your theme here
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: 'Healtha',
       debugShowCheckedModeBanner: false,
-     // theme: darkTheme,
-      home: NotificationCenter(),
+      theme: themeData,
+      home: Navbar(),
     );
   }
 }
