@@ -1,22 +1,71 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healtha/doctor_ui/doc-profile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class AllDoctors extends StatelessWidget {
+class AllDoctors extends StatefulWidget {
+  @override
+  _AllDoctorsState createState() => _AllDoctorsState();
+}
+
+class _AllDoctorsState extends State<AllDoctors> {
+  List<Doctor> allDoctors = [];
+  List<Doctor> filteredDoctors = [];
+  String searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDoctors().then((doctors) {
+      setState(() {
+        allDoctors = doctors;
+        filteredDoctors = doctors;
+      });
+    });
+  }
+
+  Future<List<Doctor>> fetchDoctors() async {
+    final response = await http.get(Uri.parse('http://192.168.1.12:4000/api/healtha/doctors'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => Doctor.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load doctors');
+    }
+  }
+
+  void updateSearchQuery(String query) {
+    setState(() {
+      searchQuery = query;
+      filteredDoctors = allDoctors.where((doctor) {
+        return doctor.name.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF0EEFA),
       appBar: AppBar(
         backgroundColor: Color(0xFFF0EEFA),
-        title: Text('Discover All Doctors'),
+        title: Text('Discover All Doctors',style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold
+        ),),
       ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              onChanged: (value) {
+                updateSearchQuery(value);
+              },
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Search by name, location or specialty',
@@ -28,9 +77,9 @@ class AllDoctors extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: doctors.length,
+              itemCount: filteredDoctors.length,
               itemBuilder: (context, index) {
-                return DoctorCard(doctor: doctors[index]);
+                return DoctorCard(doctor: filteredDoctors[index]);
               },
             ),
           ),
@@ -42,18 +91,19 @@ class AllDoctors extends StatelessWidget {
 
 class Doctor {
   final String name;
-  final String location;
-  final String specialty;
   final double rating;
-  final String assetImagePath;
 
   Doctor({
     required this.name,
-    required this.location,
-    required this.specialty,
     required this.rating,
-    required this.assetImagePath,
   });
+
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
+      name: json['name'],
+      rating: 4.5,
+    );
+  }
 }
 
 class DoctorCard extends StatefulWidget {
@@ -87,7 +137,7 @@ class _DoctorCardState extends State<DoctorCard> {
             children: [
               CircleAvatar(
                 radius: 50.0,
-                backgroundImage: AssetImage(widget.doctor.assetImagePath),
+                backgroundImage: AssetImage("images/dr.PNG"),
               ),
               SizedBox(width: 10.0),
               Expanded(
@@ -100,16 +150,6 @@ class _DoctorCardState extends State<DoctorCard> {
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    Text(widget.doctor.specialty),
-                    Row(
-                      children: [
-                        Text(widget.doctor.location),
-                        IconButton(
-                          icon: Icon(Icons.share_location_outlined, color: Colors.redAccent, size: 18.0),
-                          onPressed: () {},
-                        ),
-                      ],
                     ),
                     Row(
                       children: [
@@ -138,65 +178,13 @@ class _DoctorCardState extends State<DoctorCard> {
       ),
     );
   }
-}
 
-// Sample list of doctors
-List<Doctor> doctors = [
-  Doctor(
-    name: 'Dr.Eman Magdy',
-    location: 'El-Sadat City',
-    specialty: 'Cardiologist',
-    rating: 4.5,
-    assetImagePath: 'assets/doctor1.png',
-  ),
-  Doctor(
-    name: 'Dr.Hossam Mohammed',
-    location: 'Shibin El-Koum',
-    specialty: 'Dermatologist',
-    rating: 4.8,
-    assetImagePath: 'assets/doctor4.png',
-  ),
-  Doctor(
-    name: 'Dr.Esraa',
-    location: 'El-Sadat City',
-    specialty: 'Cardiologist',
-    rating: 4.5,
-    assetImagePath: 'assets/doctor3.jpg',
-  ),
-  Doctor(
-    name: 'Dr.Mohammed Ali',
-    location: 'Cairo, Egypt',
-    specialty: 'Dermatologist',
-    rating: 4.8,
-    assetImagePath: 'assets/doctor2.jpg',
-  ),
-  Doctor(
-    name: 'Dr.Sara Samir',
-    location: 'El-Sadat City',
-    specialty: 'Cardiologist',
-    rating: 4.5,
-    assetImagePath: 'assets/doctor5.jpg',
-  ),
-  Doctor(
-    name: 'Dr.Ahmed Nour',
-    location: 'Shibin El-Koum',
-    specialty: 'Dermatologist',
-    rating: 4.8,
-    assetImagePath: 'assets/doctor10.png',
-  ),
-  Doctor(
-    name: 'Dr.Aya Elmallah',
-    location: 'Cairo, Egypt',
-    specialty: 'Cardiologist',
-    rating: 4.5,
-    assetImagePath: 'assets/doctor7.png',
-  ),
-  Doctor(
-    name: 'Dr.Jane Smith',
-    location: 'El-Sadat City',
-    specialty: 'Dermatologist',
-    rating: 4.8,
-    assetImagePath: 'assets/doctor8.jpeg',
-  ),
-  // Add more doctors here
-];
+  void _launchURL(String location) async {
+    final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=$location');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+}

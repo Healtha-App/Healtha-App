@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
   bool isPasswordVisible = false;
 
   Future<bool> login(BuildContext context) async {
-    String healthaIP = 'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
+    String healthaIP = 'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
     final url = healthaIP;
 
     try {
