@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:http/http.dart' as http;
 
 class Disease extends StatefulWidget {
@@ -10,7 +11,7 @@ class Disease extends StatefulWidget {
 }
 
 class _DiseaseState extends State<Disease> {
-  static const Color myPurple = Color(0xff7c77d1);
+  static Color myPurple = const Color(0xff7c77d1);
 
   bool isExpanded = false;
   String predictedDisease = 'Predicted Disease';
@@ -194,28 +195,23 @@ class _DiseaseState extends State<Disease> {
     });
   }
 
-
   bool _isSymptomSelected(String symptom) {
     return selectedSymptoms.contains(symptom);
   }
 
   Map<String, int> _generateSymptomInput() {
-    Map<String, int> input_data_for_model = {};
+    Map<String, int> inputDataForModel = {};
     symptomsCategories.values.expand((symptoms) => symptoms).forEach((symptom) {
-      input_data_for_model[symptom] =
-      selectedSymptoms.contains(symptom) ? 1 : 0;
+      inputDataForModel[symptom] = selectedSymptoms.contains(symptom) ? 1 : 0;
     });
 
     // Print the number of items in the generated input
-    print('Number of items in generated input: ${input_data_for_model.length}');
+    print('Number of items in generated input: ${inputDataForModel.length}');
 
-    return input_data_for_model;
+    return inputDataForModel;
   }
 
-
-
-
-  static const Map<int, String> disease_mapping = {
+  static Map<int, String> disease_mapping = {
     0: "Paroxysmal Positional Vertigo",
     1: "AIDS",
     2: "Acne",
@@ -261,14 +257,16 @@ class _DiseaseState extends State<Disease> {
   String mapToDisease(int prediction) {
     return disease_mapping[prediction] ?? "Unknown";
   }
+
   Future<void> _predictDisease() async {
-    final url = 'https://model-1-bzs7.onrender.com/';
-    final input_data_for_model = _generateSymptomInput();
+    const url = 'https://model-1-bzs7.onrender.com/';
+    final inputDataForModel = _generateSymptomInput();
 
     // Convert data to JSON string
-    final inputJson = jsonEncode(input_data_for_model);
-    print('Number of items in input_data_for_model: ${input_data_for_model.length}');
-    print('Input data for model: $input_data_for_model');
+    final inputJson = jsonEncode(inputDataForModel);
+    print(
+        'Number of items in input_data_for_model: ${inputDataForModel.length}');
+    print('Input data for model: $inputDataForModel');
 
     try {
       // Send POST request using http package
@@ -287,18 +285,20 @@ class _DiseaseState extends State<Disease> {
           buttonPressed = true;
         });
 
-        print('Predicted Disease: $predictedDisease');
+        print(S.of(context).Predicted_Disease(predictedDisease!));
       } else {
         // Handle error with status code
         setState(() {
-          predictedDisease = 'Error: Prediction failed. Status code: ${response.statusCode}';
+          predictedDisease =
+              'Error: Prediction failed. Status code: ${response.statusCode}';
           buttonPressed = true;
         });
       }
     } catch (error) {
       // Handle other exceptions (e.g., network errors)
       setState(() {
-        predictedDisease = 'Error: Unable to get prediction. Check your internet connection.';
+        predictedDisease =
+            'Error: Unable to get prediction. Check your internet connection.';
         buttonPressed = true;
       });
       print('Error making prediction request: $error');
@@ -313,7 +313,6 @@ class _DiseaseState extends State<Disease> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -323,15 +322,15 @@ class _DiseaseState extends State<Disease> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xff7c77d1).withOpacity(0.5),
-                          Color(0xff7c77d1).withOpacity(0.7),
-                          Color(0xff7c77d1).withOpacity(0.9),
-                          Color(0xff7c77d1),
+                          const Color(0xff7c77d1).withOpacity(0.5),
+                          const Color(0xff7c77d1).withOpacity(0.7),
+                          const Color(0xff7c77d1).withOpacity(0.9),
+                          const Color(0xff7c77d1),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.topRight,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15),
                       ),
@@ -342,7 +341,7 @@ class _DiseaseState extends State<Disease> {
                     left: MediaQuery.of(context).size.width * 0.05,
                     right: MediaQuery.of(context).size.width * 0.05,
                     child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: 120,
                       decoration: BoxDecoration(
@@ -351,7 +350,7 @@ class _DiseaseState extends State<Disease> {
                         boxShadow: [
                           BoxShadow(
                             color: myPurple,
-                            offset: Offset(0.0, 2.0),
+                            offset: const Offset(0.0, 2.0),
                             blurRadius: 1.0,
                             spreadRadius: 0.0,
                           ),
@@ -362,20 +361,20 @@ class _DiseaseState extends State<Disease> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Your health, our priority!",
+                            S.of(context).Your_health_our_priority,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: myPurple,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
-                            "Disease prediction made easy",
+                            S.of(context).Disease_prediction_made_easy,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15),
+                            style: const TextStyle(fontSize: 15),
                           ),
                         ],
                       ),
@@ -383,7 +382,7 @@ class _DiseaseState extends State<Disease> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 60,
               ),
               Padding(
@@ -391,15 +390,15 @@ class _DiseaseState extends State<Disease> {
                 child: Row(
                   children: [
                     Text(
-                      'What are you feeling?',
+                      S.of(context).What_are_you_feeling,
                       textAlign: TextAlign.start,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ...symptomsCategories.keys.map((category) {
@@ -410,7 +409,7 @@ class _DiseaseState extends State<Disease> {
                       ListTile(
                         title: Text(
                           category,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -445,7 +444,7 @@ class _DiseaseState extends State<Disease> {
                   ),
                 );
               }).toList(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               ElevatedButton(
@@ -454,32 +453,35 @@ class _DiseaseState extends State<Disease> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: myPurple,
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
                 child: Text(
-                  'Predict Disease',
-                  style: TextStyle(
+                  S.of(context).Predict_Disease,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               if (buttonPressed)
                 Text(
-                  'Predicted Disease: $predictedDisease',
-                  style: TextStyle(
+                  S.of(context).Predicted_Disease(predictedDisease),
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-              SizedBox(height: 50,),
+              const SizedBox(
+                height: 50,
+              ),
             ],
           ),
         ),
@@ -489,7 +491,7 @@ class _DiseaseState extends State<Disease> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: Disease(),
   ));
 }

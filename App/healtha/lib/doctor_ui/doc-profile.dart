@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../profile/customContainer.dart';
+import 'package:healtha/generated/l10n.dart';
 
 class drProfile extends StatefulWidget {
   const drProfile({Key? key}) : super(key: key);
@@ -32,7 +33,8 @@ class _drProfileState extends State<drProfile> {
 
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
-    final response = await http.get(Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors'));
+    final response = await http.get(Uri.parse(
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors'));
 
     if (response.statusCode == 200) {
       // If the request is successful, parse the JSON response
@@ -42,7 +44,7 @@ class _drProfileState extends State<drProfile> {
         Map<String, dynamic> userData = doctorsData.last;
         // Update the state variables with the retrieved user data
         setState(() {
-          email = userData['email'];
+          email = userData[S.of(context).email];
           name = userData['username'];
           phone = userData["contactInformation"];
           spec = userData["specialization"];
@@ -58,12 +60,12 @@ class _drProfileState extends State<drProfile> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Failed to fetch user data'),
+          title: const Text("Error"),
+          content: Text(S.of(context).Failed_to_fetch_user_data),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              child: Text(S.of(context).OK),
             ),
           ],
         ),
@@ -79,297 +81,346 @@ class _drProfileState extends State<drProfile> {
     return SafeArea(
       child: Scaffold(
         body: _isLoading
-            ? Center(child: CircularProgressIndicator()) // Show loading indicator if data is still loading
+            ? const Center(
+                child:
+                    CircularProgressIndicator()) // Show loading indicator if data is still loading
             : SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    width: screenSize.width,
-                    height: screenSize.height / 2.1,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("images/dr.PNG"),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Theme.of(context).colorScheme.background.withOpacity(1),
-                          Theme.of(context).colorScheme.background.withOpacity(0.3),
-                          Theme.of(context).colorScheme.background.withOpacity(0),
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenSize.height / 1.2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                child: Column(
+                  children: [
+                    Stack(
                       children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Patients",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              "20",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white70,
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Experience widget
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Experience",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              "5 Years",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white70,
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Specialization widget
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Specialization",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              spec ?? "Loading ..",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white70,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(screenSize.width * 0.05),
-                    child: Column(
-                      children: [
-                        SizedBox(
+                        Container(
+                          width: screenSize.width,
                           height: screenSize.height / 2.1,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Dr. ",
-                              style: TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("images/dr.PNG"),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .surface
+                                      .withOpacity(1),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .surface
+                                      .withOpacity(0.3),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .surface
+                                      .withOpacity(0),
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
                               ),
                             ),
-                            Text(
-                              name ?? "Loading...",
-                              style: TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(
-                          height: 25,
-                        ),
-                        customContainer(
-                          title: "email",
-                          icon1: Image.asset("assets/at.png"),
-                          data: email ?? "Loading...", // Display "Loading..." if email is null
-                        ),
-                        SizedBox(height: 15),
-                        customContainer(
-                          title: "Phone Number",
-                          icon1: Image.asset("assets/phone-call.png"),
-                          data: phone ?? 'loading ..',
-                        ),
-                        // New customContainers to display skills and qualifications
-                        skills != null
-                            ? Padding(
-                          padding: EdgeInsets.all(screenSize.width * 0.02),
-                          child: customContainer(
-                            title: "Skills",
-                            icon1: Image.asset("images/skill.png"),
-                            data: skills!,
-                          ),
-                        )
-                            : SizedBox(height: 10),
-                        qualifications != null
-                            ? customContainer(
-                          title: "Qualifications",
-                          icon1: Image.asset("images/certificate2.png"),
-                          data: qualifications!,
-                        )
-                            : SizedBox(height: 30),
-                        Padding(
-                          padding: EdgeInsets.all(screenSize.width * 0.02),
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Dialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
+                          height: screenSize.height / 1.2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    S.of(context).Patients,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
-                                    child: Container(
-                                      padding: EdgeInsets.all(20.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            "Complete Your Info",
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(height: 20.0),
-                                          TextField(
-                                            keyboardType: TextInputType.multiline,
-                                            minLines: 1,
-                                            maxLines: 5,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                skills = value;
-                                              });
-                                            },
-                                            decoration: InputDecoration(
-                                              labelText: "Skills",
-                                              hintText: "Enter your skills",
-                                              border: OutlineInputBorder(),
-                                            ),
-                                          ),
-                                          SizedBox(height: 10),
-                                          TextField(
-                                            keyboardType: TextInputType.multiline,
-                                            minLines: 1,
-                                            maxLines: 5,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                qualifications = value;
-                                              });
-                                            },
-                                            decoration: InputDecoration(
-                                              labelText: "Qualifications",
-                                              hintText: "Enter your qualifications",
-                                              border: OutlineInputBorder(),
-                                            ),
-                                          ),
-                                          SizedBox(height: 20.0),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  // Save skills and qualifications
-                                                  // You can handle saving the data to your database here
-                                                  Navigator.of(context).pop();
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Color(0xff7c77d1),
-                                                  //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                                ),
-                                                child: Text("Save",style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.w600
-                                                ),),
-                                              ),
-                                              SizedBox(width: 10.0),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.white,
-                                                  //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                                ),
-                                                child: Text("Cancel",style: TextStyle(
-                                                    color: Color(0xff7c77d1),
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.w600
-                                                ),),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  const Text(
+                                    "20",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white70,
                                     ),
-                                  );
-                                },
-                              );
-                            },
-                            icon: Icon(Icons.edit, color: Colors.white),
-                            label: Text(
-                              "Complete your info",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                                  ),
+                                ],
                               ),
-                            ),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xff7c77d1)),
-                            ),
+                              // Experience widget
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    S.of(context).Experience,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  const Text(
+                                    "5 Years",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // Specialization widget
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    S.of(context).Specialization,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    spec ?? "Loading ..",
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(screenSize.width * 0.05),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: screenSize.height / 2.1,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    S.of(context).Dr,
+                                    style: const TextStyle(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    name ?? "Loading...",
+                                    style: TextStyle(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black.withOpacity(0.7),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              customContainer(
+                                title: S.of(context).email,
+                                icon1: Image.asset("assets/at.png"),
+                                data: email ??
+                                    "Loading...", // Display "Loading..." if email is null
+                              ),
+                              const SizedBox(height: 15),
+                              customContainer(
+                                title: S.of(context).Phone_Number,
+                                icon1: Image.asset("assets/phone-call.png"),
+                                data: phone ?? 'loading ..',
+                              ),
+                              // New customContainers to display skills and qualifications
+                              skills != null
+                                  ? Padding(
+                                      padding: EdgeInsets.all(
+                                          screenSize.width * 0.02),
+                                      child: customContainer(
+                                        title: S.of(context).Skills,
+                                        icon1: Image.asset("images/skill.png"),
+                                        data: skills!,
+                                      ),
+                                    )
+                                  : const SizedBox(height: 10),
+                              qualifications != null
+                                  ? customContainer(
+                                      title: S.of(context).Qualifications,
+                                      icon1: Image.asset(
+                                          "images/certificate2.png"),
+                                      data: qualifications!,
+                                    )
+                                  : const SizedBox(height: 30),
+                              Padding(
+                                padding:
+                                    EdgeInsets.all(screenSize.width * 0.02),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                          ),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  S
+                                                      .of(context)
+                                                      .Complete_Your_Info,
+                                                  style: const TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 20.0),
+                                                TextField(
+                                                  keyboardType:
+                                                      TextInputType.multiline,
+                                                  minLines: 1,
+                                                  maxLines: 5,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      skills = value;
+                                                    });
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    labelText:
+                                                        S.of(context).Skills,
+                                                    hintText: S
+                                                        .of(context)
+                                                        .Enter_your_skills,
+                                                    border:
+                                                        const OutlineInputBorder(),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                TextField(
+                                                  keyboardType:
+                                                      TextInputType.multiline,
+                                                  minLines: 1,
+                                                  maxLines: 5,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      qualifications = value;
+                                                    });
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    labelText: S
+                                                        .of(context)
+                                                        .Qualifications,
+                                                    hintText: S
+                                                        .of(context)
+                                                        .Enter_your_qualifications,
+                                                    border:
+                                                        const OutlineInputBorder(),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 20.0),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        // Save skills and qualifications
+                                                        // You can handle saving the data to your database here
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            const Color(
+                                                                0xff7c77d1),
+                                                        //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                                      ),
+                                                      child: Text(
+                                                        S.of(context).Save,
+                                                        style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10.0),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                                      ),
+                                                      child: Text(
+                                                        S.of(context).Cancel,
+                                                        style: const TextStyle(
+                                                            color: Color(
+                                                                0xff7c77d1),
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: const Icon(Icons.edit,
+                                      color: Colors.white),
+                                  label: Text(
+                                    S.of(context).Complete_your_info,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                            const Color(0xff7c77d1)),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }

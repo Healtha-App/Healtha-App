@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/home/Lipid-Panel.dart';
 import 'package:healtha/home/title_item.dart';
 import 'package:healtha/register_login/log_in.dart';
@@ -49,7 +50,7 @@ List LabTestsDiscription = [
 
 final iconBot = Image.asset(
   'images/bot1.png',
-  color: Color(0xff7c77d1), // Set desired icon color
+  color: const Color(0xff7c77d1), // Set desired icon color
   width: 60.0, // Adjust icon width
   height: 60.0, // Adjust icon height
 );
@@ -92,7 +93,10 @@ final List<Doctor> Doctors = [
   Doctor(name: 'Dr.Emily', photoAsset: 'assets/doctor9.png'),
   Doctor(name: 'Dr.Michael', photoAsset: 'assets/doctor10.png'),
 ];
+
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -101,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   String? name;
 
+  @override
   void initState() {
     super.initState();
     // Call the function to fetch user data when the page loads
@@ -109,7 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
-    final response = await http.get(Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
+    final response = await http.get(Uri.parse(
+        'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
 
     if (response.statusCode == 200) {
       // If the request is successful, parse the JSON response
@@ -131,8 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 15),
@@ -151,18 +156,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           Column(
                             children: [
                               Text(
-                                "Hello ${name}!",
+                                S.of(context).Hello(name!),
                                 style: GoogleFonts.openSans(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
                               Text(
-                                "Welcome to Healtha",
+                                S.of(context).Welcome_to_Healtha,
                                 style: GoogleFonts.dancingScript(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xff7c77d1),
@@ -171,17 +176,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-
                         ],
                       ),
                       InkResponse(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ProfileScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => ProfileScreen()),
                           );
                         },
-                        child: CircleAvatar(
+                        child: const CircleAvatar(
                           radius: 30,
                           backgroundImage: AssetImage("images/girl.PNG"),
                         ),
@@ -189,12 +194,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
-                    "Popular Laboratory Tests",
-                    style: TextStyle(
+                    S.of(context).Popular_Laboratory_Tests,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -211,17 +216,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     reverse: false,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:  Duration(milliseconds: 800),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
                     autoPlayCurve: Curves.fastOutSlowIn,
                     enlargeCenterPage: true,
                     enlargeFactor: 0.3,
                     scrollDirection: Axis.horizontal,
                   ),
                 ),
-                SizedBox(height: 20,),
-
-
-                SizedBox(
+                const SizedBox(
+                  height: 20,
+                ),
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
@@ -230,18 +236,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Expanded(
                       child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: Doctors.length,
-                      itemBuilder: (context, index) {
-                        return DoctorCard(doctor: Doctors[index]);
-                      },
-                                      ),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: Doctors.length,
+                        itemBuilder: (context, index) {
+                          return DoctorCard(doctor: Doctors[index]);
+                        },
+                      ),
                     ),
                   ),
                 ),
                 /*Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding:   EdgeInsets.only(right: 15),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
@@ -249,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         // Navigate to the see all doctors screen
                       },
                       child: Text(
-                        "See All",
+                        S.of(context).See_All,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -266,26 +272,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EncyclopediaTypes()),
+                          MaterialPageRoute(
+                              builder: (context) => EncyclopediaTypes()),
                         );
                       },
                       child: Container(
                         width: double.infinity,
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Color(0xff7c77d1).withOpacity(0.5),
-                              Color(0xff7c77d1).withOpacity(0.7),
-                              Color(0xff7c77d1).withOpacity(0.9),
-                              Color(0xff7c77d1),
+                              const Color(0xff7c77d1).withOpacity(0.5),
+                              const Color(0xff7c77d1).withOpacity(0.7),
+                              const Color(0xff7c77d1).withOpacity(0.9),
+                              const Color(0xff7c77d1),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.black12,
                               blurRadius: 6,
@@ -297,30 +304,32 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
-                              child: ImageIcon(
+                              child: const ImageIcon(
                                 AssetImage("images/body.png"),
                                 size: 35.0,
                                 color: Color(0xff7c77d1),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Text(
-                              "Explore healtha encyclopedias",
-                              style: TextStyle(
+                              S.of(context).Explore_healtha_encyclopedias,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
-                              "Lab analysis encyclopedia and diseases encyclopedia",
-                              style: TextStyle(
+                              S
+                                  .of(context)
+                                  .Lab_analysis_encyclopedia_and_diseases_encyclopedia,
+                              style: const TextStyle(
                                 color: Colors.white54,
                               ),
                             ),
@@ -337,12 +346,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Container(
                         width: double.infinity,
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.black12,
                               blurRadius: 6,
@@ -354,30 +363,32 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
                                 color: Color(0xFFF0EEFA),
                                 shape: BoxShape.circle,
                               ),
-                              child: ImageIcon(
+                              child: const ImageIcon(
                                 AssetImage("images/ency2.png"),
                                 size: 35.0,
                                 color: Color(0xff7c77d1),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Text(
-                              "Generate Laboratory Test Report ",
-                              style: TextStyle(
+                              S.of(context).Generate_Laboratory_Test_Report,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
-                              "Discover how could you get your lab report via Healtha!",
-                              style: TextStyle(
+                              S
+                                  .of(context)
+                                  .Discover_how_could_you_get_your_lab_report_via_Healtha,
+                              style: const TextStyle(
                                 color: Colors.black54,
                               ),
                             ),
@@ -394,21 +405,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Container(
                         width: double.infinity,
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Color(0xff7c77d1).withOpacity(0.5),
-                              Color(0xff7c77d1).withOpacity(0.7),
-                              Color(0xff7c77d1).withOpacity(0.9),
-                              Color(0xff7c77d1),
+                              const Color(0xff7c77d1).withOpacity(0.5),
+                              const Color(0xff7c77d1).withOpacity(0.7),
+                              const Color(0xff7c77d1).withOpacity(0.9),
+                              const Color(0xff7c77d1),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.black12,
                               blurRadius: 6,
@@ -420,30 +431,32 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
-                              child: ImageIcon(
+                              child: const ImageIcon(
                                 AssetImage("images/symbtoms.png"),
                                 size: 35.0,
                                 color: Color(0xff7c77d1),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Text(
-                              "Track your symptoms",
-                              style: TextStyle(
+                              S.of(context).Track_your_symptoms,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
-                              "Make use of the diseases prediction feature and show your symptomes",
-                              style: TextStyle(
+                              S
+                                  .of(context)
+                                  .Make_use_of_the_diseases_prediction_feature_and_show_your_symptomes,
+                              style: const TextStyle(
                                 color: Colors.white54,
                               ),
                             ),
@@ -453,7 +466,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
               ],
             ),
           ),
@@ -559,8 +572,18 @@ class TestsPoster extends StatelessWidget {
                 ),
               ),
               Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black45.withOpacity(.8),
+                      Colors.white.withOpacity(0.1),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
                 child: Padding(
-                  padding: EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(12),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
@@ -571,16 +594,6 @@ class TestsPoster extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black45.withOpacity(.8),
-                      Colors.white.withOpacity(0.1),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
                   ),
                 ),
               ),

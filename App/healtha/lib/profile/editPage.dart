@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'headerContainer.dart';
 import 'profile.dart';
 import 'customTextField.dart';
-
 
 class editPage extends StatelessWidget {
   const editPage({Key? key}) : super(key: key);
@@ -12,16 +12,17 @@ class editPage extends StatelessWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-
-        onPressed: (){
+        onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ProfileScreen()),
+            MaterialPageRoute(builder: (context) => const ProfileScreen()),
           );
         },
-        backgroundColor:Color(0xff7c77d1),
-        child: Icon(Icons.arrow_back,color: Colors.white,),
-
+        backgroundColor: const Color(0xff7c77d1),
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -29,11 +30,11 @@ class editPage extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             CustomPaint(
+              painter: HeaderCurvedContainer(),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
               ),
-              painter: HeaderCurvedContainer(),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +42,7 @@ class editPage extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.all(20.0),
                   /* child: Text(
-                    'Profile',
+                    S.of(context).Profile,
                     style: TextStyle(
                       fontSize: 35.0,
                       letterSpacing: 1.5,
@@ -63,51 +64,47 @@ class editPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  width: 170,
-                    height: 40,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Enter your Name",
-                        hintStyle: TextStyle(fontSize: 15,color: Colors.black54),
-                      ),
-                    )),
-                const SizedBox(height: 10),
-                Container(
+                SizedBox(
                     width: 170,
                     height: 40,
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Patient / Doctor",
-                        hintStyle: TextStyle(fontSize: 15,color: Colors.black54),
+                        hintText: S.of(context).Enter_your_Name,
+                        hintStyle: const TextStyle(
+                            fontSize: 15, color: Colors.black54),
                       ),
                     )),
-
+                const SizedBox(height: 10),
+                SizedBox(
+                    width: 170,
+                    height: 40,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: S.of(context).Patient_Doctor,
+                        hintStyle: const TextStyle(
+                            fontSize: 15, color: Colors.black54),
+                      ),
+                    )),
                 customTextField(
                   type: TextInputType.emailAddress,
-                  hint: "Enter your email",
+                  hint: S.of(context).Enter_your_email,
                 ),
                 const SizedBox(height: 15),
                 customTextField(
                   type: TextInputType.number,
-                  hint: "Enter your Phone Number",
+                  hint: S.of(context).Enter_your_Phone_Number,
                 ),
                 const SizedBox(height: 15),
                 customTextField(
                   type: TextInputType.text,
-                  hint: "Enter your Address",
+                  hint: S.of(context).Enter_your_Address,
                 ),
                 const SizedBox(height: 15),
-
-
-
-
               ],
             ),
           ],
         ),
       ),
-
     );
   }
 }

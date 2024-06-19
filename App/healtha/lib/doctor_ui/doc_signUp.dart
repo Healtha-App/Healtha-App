@@ -8,8 +8,11 @@ import '../home/home_screen.dart';
 import '../main.dart';
 import '../themes/dark.dart';
 import 'doc_login.dart';
+import 'package:healtha/generated/l10n.dart';
 
 class docSignUpPage extends StatefulWidget {
+  const docSignUpPage({super.key});
+
   @override
   _docSignUpPageState createState() => _docSignUpPageState();
 }
@@ -21,7 +24,8 @@ class _docSignUpPageState extends State<docSignUpPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController contactInfoController = TextEditingController();
-  final TextEditingController specializationController = TextEditingController();
+  final TextEditingController specializationController =
+      TextEditingController();
 
   bool isMale = false;
   bool isFemale = false;
@@ -29,7 +33,8 @@ class _docSignUpPageState extends State<docSignUpPage> {
   bool isPasswordVisible = false;
 
   Future<void> signUp(BuildContext context) async {
-    String healthaIP = 'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors';
+    String healthaIP =
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors';
     final url = healthaIP;
 
     try {
@@ -53,13 +58,13 @@ class _docSignUpPageState extends State<docSignUpPage> {
               height: 60, // Adjust the height as needed
               child: Row(
                 children: [
-                  Icon(Icons.check_circle, color: Colors.green),
-                  SizedBox(width: 10),
+                  const Icon(Icons.check_circle, color: Colors.green),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       'Account created successfully, \n '
-                          'WELCOME Dr.${usernameController.text} TO HEALTHA !',
-                      style: TextStyle(
+                      'WELCOME Dr.${usernameController.text} TO HEALTHA !',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -69,30 +74,27 @@ class _docSignUpPageState extends State<docSignUpPage> {
                 ],
               ),
             ),
-
-            backgroundColor: MyApp().themeData == darkTheme
-                ? Colors.black
-                : Colors.white,
+            backgroundColor:
+                MyApp().themeData == darkTheme ? Colors.black : Colors.white,
             elevation: 8,
             behavior: SnackBarBehavior.floating,
           ),
         );
 
-        Future.delayed(Duration(seconds: 5), () {
+        Future.delayed(const Duration(seconds: 5), () {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => RequestedReports(),
             ),
-
           );
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Sign-up failed. Please try again ..',
-              style: TextStyle(
+              S.of(context).Sign_up_failed_Please_try_again,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -120,10 +122,10 @@ class _docSignUpPageState extends State<docSignUpPage> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xff7c77d1).withOpacity(0.5),
-                        Color(0xff7c77d1).withOpacity(0.7),
-                        Color(0xff7c77d1).withOpacity(0.9),
-                        Color(0xff7c77d1),
+                        const Color(0xff7c77d1).withOpacity(0.5),
+                        const Color(0xff7c77d1).withOpacity(0.7),
+                        const Color(0xff7c77d1).withOpacity(0.9),
+                        const Color(0xff7c77d1),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,
@@ -134,7 +136,8 @@ class _docSignUpPageState extends State<docSignUpPage> {
                     children: [
                       SizedBox(height: screenSize.height * 0.1),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.18),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenSize.width * 0.18),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -146,7 +149,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                             ),
                             SizedBox(width: screenSize.width * 0.02),
                             Text(
-                              'Healtha',
+                              S.of(context).Healtha,
                               style: GoogleFonts.dancingScript(
                                 textStyle: TextStyle(
                                   fontSize: screenSize.width * 0.1,
@@ -179,11 +182,11 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Text(
-                                    'Sign Up',
+                                    S.of(context).Sign_Up,
                                     style: TextStyle(
                                       fontSize: screenSize.width * 0.08,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xff7c77d1),
+                                      color: const Color(0xff7c77d1),
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -191,10 +194,11 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   TextFormField(
                                     controller: usernameController,
                                     decoration: InputDecoration(
-                                      labelText: 'Username',
-                                      suffixIcon: Icon(Icons.person),
+                                      labelText: S.of(context).Username,
+                                      suffixIcon: const Icon(Icons.person),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                        borderRadius: BorderRadius.circular(
+                                            screenSize.width * 0.1),
                                       ),
                                     ),
                                     validator: (value) {
@@ -211,16 +215,20 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                       suffixIcon: GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            isPasswordVisible = !isPasswordVisible;
+                                            isPasswordVisible =
+                                                !isPasswordVisible;
                                           });
                                         },
                                         child: Icon(
-                                          isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                                          isPasswordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
                                         ),
                                       ),
-                                      labelText: 'Password',
+                                      labelText: S.of(context).Password,
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                        borderRadius: BorderRadius.circular(
+                                            screenSize.width * 0.1),
                                       ),
                                     ),
                                     obscureText: !isPasswordVisible,
@@ -229,7 +237,9 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                         return 'Please enter your Password';
                                       } else if (value.length < 8) {
                                         return 'Password must be at least 8 characters';
-                                      } else if (!RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])').hasMatch(value)) {
+                                      } else if (!RegExp(
+                                              r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
+                                          .hasMatch(value)) {
                                         return 'Password must contain at least one lowercase letter, one uppercase letter, and one digit';
                                       }
                                       return null;
@@ -239,16 +249,20 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   TextFormField(
                                     controller: emailController,
                                     decoration: InputDecoration(
-                                      labelText: 'Email',
-                                      suffixIcon: Icon(Icons.email_outlined),
+                                      labelText: S.of(context).Email,
+                                      suffixIcon:
+                                          const Icon(Icons.email_outlined),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                        borderRadius: BorderRadius.circular(
+                                            screenSize.width * 0.1),
                                       ),
                                     ),
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return 'Please enter your Email';
-                                      } else if (!RegExp(r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$').hasMatch(value)) {
+                                      } else if (!RegExp(
+                                              r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
+                                          .hasMatch(value)) {
                                         return 'Please enter a valid email address';
                                       }
                                       return null;
@@ -257,7 +271,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   SizedBox(height: screenSize.height * 0.02),
                                   Row(
                                     children: [
-                                      Text('Gender'),
+                                      Text(S.of(context).Gender),
                                       Checkbox(
                                         value: isMale,
                                         onChanged: (bool? newValue) {
@@ -269,7 +283,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                           }
                                         },
                                       ),
-                                      Text('Male'),
+                                      Text(S.of(context).Male),
                                       Checkbox(
                                         value: isFemale,
                                         onChanged: (bool? newValue) {
@@ -281,16 +295,18 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                           }
                                         },
                                       ),
-                                      Text('Female'),
+                                      Text(S.of(context).Female),
                                     ],
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
                                   TextFormField(
                                     controller: contactInfoController,
                                     decoration: InputDecoration(
-                                      labelText: 'Contact Information',
+                                      labelText:
+                                          S.of(context).Contact_Information,
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                        borderRadius: BorderRadius.circular(
+                                            screenSize.width * 0.1),
                                       ),
                                     ),
                                     validator: (value) {
@@ -306,9 +322,10 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   TextFormField(
                                     controller: specializationController,
                                     decoration: InputDecoration(
-                                      labelText: 'Specialization',
+                                      labelText: S.of(context).Specialization,
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                        borderRadius: BorderRadius.circular(
+                                            screenSize.width * 0.1),
                                       ),
                                     ),
                                     validator: (value) {
@@ -319,7 +336,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                     },
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
-                                  Container(
+                                  SizedBox(
                                     width: double.infinity,
                                     height: screenSize.width * 0.13,
                                     child: ElevatedButton(
@@ -328,22 +345,25 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                           signUp(context);
                                         }
                                       },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all<Color>(
+                                          const Color(0xff7c77d1),
+                                        ),
+                                        shape: WidgetStateProperty.all<
+                                            OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                screenSize.width * 0.1),
+                                          ),
+                                        ),
+                                      ),
                                       child: Text(
-                                        'Sign Up',
+                                        S.of(context).Sign_Up,
                                         style: TextStyle(
                                           fontSize: screenSize.width * 0.06,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all<Color>(
-                                          Color(0xff7c77d1),
-                                        ),
-                                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(screenSize.width * 0.1),
-                                          ),
                                         ),
                                       ),
                                     ),
@@ -352,7 +372,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Have an account?"),
+                                      Text(S.of(context).Have_an_account),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.push(
@@ -363,8 +383,9 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                           );
                                         },
                                         child: Text(
-                                          'Log in',
-                                          style: TextStyle(color: Color(0xFF7165D6)),
+                                          S.of(context).Log_in,
+                                          style: const TextStyle(
+                                              color: Color(0xFF7165D6)),
                                         ),
                                       ),
                                     ],

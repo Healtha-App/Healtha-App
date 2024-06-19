@@ -3,12 +3,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:healtha/generated/l10n.dart';
 
 class ReportDetails extends StatefulWidget {
   final String reportId;
   final Function(bool) onConfirm;
 
-  ReportDetails({Key? key, required this.reportId, required this.onConfirm})
+  const ReportDetails(
+      {Key? key, required this.reportId, required this.onConfirm})
       : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class ReportDetails extends StatefulWidget {
 class _ReportDetailsState extends State<ReportDetails> {
   String _reportContent = '';
   bool _isLoading = true;
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   bool _isEditing = false;
 
   @override
@@ -61,7 +63,7 @@ class _ReportDetailsState extends State<ReportDetails> {
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Report updated successfully'),
+            content: Text(S.of(context).Report_updated_successfully),
           ),
         );
       } else {
@@ -82,18 +84,18 @@ class _ReportDetailsState extends State<ReportDetails> {
         // Update UI or take necessary actions upon successful confirmation
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Report confirmed and notification sent'),
+            content: Text(S.of(context).Report_confirmed_and_notification_sent),
           ),
         );
         widget.onConfirm(true);
       } else {
-        throw Exception('Failed to confirm report');
+        throw Exception(S.of(context).Failed_to_confirm_report);
       }
     } catch (error) {
       print('Error confirming report: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to confirm report'),
+          content: Text(S.of(context).Failed_to_confirm_report),
         ),
       );
     }
@@ -115,8 +117,8 @@ class _ReportDetailsState extends State<ReportDetails> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFFE0E7EA), // Light blue
-                    Color(0xff7c77d1).withOpacity(0.2), // Light grey
+                    const Color(0xFFE0E7EA), // Light blue
+                    const Color(0xff7c77d1).withOpacity(0.2), // Light grey
                   ],
                 ),
               ),
@@ -129,7 +131,7 @@ class _ReportDetailsState extends State<ReportDetails> {
                 width: screenSize.width * 0.6,
                 height: screenSize.width * 0.6,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: const Color(0xFF7C77D1), // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.3),
                 ),
               ),
@@ -141,7 +143,7 @@ class _ReportDetailsState extends State<ReportDetails> {
                 width: screenSize.width * 0.4,
                 height: screenSize.width * 0.4,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: const Color(0xFF7C77D1), // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.2),
                 ),
               ),
@@ -153,7 +155,7 @@ class _ReportDetailsState extends State<ReportDetails> {
                 width: screenSize.width * 0.2,
                 height: screenSize.width * 0.2,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1), // Purple
+                  color: const Color(0xFF7C77D1), // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                 ),
               ),
@@ -178,62 +180,62 @@ class _ReportDetailsState extends State<ReportDetails> {
                     height: screenSize.height * 0.8,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.white70.withOpacity(0.6),
                           blurRadius: 1,
-                          offset: Offset(0, 7),
+                          offset: const Offset(0, 7),
                         ),
                       ],
                     ),
                     child: _isLoading
-                        ? Center(
-                      child: CircularProgressIndicator(),
-                    )
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
                         : SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              "Healtha Report",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff7c77d1),
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Text(
+                                    S.of(context).Healtha_Report,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff7c77d1),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  // Wrap Text widget with TextField
+                                  child: _isEditing
+                                      ? TextField(
+                                          controller: _textEditingController,
+                                          maxLines:
+                                              null, // Allow the TextField to expand vertically
+                                          decoration: InputDecoration(
+                                            border: const OutlineInputBorder(),
+                                            hintText:
+                                                S.of(context).Enter_report_text,
+                                          ),
+                                        )
+                                      : Text(
+                                          _reportContent,
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                ),
+                                const SizedBox(height: 10),
+                              ],
                             ),
                           ),
-
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            // Wrap Text widget with TextField
-                            child: _isEditing
-                                ? TextField(
-                              controller: _textEditingController,
-                              maxLines: null, // Allow the TextField to expand vertically
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Enter report text',
-                              ),
-                            )
-                                : Text(
-                              _reportContent,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Row(
                     children: [
                       Expanded(
@@ -246,7 +248,8 @@ class _ReportDetailsState extends State<ReportDetails> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF7C77D1), // Set button color
+                            backgroundColor:
+                                const Color(0xFF7C77D1), // Set button color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -255,7 +258,7 @@ class _ReportDetailsState extends State<ReportDetails> {
                             _isEditing
                                 ? 'Save'
                                 : 'Edit', // Change button text based on editing state
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -263,7 +266,8 @@ class _ReportDetailsState extends State<ReportDetails> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10), // Add some space between buttons
+                      const SizedBox(
+                          width: 10), // Add some space between buttons
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -271,21 +275,24 @@ class _ReportDetailsState extends State<ReportDetails> {
                               _confirmReport();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Report confirmed successfully'),
+                                  content: Text(S
+                                      .of(context)
+                                      .Report_confirmed_successfully),
                                 ),
                               );
                               widget.onConfirm(true);
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF7C77D1), // Set button color
+                            backgroundColor:
+                                const Color(0xFF7C77D1), // Set button color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
                           child: Text(
-                            'Confirm',
-                            style: TextStyle(
+                            S.of(context).Confirm,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

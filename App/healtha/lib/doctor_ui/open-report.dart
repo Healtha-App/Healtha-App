@@ -3,11 +3,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:healtha/generated/l10n.dart';
 
 class OpenReport extends StatefulWidget {
   final Function(bool) onConfirm;
 
-  OpenReport({Key? key, required this.onConfirm}) : super(key: key);
+  const OpenReport({Key? key, required this.onConfirm}) : super(key: key);
 
   @override
   _OpenReportState createState() => _OpenReportState();
@@ -16,10 +17,11 @@ class OpenReport extends StatefulWidget {
 class _OpenReportState extends State<OpenReport> {
   String _translatedReport = '';
   bool _isTranslating = false;
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   bool _isEditing = false;
   static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
-  static const String _backendUrl = 'http://your_backend_url/healtha/reports'; // Change to your actual backend URL
+  static const String _backendUrl =
+      'http://your_backend_url/healtha/reports'; // Change to your actual backend URL
   int reportId = 1; // Example report ID, replace with actual ID
 
   Future<void> _translateReport() async {
@@ -27,7 +29,8 @@ class _OpenReportState extends State<OpenReport> {
       _isTranslating = true;
     });
 
-    String promptWithLanguage = 'Write a user-friendly lab analysis report about this lab test in this formats '
+    String promptWithLanguage =
+        'Write a user-friendly lab analysis report about this lab test in this formats '
         'in points and each point list of items, in this report write'
         "start with Dear (patient name from the report), We hope this report finds you in good health. "
         "We have conducted a comprehensive analysis to assess your health. "
@@ -78,14 +81,14 @@ class _OpenReportState extends State<OpenReport> {
           _translatedReport = _textEditingController.text;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Report updated successfully')),
+          SnackBar(content: Text(S.of(context).Report_updated_successfully)),
         );
       } else {
         throw Exception('Failed to update report');
       }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error updating report: $error')),
+        SnackBar(content: Text(S.of(context).Error_updating_report(error))),
       );
     }
   }
@@ -110,8 +113,8 @@ class _OpenReportState extends State<OpenReport> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFFE0E7EA),
-                    Color(0xff7c77d1).withOpacity(0.2),
+                    const Color(0xFFE0E7EA),
+                    const Color(0xff7c77d1).withOpacity(0.2),
                   ],
                 ),
               ),
@@ -123,7 +126,7 @@ class _OpenReportState extends State<OpenReport> {
                 width: screenSize.width * 0.6,
                 height: screenSize.width * 0.6,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1),
+                  color: const Color(0xFF7C77D1),
                   borderRadius: BorderRadius.circular(screenSize.width * 0.3),
                 ),
               ),
@@ -135,7 +138,7 @@ class _OpenReportState extends State<OpenReport> {
                 width: screenSize.width * 0.4,
                 height: screenSize.width * 0.4,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1),
+                  color: const Color(0xFF7C77D1),
                   borderRadius: BorderRadius.circular(screenSize.width * 0.2),
                 ),
               ),
@@ -147,7 +150,7 @@ class _OpenReportState extends State<OpenReport> {
                 width: screenSize.width * 0.2,
                 height: screenSize.width * 0.2,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7C77D1),
+                  color: const Color(0xFF7C77D1),
                   borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                 ),
               ),
@@ -172,65 +175,68 @@ class _OpenReportState extends State<OpenReport> {
                     height: screenSize.height * 0.8,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.white70.withOpacity(0.6),
                           blurRadius: 1,
-                          offset: Offset(0, 7),
+                          offset: const Offset(0, 7),
                         ),
                       ],
                     ),
                     child: _isTranslating
-                        ? Center(
-                      child: CircularProgressIndicator(),
-                    )
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
                         : SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              "Healtha Report",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff7c77d1),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            constraints: BoxConstraints(
-                              maxHeight: screenSize.height * 0.5,
-                            ),
-                            child: _isEditing
-                                ? Container(
-                              height: screenSize.height * 0.5,
-                              child: TextField(
-                                controller: _textEditingController,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Enter report text',
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Text(
+                                    S.of(context).Healtha_Report,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff7c77d1),
+                                    ),
+                                  ),
                                 ),
-                                maxLines: null,
-                                expands: true,
-                              ),
-                            )
-                                : Text(
-                              _translatedReport ?? '',
-                              style: TextStyle(fontSize: 14),
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  constraints: BoxConstraints(
+                                    maxHeight: screenSize.height * 0.5,
+                                  ),
+                                  child: _isEditing
+                                      ? SizedBox(
+                                          height: screenSize.height * 0.5,
+                                          child: TextField(
+                                            controller: _textEditingController,
+                                            decoration: InputDecoration(
+                                              border:
+                                                  const OutlineInputBorder(),
+                                              hintText: S
+                                                  .of(context)
+                                                  .Enter_report_text,
+                                            ),
+                                            maxLines: null,
+                                            expands: true,
+                                          ),
+                                        )
+                                      : Text(
+                                          _translatedReport ?? '',
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Row(
                     children: [
                       Expanded(
@@ -242,42 +248,44 @@ class _OpenReportState extends State<OpenReport> {
                             _toggleEdit();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF7C77D1),
+                            backgroundColor: const Color(0xFF7C77D1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
                           child: Text(
                             _isEditing ? 'Save' : 'Edit',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
                             if (!_isTranslating) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Report confirmed successfully'),
+                                  content: Text(S
+                                      .of(context)
+                                      .Report_confirmed_successfully),
                                 ),
                               );
                               widget.onConfirm(true);
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF7C77D1),
+                            backgroundColor: const Color(0xFF7C77D1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
                           child: Text(
-                            'Confirm',
-                            style: TextStyle(
+                            S.of(context).Confirm,
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtha/generated/l10n.dart';
 //import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -14,21 +15,23 @@ String _formatDate(String dateTimeString) {
 }
 
 class NotificationCenter extends StatefulWidget {
+  const NotificationCenter({super.key});
+
   @override
   _NotificationCenterState createState() => _NotificationCenterState();
 }
 
 class _NotificationCenterState extends State<NotificationCenter> {
   List<dynamic> _reports = [];
-  List<dynamic> _todayReports = [];
-  List<dynamic> _thisWeekReports = [];
-  List<dynamic> _laterReports = [];
+  final List<dynamic> _todayReports = [];
+  final List<dynamic> _thisWeekReports = [];
+  final List<dynamic> _laterReports = [];
 
   @override
   void initState() {
     super.initState();
     _fetchReports();
-  //  _setupFirebaseMessaging();
+    //  _setupFirebaseMessaging();
   }
 
   Future<void> _fetchReports() async {
@@ -61,7 +64,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
           DateFormat('yyyy-MM-dd').format(now)) {
         _todayReports.add(report);
       } else if (reportDate
-          .isAfter(now.subtract(Duration(days: now.weekday))) &&
+              .isAfter(now.subtract(Duration(days: now.weekday))) &&
           reportDate.isBefore(now.add(Duration(days: 7 - now.weekday)))) {
         _thisWeekReports.add(report);
       } else {
@@ -108,9 +111,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
             // Background Gradient
             Container(
               color: Colors.white,
-
             ),
-
 
             // Content
             SingleChildScrollView(
@@ -122,8 +123,8 @@ class _NotificationCenterState extends State<NotificationCenter> {
                     SizedBox(
                         height: screenSize.height * 0.051), // Adjust as needed
                     Text(
-                      'Notification Center',
-                      style: TextStyle(
+                      S.of(context).Notification_Center,
+                      style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -132,8 +133,8 @@ class _NotificationCenterState extends State<NotificationCenter> {
                     SizedBox(height: screenSize.height * 0.02),
                     if (_todayReports.isNotEmpty) ...[
                       Text(
-                        'Today',
-                        style: TextStyle(
+                        S.of(context).Today,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black54,
@@ -146,8 +147,8 @@ class _NotificationCenterState extends State<NotificationCenter> {
                     ],
                     if (_thisWeekReports.isNotEmpty) ...[
                       Text(
-                        'This Week',
-                        style: TextStyle(
+                        S.of(context).This_Week,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black54,
@@ -160,8 +161,8 @@ class _NotificationCenterState extends State<NotificationCenter> {
                         height: screenSize.width * 0.03,
                       ),
                       Text(
-                        'Later Reports',
-                        style: TextStyle(
+                        S.of(context).Later_Reports,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black54,
@@ -188,7 +189,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
 
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: reports.length,
       itemBuilder: (context, index) {
         final report = reports[index];
@@ -216,7 +217,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
           background: Container(
             alignment: AlignmentDirectional.centerEnd,
             color: Colors.red,
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
               child: Icon(
                 Icons.delete,
@@ -240,51 +241,60 @@ class _NotificationCenterState extends State<NotificationCenter> {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.all(Radius.circular(
                     screenSize.width * 0.02)), // Reduced border radius
-               
               ),
               child: Padding(
                 padding: EdgeInsets.all(
                     screenSize.width * 0.0081), // Reduced padding
                 child: ListTile(
-                  contentPadding: EdgeInsets.all(8), // Reduced padding
+                  contentPadding: const EdgeInsets.all(8), // Reduced padding
                   title: Text(
-                    "Your CBC Test Report is ready",
-                    style: TextStyle(
+                    S.of(context).Your_CBC_Test_Report_is_ready,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF7C77D1),
                     ),
                   ),
                   subtitle: Text(
-                    "Uploaded on ${_formatDate(report['uploadTime'])}",
+                    S
+                        .of(context)
+                        .Uploaded_on(_formatDate(report['uploadTime'])),
                   ),
                   trailing: Padding(
-                    padding: const EdgeInsets.only(right: 12.0), // Added padding
+                    padding:
+                        const EdgeInsets.only(right: 12.0), // Added padding
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ReportDetails(reportId: report['reportid'].toString(), onConfirm: (bool confirmed) { /* Handle confirmation logic here */ },)),
+                          MaterialPageRoute(
+                              builder: (context) => ReportDetails(
+                                    reportId: report['reportid'].toString(),
+                                    onConfirm: (bool confirmed) {
+                                      /* Handle confirmation logic here */
+                                    },
+                                  )),
                         );
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor:Color(0xFF7C77D1), // Background color
+                        backgroundColor:
+                            const Color(0xFF7C77D1), // Background color
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0), // Rounded corners
+                          borderRadius:
+                              BorderRadius.circular(18.0), // Rounded corners
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Button padding
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0), // Button padding
                       ),
                       child: Text(
-                        "view",
-                        style: TextStyle(
+                        S.of(context).view,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white, // Text color
                         ),
                       ),
                     ),
                   ),
-
-
                 ),
               ),
             ),

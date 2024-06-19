@@ -3,8 +3,11 @@ import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/main.dart';
 import '../register_login/join_as.dart';
 import '../register_login/sign_up.dart';
+import 'package:healtha/generated/l10n.dart';
 
 class EncyclopediaTypes extends StatelessWidget {
+  const EncyclopediaTypes({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,18 +21,18 @@ class EncyclopediaTypes extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.25,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                   // color: MyApp.myPurple,
+                    // color: MyApp.myPurple,
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xff7c77d1).withOpacity(0.5),
-                        Color(0xff7c77d1).withOpacity(0.7),
-                        Color(0xff7c77d1).withOpacity(0.9),
-                        Color(0xff7c77d1),
+                        const Color(0xff7c77d1).withOpacity(0.5),
+                        const Color(0xff7c77d1).withOpacity(0.7),
+                        const Color(0xff7c77d1).withOpacity(0.9),
+                        const Color(0xff7c77d1),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),
                     ),
@@ -40,13 +43,12 @@ class EncyclopediaTypes extends StatelessWidget {
                   left: MediaQuery.of(context).size.width * 0.05,
                   right: MediaQuery.of(context).size.width * 0.05,
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     width: MediaQuery.of(context).size.width * 0.9,
-
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color(0xff7c77d1),
                           offset: Offset(0.0, 2.0),
@@ -60,18 +62,18 @@ class EncyclopediaTypes extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Dive into medical wisdom!",
+                          S.of(context).Dive_into_medical_wisdom,
                           style: TextStyle(
                               fontSize: 21,
                               fontWeight: FontWeight.bold,
                               color: MyApp.myPurple),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          "your pocket health encyclopedia",
-                          style: TextStyle(fontSize: 14),
+                          S.of(context).your_pocket_health_encyclopedia,
+                          style: const TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
@@ -79,58 +81,67 @@ class EncyclopediaTypes extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 100,),
+            const SizedBox(
+              height: 100,
+            ),
             InkWell(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EncyclopediaPage('Disease','assets/body-scan-c.png')),
+                  MaterialPageRoute(
+                      builder: (context) => EncyclopediaPage(
+                          'Disease', 'assets/body-scan-c.png')),
                 );
               },
-              child: MyContainer('Diseases Encyclopedia','assets/body-scan-c.png'),
+              child: const MyContainer(
+                  'Diseases Encyclopedia', 'assets/body-scan-c.png'),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             InkWell(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EncyclopediaPage('Lab Test','assets/flask.png')),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          EncyclopediaPage('Lab Test', 'assets/flask.png')),
                 );
               },
-              child: MyContainer2('Lab Tests Encyclopedia','assets/flask.png'),
+              child: const MyContainer2(
+                  'Lab Tests Encyclopedia', 'assets/flask.png'),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
             InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                        builder: (context) => joinAs()));
+                Navigator.push(context,
+                    MaterialPageRoute<void>(builder: (context) => joinAs()));
               },
               child: Container(
                 alignment: Alignment.center,
                 height: MediaQuery.of(context).size.height * 0.060,
                 width: MediaQuery.of(context).size.width * 0.6,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                   color: Color(0xff7c77d1),
-
+                  borderRadius: BorderRadius.circular(18),
+                  color: const Color(0xff7c77d1),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Join app",
-                      style: TextStyle(
+                      S.of(context).Join_app,
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
                     )
@@ -139,7 +150,6 @@ class EncyclopediaTypes extends StatelessWidget {
               ),
             ),
           ],
-
         ),
       ),
     );
@@ -150,7 +160,7 @@ class MyContainer extends StatelessWidget {
   final String label;
   final String image;
 
-  MyContainer(this.label, this.image);
+  const MyContainer(this.label, this.image, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -162,10 +172,10 @@ class MyContainer extends StatelessWidget {
         //color: Color(0xff7c77d1),
         gradient: LinearGradient(
           colors: [
-            Color(0xff7c77d1).withOpacity(0.4),
-            Color(0xff7c77d1).withOpacity(0.6),
-            Color(0xff7c77d1).withOpacity(0.9),
-            Color(0xff7c77d1),
+            const Color(0xff7c77d1).withOpacity(0.4),
+            const Color(0xff7c77d1).withOpacity(0.6),
+            const Color(0xff7c77d1).withOpacity(0.9),
+            const Color(0xff7c77d1),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -175,7 +185,7 @@ class MyContainer extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -187,26 +197,23 @@ class MyContainer extends StatelessWidget {
             width: 80,
             height: 80,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             label,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 17
-            ),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),
           ),
-
         ],
       ),
     );
   }
 }
+
 class MyContainer2 extends StatelessWidget {
   final String label;
   final String image;
 
-  MyContainer2(this.label, this.image);
+  const MyContainer2(this.label, this.image, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -221,7 +228,7 @@ class MyContainer2 extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -233,16 +240,14 @@ class MyContainer2 extends StatelessWidget {
             width: 80,
             height: 80,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             label,
-            style: TextStyle(
-              color: Color(0xff7c77d1),
-              fontWeight: FontWeight.bold,
-              fontSize: 17
-            ),
+            style: const TextStyle(
+                color: Color(0xff7c77d1),
+                fontWeight: FontWeight.bold,
+                fontSize: 17),
           ),
-
         ],
       ),
     );

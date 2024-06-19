@@ -2,11 +2,12 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import 'one_encyclopedia.dart';
+import 'package:healtha/generated/l10n.dart';
 
 class LabTestDetailsPage extends StatelessWidget {
   final LabTest labTest; // Update the type here
 
-  LabTestDetailsPage({required this.labTest});
+  const LabTestDetailsPage({super.key, required this.labTest});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class LabTestDetailsPage extends StatelessWidget {
         backgroundColor: MyApp.myPurple,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -31,7 +32,7 @@ class LabTestDetailsPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: MyApp.myPurple,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),
                   ),
@@ -42,13 +43,12 @@ class LabTestDetailsPage extends StatelessWidget {
                 left: MediaQuery.of(context).size.width * 0.05,
                 right: MediaQuery.of(context).size.width * 0.05,
                 child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.8,
-
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Color(0xff7c77d1),
                         offset: Offset(0.0, 2.0),
@@ -59,7 +59,7 @@ class LabTestDetailsPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "${labTest.name}",
+                      labTest.name,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class LabTestDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -80,17 +80,17 @@ class LabTestDetailsPage extends StatelessWidget {
                 children: [
                   //SizedBox(height: 10,),
                   Text(
-                    'Lab Test Details:',
+                    S.of(context).Lab_Test_Details,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: MyApp.myPurple,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
-                    'Name: ${labTest.name}',
-                    style: TextStyle(fontSize: 14),
+                    S.of(context).Name(labTest.name),
+                    style: const TextStyle(fontSize: 14),
                   ),
                   // Add more details as needed
                 ],

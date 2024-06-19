@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:http/http.dart' as http;
 
 class Report extends StatefulWidget {
+  const Report({super.key});
+
   @override
   _ReportState createState() => _ReportState();
 }
@@ -14,7 +17,8 @@ class _ReportState extends State<Report> {
   bool _isTranslating = false;
   static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
 
-  Future<void> _saveReport(int userId, String filePath, String reportContent) async {
+  Future<void> _saveReport(
+      int userId, String filePath, String reportContent) async {
     if (_translatedReport.isEmpty) {
       // If translated report is not available yet, wait for translation to complete
       return;
@@ -27,7 +31,8 @@ class _ReportState extends State<Report> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
+        Uri.parse(
+            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -60,9 +65,8 @@ class _ReportState extends State<Report> {
       _isTranslating = true;
     });
 
-    String promptWithLanguage = _isTranslated
-        ? _getTranslatedPrompt()
-        : _getOriginalPrompt();
+    String promptWithLanguage =
+        _isTranslated ? _getTranslatedPrompt() : _getOriginalPrompt();
 
     final response = await http.post(
       Uri.parse('https://api.chatpdf.com/v1/chats/message'),
@@ -146,7 +150,10 @@ class _ReportState extends State<Report> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Theme.of(context).colorScheme.primary, // Light blue
-                    Theme.of(context).colorScheme.secondary.withOpacity(0.2), // Light grey
+                    Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.2), // Light grey
                   ],
                 ),
               ),
@@ -208,12 +215,12 @@ class _ReportState extends State<Report> {
                     height: 700,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.white70.withOpacity(0.6),
                           blurRadius: 1,
-                          offset: Offset(0, 7),
+                          offset: const Offset(0, 7),
                         ),
                       ],
                     ),
@@ -227,7 +234,7 @@ class _ReportState extends State<Report> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Text(
-                              "Healtha Report",
+                              S.of(context).Healtha_Report,
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -235,35 +242,41 @@ class _ReportState extends State<Report> {
                               ),
                             ),
                           ),
-                          Divider(),
+                          const Divider(),
                           Container(
                             padding: const EdgeInsets.all(20),
                             child: Text(
                               _translatedReport ?? '',
-                              style: TextStyle(fontSize: 14,),
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           ElevatedButton(
                             onPressed: !_isTranslating
                                 ? () {
-                              // Save the report without triggering translation
-                              _saveReport(1, 'file_path', _translatedReport); // Pass report content
-                            }
+                                    // Save the report without triggering translation
+                                    _saveReport(1, 'file_path',
+                                        _translatedReport); // Pass report content
+                                  }
                                 : null, // Disable button if translation is ongoing
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Theme.of(context).colorScheme.secondary,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
                               minimumSize: Size(screenSize.width * 0.8, 50),
                             ),
                             child: Text(
                               _isTranslated ? "Save" : "حفظ",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           InkWell(
                             onTap: () {
                               if (!_isTranslating) {
@@ -271,14 +284,14 @@ class _ReportState extends State<Report> {
                               }
                             },
                             child: Text(
-                              "Translate this report ",
-                              style: TextStyle(
+                              S.of(context).Translate_this_report,
+                              style: const TextStyle(
                                 color: Color(0xff7c77d1),
                                 decoration: TextDecoration.underline,
                               ),
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                         ],
                       ),
                     ),

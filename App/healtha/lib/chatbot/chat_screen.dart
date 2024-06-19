@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:healtha/generated/l10n.dart';
 
 class APIKey {
   static const apiKey =
@@ -9,6 +10,8 @@ class APIKey {
 }
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -21,7 +24,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff7c77d1),
+        backgroundColor: const Color(0xff7c77d1),
         title: Row(
           children: [
             Image.asset(
@@ -30,11 +33,11 @@ class _ChatScreenState extends State<ChatScreen> {
               width: 50.0,
               height: 50.0,
             ),
-            SizedBox(width: 10.0),
+            const SizedBox(width: 10.0),
             Text(
-              'Healtha',
+              S.of(context).Healtha,
               style: GoogleFonts.dancingScript(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
@@ -46,7 +49,8 @@ class _ChatScreenState extends State<ChatScreen> {
         centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 80),
+        padding:
+            const EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 80),
         children: _messages.map((message) => _buildMessage(message)).toList(),
       ),
       bottomSheet: Container(
@@ -56,48 +60,48 @@ class _ChatScreenState extends State<ChatScreen> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 10,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ]),
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 8),
               child: Icon(
                 Icons.add,
                 size: MediaQuery.of(context).size.width * 0.07,
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 5),
+              padding: const EdgeInsets.only(left: 5),
               child: Icon(
                 Icons.emoji_emotions_outlined,
                 size: MediaQuery.of(context).size.width * 0.07,
-                color: Color(0xff7c77d1),
+                color: const Color(0xff7c77d1),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Container(
                 alignment: Alignment.centerRight,
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: TextFormField(
                   controller: _textEditingController,
                   decoration: InputDecoration(
-                    hintText: "Type something",
+                    hintText: S.of(context).Type_something,
                     border: InputBorder.none,
                   ),
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
-              padding: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10),
               child: IconButton(
                 icon: Icon(
                   Icons.send,
                   size: MediaQuery.of(context).size.width * 0.07,
-                  color: Color(0xff7c77d1),
+                  color: const Color(0xff7c77d1),
                 ),
                 onPressed: () async {
                   if (_textEditingController.text.isNotEmpty) {
@@ -115,7 +119,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildMessage(Message message) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Column(
@@ -123,11 +127,11 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             Text(
               message.sender,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
               message.text,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),
@@ -136,14 +140,15 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> _sendMessage(String text) async {
-    Message userMessage = Message(sender: 'user', text: text);
+    Message userMessage = Message(sender: S.of(context).user, text: text);
     setState(() {
       _messages.add(userMessage);
     });
 
     try {
       String response = await sendMessageToChatGpt(userMessage);
-      Message chatGptMessage = Message(sender: 'Healtha', text: response);
+      Message chatGptMessage =
+          Message(sender: S.of(context).Healtha, text: response);
       setState(() {
         _messages.add(chatGptMessage);
       });
@@ -180,7 +185,8 @@ class _ChatScreenState extends State<ChatScreen> {
         Map<String, dynamic> parsedResponse = json.decode(response.body);
         return parsedResponse['choices'][0]['message']['content'];
       } else {
-        throw Exception('Failed to send message to ChatGPT. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to send message to ChatGPT. Status code: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Failed to send message to ChatGPT. Error: $e');

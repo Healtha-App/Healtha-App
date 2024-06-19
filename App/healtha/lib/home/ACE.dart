@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:healtha/generated/l10n.dart';
 
 class LabTest {
   final String name;
@@ -23,18 +24,17 @@ class ACE extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: FutureBuilder(
         future: fetchLabTest(),
         builder: (context, AsyncSnapshot<LabTest> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(child: Text(S.of(context).Error(snapshot.error!)));
           } else {
             LabTest? labTest = snapshot.data;
             if (labTest == null) {
-              return Center(child: Text('No lab test found'));
+              return Center(child: Text(S.of(context).No_lab_test_found));
             }
             return LabTestDetailsPage(labTest: labTest);
           }
@@ -48,8 +48,10 @@ class ACE extends StatelessWidget {
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty && labTests.length >= 6) { // Check if there are at least 3 lab tests
-        Map<String, dynamic> sixLabTest = labTests[5]; // Accessing the third lab test using index 2
+      if (labTests.isNotEmpty && labTests.length >= 6) {
+        // Check if there are at least 3 lab tests
+        Map<String, dynamic> sixLabTest =
+            labTests[5]; // Accessing the third lab test using index 2
         String name = sixLabTest['name'];
         List<dynamic> sections = sixLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {
@@ -66,13 +68,12 @@ class ACE extends StatelessWidget {
       throw Exception('Failed to load lab tests');
     }
   }
-
 }
 
 class LabTestDetailsPage extends StatelessWidget {
   final LabTest labTest;
 
-  LabTestDetailsPage({required this.labTest});
+  const LabTestDetailsPage({super.key, required this.labTest});
 
   @override
   Widget build(BuildContext context) {
@@ -88,15 +89,15 @@ class LabTestDetailsPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xff7c77d1).withOpacity(0.5),
-                      Color(0xff7c77d1).withOpacity(0.7),
-                      Color(0xff7c77d1).withOpacity(0.9),
-                      Color(0xff7c77d1),
+                      const Color(0xff7c77d1).withOpacity(0.5),
+                      const Color(0xff7c77d1).withOpacity(0.7),
+                      const Color(0xff7c77d1).withOpacity(0.9),
+                      const Color(0xff7c77d1),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),
                   ),
@@ -107,12 +108,12 @@ class LabTestDetailsPage extends StatelessWidget {
                 left: MediaQuery.of(context).size.width * 0.05,
                 right: MediaQuery.of(context).size.width * 0.05,
                 child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.8,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Color(0xff7c77d1),
                         offset: Offset(0.0, 2.0),
@@ -123,8 +124,8 @@ class LabTestDetailsPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "${labTest.name}",
-                      style: TextStyle(
+                      labTest.name,
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff7c77d1),
@@ -135,7 +136,7 @@ class LabTestDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -143,26 +144,28 @@ class LabTestDetailsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 15,),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     Text(
-                      'Lab Test Details:',
-                      style: TextStyle(
+                      S.of(context).Lab_Test_Details,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff7c77d1),
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
-                      'Name: ${labTest.name}',
-                      style: TextStyle(fontSize: 16),
+                      S.of(context).Name(labTest.name),
+                      style: const TextStyle(fontSize: 16),
                     ),
                     // Display sections
                     if (labTest.sections.isNotEmpty) ...[
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Text(
-                        'Sections:',
-                        style: TextStyle(
+                        S.of(context).Sections,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color(0xff7c77d1),
@@ -172,15 +175,15 @@ class LabTestDetailsPage extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
-                              '${section.title}',
-                              style: TextStyle(fontSize: 15,
-                                  fontWeight: FontWeight.w600),
+                              section.title,
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              '${section.content}',
-                              style: TextStyle(fontSize: 14),
+                              section.content,
+                              style: const TextStyle(fontSize: 14),
                             ),
                           ],
                         ),

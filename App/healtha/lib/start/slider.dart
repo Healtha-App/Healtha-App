@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -35,27 +36,27 @@ class _sliderState extends State<slider> {
             }),
             pages: [
               buildPage(
-                Color(0xff6e54ab)!,
+                const Color(0xff6e54ab),
                 [
-                  'welcome to',
-                  'Healtha',
+                  S.of(context).welcome_to,
+                  S.of(context).app_name,
                   '',
-                  'Medical knowledge in your pocket. Explore medical encyclopedias',
+                  S.of(context).description_1,
                 ],
                 'images/search.json',
                 screenSize,
               ),
               buildPage(
-                Color(0xFF7165D6),
-                ['', 'Healtha', '', 'Laboratory tests analysis made easy'],
+                const Color(0xFF7165D6),
+                ['', S.of(context).app_name, '', S.of(context).description_2],
                 'images/ency.json',
                 screenSize,
               ),
               buildPage(
-                Color(0xff7c77d1)!,
+                const Color(0xff7c77d1),
                 [
                   '',
-                  'Healtha',
+                  S.of(context).app_name,
                   '',
                   'Diseases prediction made easy.consultation with specialists '
                 ],
@@ -63,10 +64,10 @@ class _sliderState extends State<slider> {
                 screenSize,
               ),
               buildPage(
-                Color(0xffa79ef9)!,
+                const Color(0xffa79ef9),
                 [
                   '',
-                  'Healtha',
+                  S.of(context).app_name,
                   '',
                   'Proactive health starts here.insights with smart reports'
                 ],
@@ -81,16 +82,16 @@ class _sliderState extends State<slider> {
   }
 
   buildPage(
-      Color color,
-      List<String> texts,
-      String animationJson,
-      Size screenSize,
-      ) {
+    Color color,
+    List<String> texts,
+    String animationJson,
+    Size screenSize,
+  ) {
     return Container(
       color: color,
       height: screenSize.height,
       width: screenSize.width,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +156,7 @@ class _sliderState extends State<slider> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (context) => option(),
+                    builder: (context) => const option(),
                   ),
                 );
               },
@@ -171,15 +172,15 @@ class _sliderState extends State<slider> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Get Started",
+                      S.of(context).Get_Started,
                       style: TextStyle(
                         fontSize: screenSize.width * 0.05,
-                        color: Color(0xff7c77d1),
+                        color: const Color(0xff7c77d1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(width: screenSize.width * 0.02),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward,
                       color: Color(0xff7c77d1),
                     ),

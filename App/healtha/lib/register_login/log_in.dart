@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,6 +9,8 @@ import '../home/home_screen.dart';
 import '../navigation.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   State<Login> createState() => _LoginState();
 }
@@ -20,7 +23,8 @@ class _LoginState extends State<Login> {
   bool isPasswordVisible = false;
 
   Future<bool> login(BuildContext context) async {
-    String healthaIP = 'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
+    String healthaIP =
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
     final url = healthaIP;
 
     try {
@@ -31,8 +35,8 @@ class _LoginState extends State<Login> {
 
         // Check if there is a user with the provided username and password
         var user = specialistDoctors.firstWhere(
-              (doctor) =>
-          doctor['email'] == emailController.text &&
+          (doctor) =>
+              doctor['email'] == emailController.text &&
               doctor['password'] == passwordController.text,
           orElse: () => null,
         );
@@ -46,17 +50,17 @@ class _LoginState extends State<Login> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text(
-                'Error',
+              title: const Text(
+                "Error",
                 style: TextStyle(
                   color: Colors.red,
                 ),
               ),
-              content: Text('Invalid email or password'),
+              content: Text(S.of(context).Invalid_email_or_password),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('OK'),
+                  child: Text(S.of(context).OK),
                 ),
               ],
             ),
@@ -84,10 +88,10 @@ class _LoginState extends State<Login> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xff7c77d1).withOpacity(0.5),
-                Color(0xff7c77d1).withOpacity(0.7),
-                Color(0xff7c77d1).withOpacity(0.9),
-                Color(0xff7c77d1),
+                const Color(0xff7c77d1).withOpacity(0.5),
+                const Color(0xff7c77d1).withOpacity(0.7),
+                const Color(0xff7c77d1).withOpacity(0.9),
+                const Color(0xff7c77d1),
               ],
               begin: Alignment.topLeft,
               end: Alignment.topRight,
@@ -100,7 +104,8 @@ class _LoginState extends State<Login> {
                 height: screenSize.height * 0.1,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.15),
+                padding:
+                    EdgeInsets.symmetric(horizontal: screenSize.width * 0.15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -112,7 +117,7 @@ class _LoginState extends State<Login> {
                     ),
                     SizedBox(width: screenSize.width * 0.02),
                     Text(
-                      'Healtha',
+                      S.of(context).Healtha,
                       style: GoogleFonts.dancingScript(
                         textStyle: TextStyle(
                           fontSize: screenSize.width * 0.08,
@@ -143,26 +148,28 @@ class _LoginState extends State<Login> {
                       height: screenSize.height * 0.1,
                     ),
                     Text(
-                      'Log In',
+                      S.of(context).Log_In,
                       style: TextStyle(
                         fontSize: screenSize.width * 0.07,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xff7c77d1),
+                        color: const Color(0xff7c77d1),
                       ),
                     ),
                     SizedBox(
                       height: screenSize.height * 0.05,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenSize.width * 0.05),
                       child: TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          suffixIcon: Icon(Icons.email_outlined),
+                          suffixIcon: const Icon(Icons.email_outlined),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                            borderRadius:
+                                BorderRadius.circular(screenSize.width * 0.1),
                           ),
-                          labelText: 'Email',
+                          labelText: S.of(context).Email,
                         ),
                       ),
                     ),
@@ -170,19 +177,24 @@ class _LoginState extends State<Login> {
                       height: screenSize.height * 0.03,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenSize.width * 0.05),
                       child: TextFormField(
                         keyboardType: TextInputType.text,
                         controller: passwordController,
-                        obscureText: !isPasswordVisible, //This will obscure text dynamically
+                        obscureText:
+                            !isPasswordVisible, //This will obscure text dynamically
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: S.of(context).Password,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                            borderRadius:
+                                BorderRadius.circular(screenSize.width * 0.1),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                              isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Colors.black,
                             ),
                             onPressed: () {
@@ -198,17 +210,19 @@ class _LoginState extends State<Login> {
                       height: screenSize.height * 0.05,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenSize.width * 0.05),
                       child: Container(
                         width: double.infinity,
                         height: screenSize.width * 0.13,
                         decoration: BoxDecoration(
-                          color: Color(0xff7c77d1),
-                          borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                          color: const Color(0xff7c77d1),
+                          borderRadius:
+                              BorderRadius.circular(screenSize.width * 0.1),
                         ),
                         child: MaterialButton(
                           child: Text(
-                            'Login',
+                            S.of(context).Login,
                             style: TextStyle(
                               fontSize: screenSize.width * 0.06,
                               color: Colors.white,
@@ -223,13 +237,14 @@ class _LoginState extends State<Login> {
                                       height: 60, // Adjust the height as needed
                                       child: Row(
                                         children: [
-                                          Icon(Icons.check_circle, color: Colors.green),
-                                          SizedBox(width: 10),
+                                          const Icon(Icons.check_circle,
+                                              color: Colors.green),
+                                          const SizedBox(width: 10),
                                           Expanded(
                                             child: Text(
                                               'Login successful, \n '
-                                                  'Welcome ${usernameController.text} to HEALTHA!',
-                                              style: TextStyle(
+                                              'Welcome ${usernameController.text} to HEALTHA!',
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
@@ -247,7 +262,8 @@ class _LoginState extends State<Login> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomeScreen(), // Replace with your home screen
+                                    builder: (context) =>
+                                        const HomeScreen(), // Replace with your home screen
                                   ),
                                 );
                               }
@@ -262,7 +278,7 @@ class _LoginState extends State<Login> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account?"),
+                        Text(S.of(context).Don_t_have_an_account),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -273,8 +289,8 @@ class _LoginState extends State<Login> {
                             );
                           },
                           child: Text(
-                            'Sign Up',
-                            style: TextStyle(color: Color(0xFF7165D6)),
+                            S.of(context).Sign_Up,
+                            style: const TextStyle(color: Color(0xFF7165D6)),
                           ),
                         ),
                       ],

@@ -1,0 +1,422 @@
+[
+  {
+    "home_screen.dart": {
+      "Text_Hello": "Hello ${name}!",
+      "Text_Welcome_to_Healtha": "Welcome to Healtha",
+      "Text_Popular_Laboratory_Tests": "Popular Laboratory Tests",
+      "Text_See_All": "See All",
+      "Text_Explore_healtha_encyclopedias": "Explore healtha encyclopedias",
+      "Text_Lab_analysis_encyclopedia_and_diseases_encyclopedia": "Lab analysis encyclopedia and diseases encyclopedia",
+      "Text_Generate_Laboratory_Test_Report": "Generate Laboratory Test Report ",
+      "Text_Discover_how_could_you_get_your_lab_report_via_Healtha": "Discover how could you get your lab report via Healtha!",
+      "Text_Track_your_symptoms": "Track your symptoms",
+      "Text_Make_use_of_the_diseases_prediction_feature_and_show_your_symptomes": "Make use of the diseases prediction feature and show your symptomes"
+    }
+  },
+  {
+    "encyclopedia_types.dart": {
+      "Text_Dive_into_medical_wisdom": "Dive into medical wisdom!",
+      "Text_your_pocket_health_encyclopedia": "your pocket health encyclopedia",
+      "Text_Join_app": "Join app"
+    }
+  },
+  {
+    "one_item_details.dart": {
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}"
+    }
+  },
+  {
+    "one_encyclopedia.dart": {
+      "Text_Encyclopedia": "${widget.category} Encyclopedia",
+      "Text_Failed_to_load_data": "Failed to load data",
+      "TextFieldHint_Search": "Search..."
+    }
+  },
+  {
+    "slider.dart": {
+      "Text_Get_Started": "Get Started",
+      "List_welcome_message": "welcome to",
+      "List_app_name": "Healtha",
+      "List_description_1": "Medical knowledge in your pocket. Explore medical encyclopedias",
+      "List_description_2": "Laboratory tests analysis made easy",
+      "List_description_3": "Diseases prediction made easy. Consultation with specialists",
+      "List_description_4": "Proactive health starts here. Insights with smart reports"
+    }
+  },
+  {
+    "option.dart": {
+      "Text_Step_into_a_world_of_holistic_nhealth_with": "Step into a world of holistic\\nhealth with",
+      "Text_nHealtha": " \\nHealtha",
+      "Text_Show_encyclopedia": "Show encyclopedia",
+      "Text_Start_using_app": "Start using app",
+      "Text_Hey_nI_am_here_to_read_the_page_for_you": "Hey! \\nI am here to read the page for you",
+      "fontFamily_Roboto": "Roboto"
+    }
+  },
+  {
+    "saved_reports.dart": {
+      "Text_Your_Saved_Reports": "Your Saved Reports",
+      "Text_Um_Mohamed_Elshazly": "Um Mohamed Elshazly",
+      "Text_CBC": "CBC"
+    }
+  },
+  {
+    "upload_analysis.dart": {
+      "Text_Your_reports": "Your reports",
+      "Text_Generated_Reports": "Generated Reports",
+      "Text_Saved_Reports": "Saved Reports",
+      "Text_History": "History",
+      "Text_Proactive_health_starts_here": "Proactive health starts here!",
+      "Text_Unlocking_insights_with_smart_reports": "Unlocking insights with smart reports",
+      "Text_Upload_your_lab_analysis_results": "Upload your lab analysis results",
+      "Text_Generate_another_report": "Generate another report",
+      "Text_or": " or ",
+      "Text_return_home": "return home",
+      "Text_Generate": "Generate",
+      "ListTile_Generated_Reports": "Generated Reports",
+      "ListTile_Saved_Reports": "Saved Reports",
+      "ListTile_History": "History"
+    }
+  },
+  {
+    "report.dart": {
+      "Text_Healtha_Report": "Healtha Report",
+      "Text_Translate_this_report": "Translate this report "
+    }
+  },
+  {
+    "generated.dart": {
+      "Text_Generated_Reports": "Generated Reports",
+      "Text_Um_Mohamed_Elshazly": "Um Mohamed Elshazly",
+      "Text_CBC": "CBC"
+    }
+  },
+  {
+    "drop_file.dart": {
+      "Text_Browse_File": "Browse File"
+    }
+  },
+  {
+    "fetch.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_Flutter_AI_Integration": "Flutter AI Integration",
+      "Text_Fetch_AI_Result": "Fetch AI Result"
+    }
+  },
+  {
+    "log_in.dart": {
+      "Text_Error": "Error",
+      "Text_Invalid_email_or_password": "Invalid email or password",
+      "Text_OK": "OK",
+      "Text_Healtha": "Healtha",
+      "Text_Log_In": "Log In",
+      "Text_Login": "Login",
+      "Text_Sign_Up": "Sign Up",
+      "TextFormFieldLabel_Email": "Email",
+      "TextFormFieldLabel_Password": "Password",
+      "TextButton_OK": "OK",
+      "Text_Don't_have_an_account": "Don't have an account?"
+    }
+  },
+  {
+    "join_as.dart": {
+      "Text_Join_as": "Join as :",
+      "Text_Doctor": "Doctor",
+      "Text_Patient": "Patient",
+      "Text_Hey_nI_am_here_to_read_the_page_for_you": "Hey! \\nI am here to read the page for you",
+      "fontFamily_Roboto": "Roboto"
+    }
+  },
+  {
+    "settings.dart": {
+      "Text_Settings": "Settings",
+      "Text_Themes": "Themes",
+      "Text_Language": "Language"
+    }
+  },
+  {
+    "profile.dart": {
+      "Text_Error": "Error",
+      "Text_Failed_to_fetch_user_data": "Failed to fetch user data",
+      "Text_OK": "OK",
+      "Text_Menu": "Menu",
+      "Text_Favorites": "Favorites",
+      "Text_Saved": "Saved",
+      "Text_Help_Support": "Help & Support",
+      "Text_Settings": "Settings",
+      "Text_Privacy": "Privacy",
+      "Text_Log_Out": "Log Out",
+      "Text_patient": "patient",
+      "TextButton_OK": "OK",
+      "ListTile_Favorites": "Favorites",
+      "ListTile_Saved": "Saved",
+      "ListTile_Help_Support": "Help & Support",
+      "ListTile_Settings": "Settings",
+      "ListTile_Privacy": "Privacy",
+      "ListTile_Log_Out": "Log Out",
+      "title_Email": "Email",
+      "title_Phone_Number": "Phone Number",
+      "title_Date_of_Birth": "Date of Birth"
+    }
+  },
+  {
+    "sign_up.dart": {
+      "Text_Account_created_successfully_nWELCOME_TO_HEALTHA": "Account created successfully, \\nWELCOME ${usernameController.text} TO HEALTHA !",
+      "Text_Sign_up_failed_Please_try_again": "Sign-up failed. Please try again ..",
+      "Text_Healtha": "Healtha",
+      "Text_Sign_Up": "Sign Up",
+      "Text_Gender": "Gender",
+      "Text_Male": "Male",
+      "Text_Female": "Female",
+      "Text_Have_an_account": "Have an account?",
+      "Text_Log_in": "Log in",
+      "SnackBar_Sign_up_failed_Please_try_again": "Sign-up failed. Please try again ..",
+      "labelText_Name": "Name",
+      "labelText_Email": "Email",
+      "labelText_Password": "Password",
+      "labelText_Date_of_Birth": "Date of Birth",
+      "labelText_Contact_Info": "Contact Info"
+    }
+  },
+  {
+    "disease_prediction.dart": {
+      "Text_Your_health_our_priority": "Your health, our priority!",
+      "Text_Disease_prediction_made_easy": "Disease prediction made easy",
+      "Text_What_are_you_feeling": "What are you feeling?",
+      "Text_Predict_Disease": "Predict Disease",
+      "Text_Predicted_Disease": "Predicted Disease: $predictedDisease"
+    }
+  },
+  {
+    "editPage.dart": {
+      "Text_Profile": "Profile",
+      "TextFieldHint_Enter_your_Name": "Enter your Name",
+      "TextFieldHint_Patient_Doctor": "Patient / Doctor",
+      "hint_Enter_your_email": "Enter your email",
+      "hint_Enter_your_Phone_Number": "Enter your Phone Number",
+      "hint_Enter_your_Address": "Enter your Address"
+    }
+  },
+  {
+    "navigation.dart": {
+      "Text_Home": "Home",
+      "Text_Chatting": "Chatting",
+      "Text_Notifications": "Notifications",
+      "Text_Profile": "Profile"
+    }
+  },
+  {
+    "main.dart": {
+      "title_Healtha": "Healtha"
+    }
+  },
+  {
+    "notification_center.dart": {
+      "Text_Notification_Center": "Notification Center",
+      "Text_Today": "Today",
+      "Text_This_Week": "This Week",
+      "Text_Later_Reports": "Later Reports",
+      "Text_Your_CBC_Test_Report_is_ready": "Your CBC Test Report is ready",
+      "Text_view": "view",
+      "ListTileSubTitile_Uploaded_on": "Uploaded on ${_formatDate(report['uploadTime'])}"
+    }
+  },
+  {
+    "Lipid-Panel.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "Liver-function.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "Pregnancy.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "Calcium.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "cbc.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "ACE.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "lab_doctor.dart": {
+      "Text_Dear_lab_doctor": "Dear lab doctor ,",
+      "Text_Please_take_the_time_to_revise_the_reports_thoroughly": "Please take the time to revise the reports thoroughly.",
+      "Text_View_report": "View report"
+    }
+  },
+  {
+    "title_item.dart": {
+      "Text_Top_Doctors": "Top Doctors",
+      "Text_See_All": "See All"
+    }
+  },
+  {
+    "requested-reports.dart": {
+      "Text_Requested_Reports": "Requested Reports",
+      "Text_Report_ID": "Report ID: ${report['reportid']}",
+      "Text_CBC_Test": "CBC Test"
+    }
+  },
+  {
+    "report_details.dart": {
+      "Text_Report_updated_successfully": "Report updated successfully",
+      "Text_Report_confirmed_and_notification_sent": "Report confirmed and notification sent",
+      "Text_Failed_to_confirm_report": "Failed to confirm report",
+      "Text_Healtha_Report": "Healtha Report",
+      "Text_Report_confirmed_successfully": "Report confirmed successfully",
+      "Text_Confirm": "Confirm",
+      "TextFieldHint_Enter_report_text": "Enter report text",
+      "SnackBar_Report_updated_successfully": "Report updated successfully",
+      "SnackBar_Report_confirmed_and_notification_sent": "Report confirmed and notification sent",
+      "SnackBar_Failed_to_confirm_report": "Failed to confirm report",
+      "SnackBar_Report_confirmed_successfully": "Report confirmed successfully"
+    }
+  },
+  {
+    "open-report.dart": {
+      "Text_Report_updated_successfully": "Report updated successfully",
+      "Text_Error_updating_report": "Error updating report: $error",
+      "Text_Healtha_Report": "Healtha Report",
+      "Text_Report_confirmed_successfully": "Report confirmed successfully",
+      "Text_Confirm": "Confirm",
+      "TextFieldHint_Enter_report_text": "Enter report text",
+      "SnackBar_Report_updated_successfully": "Report updated successfully",
+      "SnackBar_Error_updating_report": "Error updating report: $error",
+      "SnackBar_Report_confirmed_successfully": "Report confirmed successfully"
+    }
+  },
+  {
+    "connect.dart": {
+      "TextFormFieldHint_Type_something": "Type something",
+      "sender_You": "You",
+      "sender_Healtha": "Healtha"
+    }
+  },
+  {
+    "Thyroid -function.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "doc_signUp.dart": {
+      "Text_Sign_up_failed_Please_try_again": "Sign-up failed. Please try again ..",
+      "Text_Healtha": "Healtha",
+      "Text_Sign_Up": "Sign Up",
+      "Text_Gender": "Gender",
+      "Text_Male": "Male",
+      "Text_Female": "Female",
+      "Text_Have_an_account": "Have an account?",
+      "Text_Log_in": "Log in",
+      "TextFormFieldLabel_Username": "Username",
+      "TextFormFieldLabel_Password": "Password",
+      "TextFormFieldLabel_Email": "Email",
+      "TextFormFieldLabel_Contact_Information": "Contact Information",
+      "TextFormFieldLabel_Specialization": "Specialization",
+      "SnackBar_Sign_up_failed_Please_try_again": "Sign-up failed. Please try again .."
+    }
+  },
+  {
+    "Urinalysis.dart": {
+      "Text_Error": "Error: ${snapshot.error}",
+      "Text_No_lab_test_found": "No lab test found",
+      "Text_Lab_Test_Details": "Lab Test Details:",
+      "Text_Name": "Name: ${labTest.name}",
+      "Text_Sections": "Sections:"
+    }
+  },
+  {
+    "doc_login.dart": {
+      "Text_Error": "Error",
+      "Text_Incorrect_password": "Incorrect password",
+      "Text_OK": "OK",
+      "Text_Healtha": "Healtha",
+      "Text_Log_In": "Log In",
+      "Text_Login": "Login",
+      "Text_Sign_Up": "Sign Up",
+      "TextFormFieldLabel_Email": "Email",
+      "TextFormFieldLabel_Password": "Password",
+      "Text_Don't_have_an_account": "Don't have an account?"
+    }
+  },
+  {
+    "chat_screen.dart": {
+      "Text_Healtha": "Healtha",
+      "TextFormFieldHint_Type_something": "Type something",
+      "sender_user": "user",
+      "sender_Healtha": "Healtha"
+    }
+  },
+  {
+    "doc-profile.dart": {
+      "Text_Error": "Error",
+      "Text_Failed_to_fetch_user_data": "Failed to fetch user data",
+      "Text_OK": "OK",
+      "Text_Patients": "Patients",
+      "Text_Experience": "Experience",
+      "Text_Specialization": "Specialization",
+      "Text_Dr": "Dr. ",
+      "Text_Complete_Your_Info": "Complete Your Info",
+      "Text_Save": "Save",
+      "Text_Cancel": "Cancel",
+      "Text_Complete_your_info": "Complete your info",
+      "TextFieldHint_Enter_your_skills": "Enter your skills",
+      "TextFieldHint_Enter_your_qualifications": "Enter your qualifications",
+      "TextFieldLabel_Skills": "Skills",
+      "TextFieldLabel_Qualifications": "Qualifications",
+      "TextButton_OK": "OK",
+      "title_email": "email",
+      "title_Phone_Number": "Phone Number",
+      "title_Skills": "Skills",
+      "title_Qualifications": "Qualifications"
+    }
+  },
+  {
+    "all-doctors.dart": {
+      "Text_Discover_All_Doctors": "Discover All Doctors",
+      "TextFieldHint_Search_by_name_location_or_specialty": "Search by name, location or specialty"
+    }
+  }
+]

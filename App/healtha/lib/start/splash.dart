@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
           backgroundImage: AssetImage("images/healthaSplash.jpeg"),
           backgroundColor: Colors.white,
         ),
-        nextScreen: const slider(),
+        nextScreen: slider(),
 
 // we can use
         duration: 4000,

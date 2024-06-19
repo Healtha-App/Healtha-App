@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/navigation.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +9,8 @@ import '../home/home_screen.dart';
 import 'log_in.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -22,7 +26,7 @@ class _SignUpState extends State<SignUp> {
   bool isMale = false; // New state for gender selection
   bool isFemale = false; // New state for gender selection
   final TextEditingController contactInformationController =
-  TextEditingController();
+      TextEditingController();
 
   // New state for password visibility
   bool isPasswordVisible = false;
@@ -40,11 +44,12 @@ class _SignUpState extends State<SignUp> {
           'password': passwordController.text,
           'email': emailController.text,
           'dateOfBirth': dateOfBirthController.text,
-          'gender': isMale ? 'Male' : 'Female',
+          'gender': isMale ? S.of(context).Male : S.of(context).Female,
           'contactInformation': contactInformationController.text,
         }),
         headers: {'Content-Type': 'application/json'},
       );
+      log(response.body);
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -53,12 +58,15 @@ class _SignUpState extends State<SignUp> {
               height: 60,
               child: Row(
                 children: [
-                  Icon(Icons.check_circle, color: Colors.green),
-                  SizedBox(width: 10),
+                  const Icon(Icons.check_circle, color: Colors.green),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      'Account created successfully, \nWELCOME ${usernameController.text} TO HEALTHA !',
-                      style: TextStyle(
+                      S
+                          .of(context)
+                          .Account_created_successfully_nWELCOME_TO_HEALTHA(
+                              usernameController.text),
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -82,17 +90,17 @@ class _SignUpState extends State<SignUp> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => Navbar(),
+            builder: (context) => const Navbar(),
           ),
-              (route) => false,
+          (route) => false,
         );
         return patientId;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Sign-up failed. Please try again ..',
-              style: TextStyle(
+              S.of(context).Sign_up_failed_Please_try_again,
+              style: const TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
               ),
@@ -104,6 +112,7 @@ class _SignUpState extends State<SignUp> {
     } catch (e) {
       print('Error: $e');
     }
+    return null;
   }
 
   @override
@@ -116,10 +125,10 @@ class _SignUpState extends State<SignUp> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xff7c77d1).withOpacity(0.5),
-                Color(0xff7c77d1).withOpacity(0.7),
-                Color(0xff7c77d1).withOpacity(0.9),
-                Color(0xff7c77d1),
+                const Color(0xff7c77d1).withOpacity(0.5),
+                const Color(0xff7c77d1).withOpacity(0.7),
+                const Color(0xff7c77d1).withOpacity(0.9),
+                const Color(0xff7c77d1),
               ],
               begin: Alignment.topLeft,
               end: Alignment.topRight,
@@ -142,7 +151,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     SizedBox(width: screenSize.width * 0.02),
                     Text(
-                      'Healtha',
+                      S.of(context).Healtha,
                       style: GoogleFonts.dancingScript(
                         textStyle: TextStyle(
                           fontSize: screenSize.width * 0.08,
@@ -171,17 +180,17 @@ class _SignUpState extends State<SignUp> {
                       children: [
                         SizedBox(height: screenSize.height * 0.04),
                         Text(
-                          'Sign Up',
+                          S.of(context).Sign_Up,
                           style: TextStyle(
                             fontSize: screenSize.width * 0.07,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xff7c77d1),
+                            color: const Color(0xff7c77d1),
                           ),
                         ),
                         SizedBox(height: screenSize.height * 0.02),
                         buildTextFormField(
                           controller: usernameController,
-                          labelText: 'Name',
+                          labelText: S.of(context).Username,
                           suffixIcon: Icons.person,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -192,14 +201,14 @@ class _SignUpState extends State<SignUp> {
                         ),
                         buildTextFormField(
                           controller: emailController,
-                          labelText: 'Email',
+                          labelText: S.of(context).Email,
                           suffixIcon: Icons.email_outlined,
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter your Email';
                             } else if (!RegExp(
-                                r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
+                                    r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
                                 .hasMatch(value)) {
                               return 'Please enter a valid email address';
                             }
@@ -208,7 +217,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         buildTextFormField(
                           controller: passwordController,
-                          labelText: 'Password',
+                          labelText: S.of(context).Password,
                           suffixIcon: isPasswordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
@@ -216,8 +225,7 @@ class _SignUpState extends State<SignUp> {
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value!.length < 8 ||
-                                !RegExp(
-                                    r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
+                                !RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
                                     .hasMatch(value)) {
                               return 'Password must be at least 8 characters with a mix of uppercase, lowercase, and numbers';
                             }
@@ -231,7 +239,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         buildTextFormField(
                           controller: dateOfBirthController,
-                          labelText: 'Date of Birth',
+                          labelText: S.of(context).Date_of_Birth,
                           suffixIcon: Icons.date_range_outlined,
                           keyboardType: TextInputType.datetime,
                           validator: (value) {
@@ -251,8 +259,10 @@ class _SignUpState extends State<SignUp> {
                             if (selectedDate != null &&
                                 selectedDate != DateTime.now()) {
                               setState(() {
-                                dateOfBirthController.text =
-                                selectedDate.toLocal().toString().split(' ')[0];
+                                dateOfBirthController.text = selectedDate
+                                    .toLocal()
+                                    .toString()
+                                    .split(' ')[0];
                               });
                             }
                           },
@@ -263,7 +273,7 @@ class _SignUpState extends State<SignUp> {
                               horizontal: screenSize.width * 0.05),
                           child: Row(
                             children: [
-                              Text('Gender'),
+                              Text(S.of(context).Gender),
                               Checkbox(
                                 value: isMale,
                                 onChanged: (bool? newValue) {
@@ -275,7 +285,7 @@ class _SignUpState extends State<SignUp> {
                                   });
                                 },
                               ),
-                              Text('Male'),
+                              Text(S.of(context).Male),
                               Checkbox(
                                 value: isFemale,
                                 onChanged: (bool? newValue) {
@@ -287,13 +297,13 @@ class _SignUpState extends State<SignUp> {
                                   });
                                 },
                               ),
-                              Text('Female'),
+                              Text(S.of(context).Female),
                             ],
                           ),
                         ),
                         buildTextFormField(
                           controller: contactInformationController,
-                          labelText: 'Contact Info',
+                          labelText: S.of(context).Contact_Info,
                           suffixIcon: Icons.phone,
                           keyboardType: TextInputType.phone,
                           validator: (value) {
@@ -314,12 +324,13 @@ class _SignUpState extends State<SignUp> {
                             width: double.infinity,
                             height: screenSize.height * 0.07,
                             decoration: BoxDecoration(
-                              color: Color(0xff7c77d1),
-                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                              color: const Color(0xff7c77d1),
+                              borderRadius:
+                                  BorderRadius.circular(screenSize.width * 0.1),
                             ),
                             child: MaterialButton(
                               child: Text(
-                                'Sign Up',
+                                S.of(context).Sign_Up,
                                 style: TextStyle(
                                   fontSize: screenSize.width * 0.06,
                                   color: Colors.white,
@@ -336,19 +347,20 @@ class _SignUpState extends State<SignUp> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Have an account?"),
+                            Text(S.of(context).Have_an_account),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Login(),
+                                    builder: (context) => const Login(),
                                   ),
                                 );
                               },
                               child: Text(
-                                'Log in',
-                                style: TextStyle(color: Color(0xFF7165D6)),
+                                S.of(context).Log_in,
+                                style:
+                                    const TextStyle(color: Color(0xFF7165D6)),
                               ),
                             ),
                           ],
@@ -389,8 +401,8 @@ class _SignUpState extends State<SignUp> {
             child: Icon(suffixIcon),
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-                MediaQuery.of(context).size.width * 0.1),
+            borderRadius:
+                BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),
           ),
           labelText: labelText,
         ),

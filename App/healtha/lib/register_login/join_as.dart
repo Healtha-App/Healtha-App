@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/register_login/sign_up.dart';
 import '../doctor_ui/doc_signUp.dart';
 
 class joinAs extends StatefulWidget {
+  const joinAs({super.key});
+
   @override
   _JoinAsState createState() => _JoinAsState();
 }
@@ -19,7 +22,7 @@ class _JoinAsState extends State<joinAs> {
   void initState() {
     super.initState();
     _initTTS();
-    Future.delayed(Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 10), () {
       if (mounted) {
         setState(() {
           _showDelayedMessage = false;
@@ -32,7 +35,9 @@ class _JoinAsState extends State<joinAs> {
     _flutterTts.getVoices.then((data) {
       try {
         List<Map<String, String>> voices = List<Map<String, String>>.from(data);
-        List<Map<String, String>> englishVoices = voices.where((voice) => voice["name"]?.contains("en") ?? false).toList();
+        List<Map<String, String>> englishVoices = voices
+            .where((voice) => voice["name"]?.contains("en") ?? false)
+            .toList();
         if (englishVoices.isNotEmpty) {
           _flutterTts.setVoice(englishVoices.first);
         }
@@ -66,7 +71,7 @@ class _JoinAsState extends State<joinAs> {
   }
 
   void _speakAllText() {
-    final text = "Join as: Doctor or Patient";
+    const text = "Join as: Doctor or Patient";
     _speak(text);
   }
 
@@ -86,10 +91,10 @@ class _JoinAsState extends State<joinAs> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xff7c77d1).withOpacity(0.5),
-                Color(0xff7c77d1).withOpacity(0.7),
-                Color(0xff7c77d1).withOpacity(0.9),
-                Color(0xff7c77d1),
+                const Color(0xff7c77d1).withOpacity(0.5),
+                const Color(0xff7c77d1).withOpacity(0.7),
+                const Color(0xff7c77d1).withOpacity(0.9),
+                const Color(0xff7c77d1),
               ],
               begin: Alignment.topLeft,
               end: Alignment.topRight,
@@ -99,7 +104,7 @@ class _JoinAsState extends State<joinAs> {
             children: [
               SizedBox(height: screenSize.height * 0.1),
               Text(
-                'Join as :',
+                S.of(context).Join_as,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: screenSize.width * 0.08,
@@ -123,17 +128,32 @@ class _JoinAsState extends State<joinAs> {
                       padding: EdgeInsets.all(screenSize.width * 0.03),
                       child: InkWell(
                         onTap: () {
-                          _speak("Doctor");
+                          _speak(S.of(context).Doctor);
                           Navigator.push(
                             context,
                             MaterialPageRoute<void>(
-                              builder: (context) => docSignUpPage(),
+                              builder: (context) => const docSignUpPage(),
                             ),
                           );
                         },
                         child: Container(
                           width: double.infinity,
                           height: screenSize.height * 0.2,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(screenSize.width * 0.03)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                blurRadius: screenSize.width * 0.018,
+                                offset: Offset(
+                                    0,
+                                    screenSize.width *
+                                        0.025), // changes position of shadow
+                              ),
+                            ],
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -141,7 +161,7 @@ class _JoinAsState extends State<joinAs> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Doctor",
+                                    S.of(context).Doctor,
                                     style: TextStyle(
                                       fontSize: screenSize.width * 0.06,
                                       fontWeight: FontWeight.w600,
@@ -150,21 +170,11 @@ class _JoinAsState extends State<joinAs> {
                                 ],
                               ),
                               SizedBox(width: screenSize.width * 0.1),
-                              Container(
+                              SizedBox(
                                 width: screenSize.width * 0.4,
                                 height: screenSize.height * 0.2,
-                                child: Image(image: AssetImage("images/doc.jpg")),
-                              ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.03)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: screenSize.width * 0.018,
-                                offset: Offset(0, screenSize.width * 0.025), // changes position of shadow
+                                child: const Image(
+                                    image: AssetImage("images/doc.jpg")),
                               ),
                             ],
                           ),
@@ -186,36 +196,41 @@ class _JoinAsState extends State<joinAs> {
                         child: Container(
                           width: double.infinity,
                           height: screenSize.height * 0.2,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(screenSize.width * 0.03)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                blurRadius: screenSize.width * 0.018,
+                                offset: Offset(
+                                    0,
+                                    screenSize.width *
+                                        0.025), // changes position of shadow
+                              ),
+                            ],
+                          ),
                           child: Row(
                             children: [
-                              Container(
+                              SizedBox(
                                 width: screenSize.width * 0.4,
                                 height: screenSize.height * 0.2,
-                                child: Image(image: AssetImage("images/patient.jpg")),
+                                child: const Image(
+                                    image: AssetImage("images/patient.jpg")),
                               ),
                               SizedBox(width: screenSize.width * 0.1),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "Patient",
+                                    S.of(context).Patient,
                                     style: TextStyle(
                                       fontSize: screenSize.width * 0.06,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   )
                                 ],
-                              ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(screenSize.width * 0.03)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: screenSize.width * 0.018,
-                                offset: Offset(0, screenSize.width * 0.025), // changes position of shadow
                               ),
                             ],
                           ),
@@ -238,19 +253,20 @@ class _JoinAsState extends State<joinAs> {
               visible: _showDelayedMessage,
               child: AnimatedOpacity(
                 opacity: _showDelayedMessage ? 1.0 : 0.0,
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    'Hey! \nI am here to read the page for you',
+                    S.of(context).Hey_nI_am_here_to_read_the_page_for_you,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13,
-                      fontFamily: 'Roboto', // Example font family
+                      fontFamily: S.of(context).Roboto, // Example font family
                       fontStyle: FontStyle.italic, // Example style
                     ),
                   ),
@@ -275,9 +291,12 @@ class _JoinAsState extends State<joinAs> {
                 ),
                 child: Center(
                   child: Icon(
-                    _isVolumeHigh ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeUp,
+                    _isVolumeHigh
+                        ? FontAwesomeIcons.volumeHigh
+                        : FontAwesomeIcons.volumeUp,
                     size: 20,
-                    color: _isVolumeHigh ? Colors.white : Color(0xff7c77d1),
+                    color:
+                        _isVolumeHigh ? Colors.white : const Color(0xff7c77d1),
                   ),
                 ),
               ),

@@ -12,15 +12,15 @@
 class FlutterWindow : public Win32Window {
  public:
   // Creates a new FlutterWindow hosting a Flutter view running |project|.
-  explicit FlutterWindow(const flutter::DartProject& project);
+  explicit FlutterWindow(  flutter::DartProject& project);
   virtual ~FlutterWindow();
 
  protected:
   // Win32Window:
   bool OnCreate() override;
   void OnDestroy() override;
-  LRESULT MessageHandler(HWND window, UINT const message, WPARAM const wparam,
-                         LPARAM const lparam) noexcept override;
+  LRESULT MessageHandler(HWND window, UINT   message, WPARAM   wparam,
+                         LPARAM   lparam) noexcept override;
 
  private:
   // The project to run.

@@ -34,7 +34,7 @@ class Win32Window {
   // consistent size this function will scale the inputted width and height as
   // as appropriate for the default monitor. The window is invisible until
   // |Show| is called. Returns true if the window was created successfully.
-  bool Create(const std::wstring& title, const Point& origin, const Size& size);
+  bool Create(  std::wstring& title,   Point& origin,   Size& size);
 
   // Show the current window. Returns true if the window was successfully shown.
   bool Show();
@@ -60,9 +60,9 @@ class Win32Window {
   // size change and DPI. Delegates handling of these to member overloads that
   // inheriting classes can handle.
   virtual LRESULT MessageHandler(HWND window,
-                                 UINT const message,
-                                 WPARAM const wparam,
-                                 LPARAM const lparam) noexcept;
+                                 UINT   message,
+                                 WPARAM   wparam,
+                                 LPARAM   lparam) noexcept;
 
   // Called when CreateAndShow is called, allowing subclass window-related
   // setup. Subclasses should return false if setup fails.
@@ -79,16 +79,16 @@ class Win32Window {
   // non-client DPI scaling so that the non-client area automatically
   // responds to changes in DPI. All other messages are handled by
   // MessageHandler.
-  static LRESULT CALLBACK WndProc(HWND const window,
-                                  UINT const message,
-                                  WPARAM const wparam,
-                                  LPARAM const lparam) noexcept;
+  static LRESULT CALLBACK WndProc(HWND   window,
+                                  UINT   message,
+                                  WPARAM   wparam,
+                                  LPARAM   lparam) noexcept;
 
   // Retrieves a class instance pointer for |window|
-  static Win32Window* GetThisFromHandle(HWND const window) noexcept;
+  static Win32Window* GetThisFromHandle(HWND   window) noexcept;
 
   // Update the window frame's theme to match the system theme.
-  static void UpdateTheme(HWND const window);
+  static void UpdateTheme(HWND   window);
 
   bool quit_on_close_ = false;
 

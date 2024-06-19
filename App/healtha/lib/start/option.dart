@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/register_login/join_as.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import Font Awesome package
 
 class option extends StatefulWidget {
+  const option({super.key});
+
   @override
   _OptionState createState() => _OptionState();
 }
@@ -23,7 +26,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 10),
+      duration: const Duration(seconds: 10),
     )..repeat(reverse: true);
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
     _initTTS();
@@ -32,7 +35,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
     _showDelayedMessage = true;
 
     // Delayed hide of the message after 10 seconds
-    Future.delayed(Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 10), () {
       if (mounted) {
         setState(() {
           _showDelayedMessage = false;
@@ -50,8 +53,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
   void _initTTS() {
     _flutterTts.getVoices.then((data) {
       try {
-        List<Map<String, String>> voices =
-        List<Map<String, String>>.from(data);
+        List<Map<String, String>> voices = List<Map<String, String>>.from(data);
         List<Map<String, String>> englishVoices = voices
             .where((voice) => voice["name"]?.contains("en") ?? false)
             .toList();
@@ -88,7 +90,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
   }
 
   void _speakAllText() {
-    final text =
+    const text =
         "Step into a world of holistic health with Healtha. Show encyclopedia. Start using app.";
     _speak(text);
   }
@@ -109,10 +111,10 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color(0xff7c77d1).withOpacity(0.5),
-                Color(0xff7c77d1).withOpacity(0.7),
-                Color(0xff7c77d1).withOpacity(0.9),
-                Color(0xff7c77d1),
+                const Color(0xff7c77d1).withOpacity(0.5),
+                const Color(0xff7c77d1).withOpacity(0.7),
+                const Color(0xff7c77d1).withOpacity(0.9),
+                const Color(0xff7c77d1),
               ],
             ),
           ),
@@ -139,8 +141,10 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                 animation: _animation,
                 builder: (context, child) {
                   return Positioned(
-                    top: MediaQuery.of(context).size.height * (1 - _animation.value),
-                    left: MediaQuery.of(context).size.width * (1 - _animation.value),
+                    top: MediaQuery.of(context).size.height *
+                        (1 - _animation.value),
+                    left: MediaQuery.of(context).size.width *
+                        (1 - _animation.value),
                     child: Container(
                       width: 100,
                       height: 100,
@@ -156,14 +160,17 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 70,
                     ),
                     Row(
                       children: [
                         Text(
-                          "Step into a world of holistic\nhealth with",
-                          style: TextStyle(
+                          S
+                              .of(context)
+                              .Step_into_a_world_of_holistic_nhealth_with,
+                          //"Step into a world of holistic\nhealth with",
+                          style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
@@ -173,9 +180,10 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                     Row(
                       children: [
                         Text(
-                          " \nHealtha",
+                          S.of(context).nHealtha,
+                          // " \nHealtha",
                           style: GoogleFonts.dancingScript(
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
@@ -184,10 +192,10 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 250,
                     ),
-                    Container(
+                    SizedBox(
                       width: 400,
                       height: 60,
                       child: ElevatedButton(
@@ -195,15 +203,16 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EncyclopediaTypes()),
+                                builder: (context) =>
+                                    const EncyclopediaTypes()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(
+                            side: const BorderSide(
                               color: Colors.white, // Change border color here
                             ), // Remove border
                           ),
@@ -212,8 +221,8 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                           width: 300,
                           child: Center(
                             child: Text(
-                              'Show encyclopedia',
-                              style: TextStyle(
+                              S.of(context).Show_encyclopedia,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
@@ -222,25 +231,26 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Container(
+                    SizedBox(
                       width: 400,
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => joinAs()),
+                            MaterialPageRoute(
+                                builder: (context) => const joinAs()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(
+                            side: const BorderSide(
                               color: Colors.white, // Change border color here
                             ), // Remove border
                           ),
@@ -249,8 +259,8 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                           width: 300,
                           child: Center(
                             child: Text(
-                              'Start using app',
-                              style: TextStyle(
+                              S.of(context).Start_using_app,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
@@ -275,19 +285,20 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
               visible: _showDelayedMessage,
               child: AnimatedOpacity(
                 opacity: _showDelayedMessage ? 1.0 : 0.0,
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    'Hey! \nI am here to read the page for you',
+                    S.of(context).Hey_nI_am_here_to_read_the_page_for_you,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13,
-                      fontFamily: 'Roboto', // Example font family
+                      fontFamily: S.of(context).Roboto, // Example font family
                       fontStyle: FontStyle.italic, // Example style
                     ),
                   ),
@@ -312,9 +323,12 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                 ),
                 child: Center(
                   child: Icon(
-                    _isVolumeHigh ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeUp,
+                    _isVolumeHigh
+                        ? FontAwesomeIcons.volumeHigh
+                        : FontAwesomeIcons.volumeUp,
                     size: 20,
-                    color: _isVolumeHigh ? Colors.white : Color(0xff7c77d1),
+                    color:
+                        _isVolumeHigh ? Colors.white : const Color(0xff7c77d1),
                   ),
                 ),
               ),

@@ -3,7 +3,7 @@
 // import 'dart:convert';
 //
 // class APIKey {
-//   static const apiKey =
+//   static   apiKey =
 //       "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";
 // }
 //
@@ -31,7 +31,7 @@
 //             ),
 //             SizedBox(width: 10.0),
 //             Text(
-//               'Healtha',
+//               S.of(context).Healtha,
 //               style: TextStyle(
 //                 fontSize: 25,
 //                 fontWeight: FontWeight.w700,
@@ -86,7 +86,7 @@
 //               child: TextFormField(
 //                 controller: _textEditingController,
 //                 decoration: InputDecoration(
-//                   hintText: "Type something",
+//                   hintText: S.of(context).Type_something,
 //                   border: InputBorder.none,
 //                 ),
 //               ),
@@ -118,7 +118,7 @@
 //     return Container(
 //       margin: EdgeInsets.symmetric(vertical: 10.0),
 //       child: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+//         padding:   EdgeInsets.symmetric(horizontal: 20, vertical: 5),
 //         child: Column(
 //           crossAxisAlignment: CrossAxisAlignment.start,
 //           children: <Widget>[
@@ -137,14 +137,14 @@
 //   }
 //
 //   Future<void> _sendMessage(String text) async {
-//     Message userMessage = Message(sender: 'You', text: text);
+//     Message userMessage = Message(sender: S.of(context).You, text: text);
 //     setState(() {
 //       _messages.add(userMessage);
 //     });
 //
 //     try {
 //       String response = await sendMessageToChatGpt(userMessage);
-//       Message chatGptMessage = Message(sender: 'Healtha', text: response);
+//       Message chatGptMessage = Message(sender: S.of(context).Healtha, text: response);
 //       setState(() {
 //         _messages.add(chatGptMessage);
 //       });

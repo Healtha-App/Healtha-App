@@ -1,3 +1,4 @@
+import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/home/home_screen.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +12,20 @@ import 'generated.dart';
 import 'report.dart';
 
 class UploadPage extends StatefulWidget {
+  const UploadPage({super.key});
+
   @override
   _UploadPageState createState() => _UploadPageState();
 }
 
 class _UploadPageState extends State<UploadPage> {
-  String _fileName = 'No file chosen';
-  String _processingText = '';
+  final String _fileName = 'No file chosen';
+  final String _processingText = '';
   bool showAfterAnimation = false;
   bool _isEnabled = true;
 
-  int _selectedIndex = 0;
-  static const Color myPurple = Color(0xff7c77d1);
+  final int _selectedIndex = 0;
+  static Color myPurple = const Color(0xff7c77d1);
 
   String _result = ''; // Add this variable to store the result
 
@@ -98,12 +101,12 @@ class _UploadPageState extends State<UploadPage> {
                 ),
                 child: Center(
                     child: Text(
-                  'Your reports',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  S.of(context).Your_reports,
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
                 )),
               ),
               ListTile(
-                title: Text('Generated Reports'),
+                title: Text(S.of(context).Generated_Reports),
                 onTap: () {
                   // Navigate to the GeneratedReport class when the item is tapped
                   Navigator.push(
@@ -113,7 +116,7 @@ class _UploadPageState extends State<UploadPage> {
                 },
               ),
               ListTile(
-                title: Text('Saved Reports'),
+                title: Text(S.of(context).Saved_Reports),
                 onTap: () {
                   // Navigate to the GeneratedReport class when the item is tapped
                   Navigator.push(
@@ -123,7 +126,7 @@ class _UploadPageState extends State<UploadPage> {
                 },
               ),
               ListTile(
-                title: Text('History'),
+                title: Text(S.of(context).History),
                 onTap: () {
                   // Navigate to the GeneratedReport class when the item is tapped
                   Navigator.push(
@@ -155,7 +158,7 @@ class _UploadPageState extends State<UploadPage> {
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,
                     ),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),
                     ),
@@ -166,7 +169,7 @@ class _UploadPageState extends State<UploadPage> {
                   left: screenSize.width * 0.05,
                   right: screenSize.width * 0.05,
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     width: screenSize.width * 0.9,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -174,7 +177,7 @@ class _UploadPageState extends State<UploadPage> {
                       boxShadow: [
                         BoxShadow(
                           color: myPurple,
-                          offset: Offset(0.0, 2.0),
+                          offset: const Offset(0.0, 2.0),
                           blurRadius: 1.0,
                           spreadRadius: 0.0,
                         ),
@@ -185,18 +188,18 @@ class _UploadPageState extends State<UploadPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Proactive health starts here!",
+                          S.of(context).Proactive_health_starts_here,
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: myPurple),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          "Unlocking insights with smart reports",
-                          style: TextStyle(fontSize: 14),
+                          S.of(context).Unlocking_insights_with_smart_reports,
+                          style: const TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
@@ -208,23 +211,24 @@ class _UploadPageState extends State<UploadPage> {
               padding: EdgeInsets.all(screenSize.width * 0.1),
               child: Column(
                 children: [
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   Text(
-                    'Upload your lab analysis results',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    S.of(context).Upload_your_lab_analysis_results,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   FileDropWidget(),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Divider(
+                  const Divider(
                     height: .50, // Customize the thickness
                     color: Colors.grey, // Customize the color
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   if (_isEnabled == false)
                     AnimatedTextKit(
                       animatedTexts: [
@@ -232,11 +236,11 @@ class _UploadPageState extends State<UploadPage> {
                           """Your healtha report is being generated with care...
 We will notify you as soon as it is ready
 Thank you for allowing us the time to ensure accuracy!""",
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 14,
                             color: Colors.black87,
                           ),
-                          speed: Duration(milliseconds: 40),
+                          speed: const Duration(milliseconds: 40),
                         ),
                       ],
                       isRepeatingAnimation: false,
@@ -253,36 +257,36 @@ Thank you for allowing us the time to ensure accuracy!""",
                   if (showAfterAnimation)
                     Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => UploadPage()),
+                              MaterialPageRoute(
+                                  builder: (context) => const UploadPage()),
                             );
                           },
-                          child: Text('Generate another report'),
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor: MaterialStateProperty.all<Color>(myPurple),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            foregroundColor:
+                                WidgetStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                WidgetStateProperty.all<Color>(myPurple),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ),
+                          child: Text(S.of(context).Generate_another_report),
                         ),
-
-
-
-
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(' or '),
+                            Text(S.of(context).or),
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -292,8 +296,9 @@ Thank you for allowing us the time to ensure accuracy!""",
                                 );
                               },
                               child: Text(
-                                'return home',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                S.of(context).return_home,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
@@ -308,18 +313,18 @@ Thank you for allowing us the time to ensure accuracy!""",
                             });
                           }
                         : null,
-                    child: Text('Generate'),
                     style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      foregroundColor: MaterialStateProperty.all(
+                      foregroundColor: WidgetStateProperty.all(
                           _isEnabled ? Colors.white : myPurple.withOpacity(0)),
-                      backgroundColor: MaterialStateProperty.all(
+                      backgroundColor: WidgetStateProperty.all(
                           _isEnabled ? myPurple : myPurple.withOpacity(0)),
                     ),
+                    child: Text(S.of(context).Generate),
                   ),
                 ],
               ),

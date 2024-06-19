@@ -41,7 +41,7 @@ std::vector<std::string> GetCommandLineArguments() {
   return command_line_arguments;
 }
 
-std::string Utf8FromUtf16(const wchar_t* utf16_string) {
+std::string Utf8FromUtf16(  wchar_t* utf16_string) {
   if (utf16_string == nullptr) {
     return std::string();
   }

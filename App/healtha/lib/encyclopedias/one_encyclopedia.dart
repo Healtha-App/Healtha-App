@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:healtha/generated/l10n.dart';
 
 class EncyclopediaPage extends StatefulWidget {
   final String category;
   final String image;
 
-  EncyclopediaPage(this.category, this.image);
+  const EncyclopediaPage(this.category, this.image, {super.key});
 
   @override
   _EncyclopediaPageState createState() => _EncyclopediaPageState();
@@ -16,7 +17,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   late Future<List<LabTest>> labTestsFuture;
   late Future<List<Disease>> diseasesFuture;
   List<LabTest> _searchResults = [];
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -34,7 +35,8 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   }
 
   Future<List<LabTest>> fetchLabTests() async {
-    final response = await http.get(Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
+    final response = await http.get(Uri.parse(
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
       return jsonList.map((labTest) => LabTest.fromJson(labTest)).toList();
@@ -44,7 +46,8 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   }
 
   Future<List<Disease>> fetchDiseases() async {
-    final response = await http.get(Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/disease'));
+    final response = await http.get(Uri.parse(
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/disease'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
       return jsonList.map((disease) => Disease.fromJson(disease)).toList();
@@ -69,7 +72,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
       setState(() {
         _searchResults = labTests
             .where((labTest) =>
-            labTest.name.toLowerCase().contains(query.toLowerCase()))
+                labTest.name.toLowerCase().contains(query.toLowerCase()))
             .toList();
       });
     });
@@ -90,15 +93,15 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xff7c77d1).withOpacity(0.5),
-                        Color(0xff7c77d1).withOpacity(0.7),
-                        Color(0xff7c77d1).withOpacity(0.9),
-                        Color(0xff7c77d1),
+                        const Color(0xff7c77d1).withOpacity(0.5),
+                        const Color(0xff7c77d1).withOpacity(0.7),
+                        const Color(0xff7c77d1).withOpacity(0.9),
+                        const Color(0xff7c77d1),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15),
                     ),
@@ -109,13 +112,13 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                   left: MediaQuery.of(context).size.width * 0.05,
                   right: MediaQuery.of(context).size.width * 0.05,
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: 80,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color(0xff7c77d1),
                           offset: Offset(0.0, 2.0),
@@ -126,8 +129,8 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                     ),
                     child: Center(
                       child: Text(
-                        "${widget.category} Encyclopedia",
-                        style: TextStyle(
+                        S.of(context).Encyclopedia(widget.category),
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                           color: Color(0xff7c77d1),
@@ -138,48 +141,52 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                 ),
               ],
             ),
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search, color: Color(0xff7c77d1)),
-                  hintText: 'Search...',
+                  prefixIcon:
+                      const Icon(Icons.search, color: Color(0xff7c77d1)),
+                  hintText: S.of(context).Search,
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                    borderSide:
+                        const BorderSide(color: Color(0xff7c77d1), width: 1.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                    borderSide:
+                        const BorderSide(color: Color(0xff7c77d1), width: 1.5),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             FutureBuilder<List<LabTest>>(
               future: labTestsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(
                       valueColor:
-                      AlwaysStoppedAnimation<Color>(Color(0xff7c77d1)),
+                          AlwaysStoppedAnimation<Color>(Color(0xff7c77d1)),
                     ),
                   );
                 } else if (snapshot.hasError) {
                   return Center(
-                    child: Text('Failed to load data'),
+                    child: Text(S.of(context).Failed_to_load_data),
                   );
                 } else {
-                  List<LabTest> displayList =
-                  _searchController.text.isEmpty ? snapshot.data! : _searchResults;
+                  List<LabTest> displayList = _searchController.text.isEmpty
+                      ? snapshot.data!
+                      : _searchResults;
                   return ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: displayList.length,
                     itemBuilder: (context, index) {
                       return Card(
@@ -189,7 +196,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                         ),
                         color: Colors.white,
                         child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 25),
                           leading: Image.asset(
                             widget.image,
@@ -198,7 +205,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                           ),
                           title: Text(
                             displayList[index].name ?? '',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600),
@@ -215,14 +222,14 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                               );
                             },
                             elevation: 2.0,
-                            fillColor: Color(0xFF7C77D1),
-                            child: Icon(
+                            fillColor: const Color(0xFF7C77D1),
+                            padding: const EdgeInsets.all(12.0),
+                            shape: const CircleBorder(),
+                            child: const Icon(
                               Icons.arrow_forward_ios,
                               color: Colors.white,
                               size: 17.0,
                             ),
-                            padding: EdgeInsets.all(12.0),
-                            shape: CircleBorder(),
                           ),
                         ),
                       );
@@ -241,108 +248,109 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
 class LabTestDetailsPage extends StatelessWidget {
   final LabTest labTest;
 
-  LabTestDetailsPage({required this.labTest});
+  const LabTestDetailsPage({super.key, required this.labTest});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-          children: [
+        children: [
           Stack(
-          clipBehavior: Clip.none,
-          children: [
-      Container(
-      height: MediaQuery.of(context).size.height * 0.20,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0xff7c77d1).withOpacity(0.5),
-            Color(0xff7c77d1).withOpacity(0.7),
-            Color(0xff7c77d1).withOpacity(0.9),
-            Color(0xff7c77d1),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(15),
-          bottomRight: Radius.circular(15),
-        ),
-      ),
-    ),
-    Positioned(
-    bottom: -40,
-    left: MediaQuery.of(context).size.width * 0.05,
-    right: MediaQuery.of(context).size.width * 0.05,
-    child: Container(
-    padding: EdgeInsets.all(20),
-    width: MediaQuery.of(context).size.width * 0.8,
-    decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(15),
-    boxShadow: [
-    BoxShadow(
-    color: Color(0xff7c77d1),
-    offset: Offset(0.0, 2.0),
-    blurRadius: 1.0,
-    spreadRadius: 0.0,
-    ),
-    ],  ),
-      child: Center(
-      child: Text(
-        "${labTest.name}",
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          color: Color(0xff7c77d1),
-        ),
-      ),
-    ),
-    ),
-    ),
-      ],
-    ),
-            SizedBox(height: 50),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(16.0),
-                itemCount: labTest.sections.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            labTest.sections[index].title,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff7c77d1),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            labTest.sections[index].content,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.20,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xff7c77d1).withOpacity(0.5),
+                      const Color(0xff7c77d1).withOpacity(0.7),
+                      const Color(0xff7c77d1).withOpacity(0.9),
+                      const Color(0xff7c77d1),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -40,
+                left: MediaQuery.of(context).size.width * 0.05,
+                right: MediaQuery.of(context).size.width * 0.05,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0xff7c77d1),
+                        offset: Offset(0.0, 2.0),
+                        blurRadius: 1.0,
+                        spreadRadius: 0.0,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      labTest.name,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff7c77d1),
                       ),
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: 50),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: labTest.sections.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          labTest.sections[index].title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff7c77d1),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          labTest.sections[index].content,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
+          ),
+        ],
       ),
     );
   }
@@ -415,5 +423,3 @@ class Disease {
     );
   }
 }
-
-

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/themes/dark.dart';
 import 'package:healtha/themes/light.dart';
 import '../main.dart';
 
 class SettingsPage extends StatefulWidget {
-  final Function(ThemeData) onThemeChanged; // Add a callback function to handle theme changes
+  final Function(ThemeData)
+      onThemeChanged; // Add a callback function to handle theme changes
 
-  SettingsPage({required this.onThemeChanged}); // Constructor for the callback function
+  const SettingsPage(
+      {super.key,
+      required this.onThemeChanged}); // Constructor for the callback function
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -26,48 +30,54 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(S.of(context).Settings),
       ),
       body: ListView(
         children: <Widget>[
           ExpansionTile(
-            leading: Icon(Icons.color_lens, color: Colors.purple), // Set icon color to purple
-            title: Text('Themes'),
-            subtitle: Text('Current: ${_selectedTheme == lightTheme ? 'Light' : 'Dark'}'),
+            leading: const Icon(Icons.color_lens,
+                color: Colors.purple), // Set icon color to purple
+            title: Text(S.of(context).Themes),
+            subtitle: Text(
+                'Current: ${_selectedTheme == lightTheme ? 'Light' : 'Dark'}'),
             children: <Widget>[
               ListTile(
-                title: Text('Light'),
+                title: const Text('Light'),
                 onTap: () {
                   setState(() {
                     _selectedTheme = lightTheme;
                   });
-                  widget.onThemeChanged(lightTheme); // Call the callback function with light theme
+                  widget.onThemeChanged(
+                      lightTheme); // Call the callback function with light theme
                 },
               ),
               ListTile(
-                title: Text('Dark'),
+                title: const Text('Dark'),
                 onTap: () {
                   setState(() {
                     _selectedTheme = darkTheme;
                   });
-                  widget.onThemeChanged(darkTheme); // Call the callback function with dark theme
+                  widget.onThemeChanged(
+                      darkTheme); // Call the callback function with dark theme
                 },
               ),
             ],
           ),
           ExpansionTile(
-            leading: Icon(Icons.language, color: Colors.purple), // Set icon color to purple
-            title: Text('Language'),
-            subtitle: Text('Current: English'), // Update this dynamically if needed
+            leading: const Icon(Icons.language,
+                color: Colors.purple), // Set icon color to purple
+            title: Text(S.of(context).Language),
+            subtitle: const Text(
+                'Current: English'), // Update this dynamically if needed
             children: <Widget>[
               ListTile(
-                title: Text('English'),
+                title: const Text('English'),
                 onTap: () {
                   // Handle language change to English
                 },
               ),
               ListTile(
-                title: Text('Arabic'),
+                title: const Text('Arabic'),
                 onTap: () {
                   // Handle language change to Arabic
                 },
@@ -76,7 +86,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ],
       ),
-    //  backgroundColor: Colors.white, // Set background color to white
+      //  backgroundColor: Colors.white, // Set background color to white
     );
   }
 }

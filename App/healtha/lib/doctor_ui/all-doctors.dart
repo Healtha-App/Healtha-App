@@ -5,8 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healtha/doctor_ui/doc-profile.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:healtha/generated/l10n.dart';
 
 class AllDoctors extends StatefulWidget {
+  const AllDoctors({super.key});
+
   @override
   _AllDoctorsState createState() => _AllDoctorsState();
 }
@@ -28,7 +31,8 @@ class _AllDoctorsState extends State<AllDoctors> {
   }
 
   Future<List<Doctor>> fetchDoctors() async {
-    final response = await http.get(Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/doctors'));
+    final response = await http.get(Uri.parse(
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/doctors'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -50,13 +54,13 @@ class _AllDoctorsState extends State<AllDoctors> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF0EEFA),
+      backgroundColor: const Color(0xFFF0EEFA),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF0EEFA),
-        title: Text('Discover All Doctors',style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold
-        ),),
+        backgroundColor: const Color(0xFFF0EEFA),
+        title: Text(
+          S.of(context).Discover_All_Doctors,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Column(
         children: [
@@ -67,8 +71,8 @@ class _AllDoctorsState extends State<AllDoctors> {
                 updateSearchQuery(value);
               },
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search by name, location or specialty',
+                prefixIcon: const Icon(Icons.search),
+                hintText: S.of(context).Search_by_name_location_or_specialty,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -109,7 +113,7 @@ class Doctor {
 class DoctorCard extends StatefulWidget {
   final Doctor doctor;
 
-  DoctorCard({required this.doctor});
+  const DoctorCard({super.key, required this.doctor});
 
   @override
   _DoctorCardState createState() => _DoctorCardState();
@@ -122,7 +126,7 @@ class _DoctorCardState extends State<DoctorCard> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       child: InkWell(
         onTap: () {
           // Navigate to doctor profile
@@ -135,25 +139,26 @@ class _DoctorCardState extends State<DoctorCard> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 50.0,
                 backgroundImage: AssetImage("images/dr.PNG"),
               ),
-              SizedBox(width: 10.0),
+              const SizedBox(width: 10.0),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.doctor.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.orangeAccent, size: 16.0),
+                        const Icon(Icons.star,
+                            color: Colors.orangeAccent, size: 16.0),
                         Text(widget.doctor.rating.toString()),
                       ],
                     ),
@@ -163,7 +168,9 @@ class _DoctorCardState extends State<DoctorCard> {
               IconButton(
                 icon: Icon(
                   _isFavorited ? Icons.favorite : Icons.favorite_border,
-                  color: _isFavorited ? Color(0xff7c77d1) : Color(0xff7c77d1),
+                  color: _isFavorited
+                      ? const Color(0xff7c77d1)
+                      : const Color(0xff7c77d1),
                   size: 18.0,
                 ),
                 onPressed: () {
@@ -180,7 +187,8 @@ class _DoctorCardState extends State<DoctorCard> {
   }
 
   void _launchURL(String location) async {
-    final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=$location');
+    final Uri url =
+        Uri.parse('https://www.google.com/maps/search/?api=1&query=$location');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
