@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       title: 'Healtha',
       debugShowCheckedModeBanner: false,
       theme: themeData,
-      home: docLogin(),
+      home: UploadPage(),
     );
   }
 }

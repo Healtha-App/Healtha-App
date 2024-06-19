@@ -28,7 +28,7 @@ class _AllDoctorsState extends State<AllDoctors> {
   }
 
   Future<List<Doctor>> fetchDoctors() async {
-    final response = await http.get(Uri.parse('http://192.168.1.12:4000/api/healtha/doctors'));
+    final response = await http.get(Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/doctors'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);

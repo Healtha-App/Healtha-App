@@ -63,6 +63,9 @@ dependencies:
   flutter_translate: ^3.1.0
   font_awesome_flutter: ^10.7.0
   url_launcher: ^6.3.0
+  shared_preferences: ^2.0.6
+
+  flutter_tts: ^3.2.4
 
 
 

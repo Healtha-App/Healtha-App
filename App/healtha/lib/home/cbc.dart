@@ -45,7 +45,7 @@ class CBC extends StatelessWidget {
 
   Future<LabTest> fetchLabTest() async {
     final response = await http.get(Uri.parse(
-        'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
       if (labTests.isNotEmpty) {
