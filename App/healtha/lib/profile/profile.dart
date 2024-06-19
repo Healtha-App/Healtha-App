@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healtha/lab_doctor/lab_doctor.dart';
+import 'package:healtha/main.dart';
+import 'package:healtha/profile/settings.dart';
 import 'package:healtha/register_login/log_in.dart';
+import 'package:healtha/variables.dart';
 import '../register_login/log_in.dart';
 import 'editPage.dart';
 import 'package:http/http.dart' as http;
@@ -16,17 +20,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Add this line
+
   String? email;
   String? name;
   String? phone;
   String? DoB;
   bool _isLoading = true; // Add a flag to track loading state
+
   @override
   void initState() {
     super.initState();
     // Call the function to fetch user data when the page loads
     fetchUserData();
   }
+
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
     final response = await http.get(Uri.parse('http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
@@ -40,15 +48,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // Update the state variables with the retrieved user data
         setState(() {
           email = userData['email'];
-          name=userData['username'];
-          phone=userData["contactInformation"];
-          DoB=userData["dateOfBirth"];
+          name = userData['username'];
+          phone = userData["contactInformation"];
+          DoB = userData["dateOfBirth"];
           _isLoading = false; // Set loading flag to false
           // Update other variables if needed
         });
       } else {
         // Handle the case where the list is empty
-        _isLoading = false; // Set loading flag to false
+        setState(() {
+          _isLoading = false; // Set loading flag to false
+        });
       }
     } else {
       // If the request fails, show an error message
@@ -65,23 +75,105 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       );
-      _isLoading = false; // Set loading flag to false
+      setState(() {
+        _isLoading = false; // Set loading flag to false
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Set the key here
+      appBar: AppBar(
+        backgroundColor: AppConfig.myPurple,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer(); // Use the key to open the drawer
+          },
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              height: 60.0, // Reduced height
+              child: DrawerHeader(
+                child: Text('Menu', style: TextStyle(color: Colors.black)),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                margin: EdgeInsets.all(0),
+                padding: EdgeInsets.all(16.0),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.favorite, color: myPurple),
+              title: Text('Favorites'),
+              onTap: () {
+                // Handle Favorites tap
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.bookmark, color: myPurple),
+              title: Text('Saved'),
+              onTap: () {
+                // Handle Saved tap
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.help, color: myPurple),
+              title: Text('Help & Support'),
+              onTap: () {
+                // Handle Help and Support tap
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings, color: myPurple),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage(onThemeChanged: (ThemeData ) {  },)),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.privacy_tip_sharp, color: myPurple),
+              title: Text('Privacy'),
+              onTap: () {
+
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app, color: myPurple),
+              title: Text('Log Out'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => editPage()),
           );
         },
-        backgroundColor:Color(0xff7c77d1),
-        child: Icon(Icons.edit,color: Colors.white,),
+        backgroundColor: Color(0xff7c77d1),
+        child: Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -102,15 +194,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Padding(
                   padding: EdgeInsets.all(20.0),
-                  /* child: Text(
-                          'Profile',
-                          style: TextStyle(
-                            fontSize: 35.0,
-                            letterSpacing: 1.5,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),*/
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 2,
@@ -126,31 +209,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  name??"loading..",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,color: Colors.black),
+                  name ?? "loading..",
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 const SizedBox(height: 5),
                 const Text(
                   "patient",
-                  style: TextStyle(fontSize: 15.0,color: Colors.black),
+                  style: TextStyle(fontSize: 15.0, color: Colors.black),
                 ),
                 const SizedBox(height: 25),
                 customContainer(
                   title: "Email",
                   icon1: Image.asset("assets/at.png"),
-                  data: email??"loading ..",
+                  data: email ?? "loading ..",
                 ),
                 const SizedBox(height: 15),
                 customContainer(
-                    title: "Phone Number",
-                    icon1: Image.asset("assets/phone-call.png"),
-                    data: phone??"loading .."
+                  title: "Phone Number",
+                  icon1: Image.asset("assets/phone-call.png"),
+                  data: phone ?? "loading ..",
                 ),
                 const SizedBox(height: 15),
                 customContainer(
                   title: "Date of Birth",
                   icon1: Image.asset("assets/house-chimney.png"),
-                  data: DoB??"loading ..",
+                  data: DoB ?? "loading ..",
                 ),
                 const SizedBox(height: 15),
               ],

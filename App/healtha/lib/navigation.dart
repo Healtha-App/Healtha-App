@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healtha/lab_analysis/upload_analysis.dart';
 import 'package:healtha/main.dart';
-import 'package:healtha/profile/home.dart';
+import 'package:healtha/profile/profile.dart';
 import 'package:healtha/themes/dark.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';

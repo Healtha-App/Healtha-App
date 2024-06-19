@@ -14,7 +14,7 @@ import '../encyclopedias/encyclopedia_types.dart';
 import '../lab_analysis/upload_analysis.dart';
 import '../navigation.dart';
 import '../prediction/disease_prediction.dart';
-import '../profile/home.dart';
+import '../profile/profile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'ACE.dart';

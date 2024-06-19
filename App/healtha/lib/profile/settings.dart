@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:healtha/themes/dark.dart';
+import 'package:healtha/themes/light.dart';
+import '../main.dart';
+
+class SettingsPage extends StatefulWidget {
+  final Function(ThemeData) onThemeChanged; // Add a callback function to handle theme changes
+
+  SettingsPage({required this.onThemeChanged}); // Constructor for the callback function
+
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  late ThemeData _selectedTheme; // Initialize with a default theme
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the selected theme with the default theme set in MyApp
+    _selectedTheme = ThemeData.light();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+      ),
+      body: ListView(
+        children: <Widget>[
+          ExpansionTile(
+            leading: Icon(Icons.color_lens, color: Colors.purple), // Set icon color to purple
+            title: Text('Themes'),
+            subtitle: Text('Current: ${_selectedTheme == lightTheme ? 'Light' : 'Dark'}'),
+            children: <Widget>[
+              ListTile(
+                title: Text('Light'),
+                onTap: () {
+                  setState(() {
+                    _selectedTheme = lightTheme;
+                  });
+                  widget.onThemeChanged(lightTheme); // Call the callback function with light theme
+                },
+              ),
+              ListTile(
+                title: Text('Dark'),
+                onTap: () {
+                  setState(() {
+                    _selectedTheme = darkTheme;
+                  });
+                  widget.onThemeChanged(darkTheme); // Call the callback function with dark theme
+                },
+              ),
+            ],
+          ),
+          ExpansionTile(
+            leading: Icon(Icons.language, color: Colors.purple), // Set icon color to purple
+            title: Text('Language'),
+            subtitle: Text('Current: English'), // Update this dynamically if needed
+            children: <Widget>[
+              ListTile(
+                title: Text('English'),
+                onTap: () {
+                  // Handle language change to English
+                },
+              ),
+              ListTile(
+                title: Text('Arabic'),
+                onTap: () {
+                  // Handle language change to Arabic
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    //  backgroundColor: Colors.white, // Set background color to white
+    );
+  }
+}

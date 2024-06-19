@@ -10,7 +10,7 @@ import 'package:healtha/encyclopedias/one_encyclopedia.dart';
 import 'package:healtha/lab_analysis/fetch.dart';
 import 'package:healtha/lab_analysis/saved_reports.dart';
 import 'package:healtha/prediction/disease_prediction.dart';
-import 'package:healtha/profile/home.dart';
+import 'package:healtha/profile/profile.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:healtha/home/home_screen.dart';
 import 'package:healtha/register_login/log_in.dart';
@@ -40,18 +40,20 @@ Future<void> main() async {
   // await Firebase.initializeApp();
   runApp(MyApp());
 }
+
+
 class MyApp extends StatelessWidget {
 
   MyApp({super.key});
   static const Color myPurple = Color(0xff7c77d1);
-  final ThemeData themeData = lightTheme; // Define your theme here
+  final ThemeData themeData = darkTheme; // Define your theme here
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Healtha',
       debugShowCheckedModeBanner: false,
       theme: themeData,
-      home: UploadPage(),
+      home: ProfileScreen(),
     );
   }
 }
