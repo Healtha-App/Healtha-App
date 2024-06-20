@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:healtha/screens/generated/l10n.dart';
 
 class EncyclopediaPage extends StatefulWidget {
   final String category;
   final String image;
 
-  const EncyclopediaPage(this.category, this.image, {super.key});
+  const EncyclopediaPage(this.category, this.image, {Key? key}) : super(key: key);
 
   @override
   _EncyclopediaPageState createState() => _EncyclopediaPageState();
@@ -15,16 +16,18 @@ class EncyclopediaPage extends StatefulWidget {
 
 class _EncyclopediaPageState extends State<EncyclopediaPage> {
   late Future<List<LabTest>> labTestsFuture;
-  late Future<List<Disease>> diseasesFuture;
   List<LabTest> _searchResults = [];
   final TextEditingController _searchController = TextEditingController();
+  final stt.SpeechToText _speechToText = stt.SpeechToText();
+  bool _isListening = false;
+  String _spokenText = "";
 
   @override
   void initState() {
     super.initState();
     labTestsFuture = fetchLabTests();
-    diseasesFuture = fetchDiseases();
     _searchController.addListener(_onSearchChanged);
+    initSpeechRecognizer();
   }
 
   @override
@@ -32,6 +35,46 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
     _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
     super.dispose();
+  }
+
+  void initSpeechRecognizer() async {
+    bool available = await _speechToText.initialize(
+      onError: (error) => print('Error: $error'),
+      onStatus: (status) => print('Status: $status'),
+    );
+    if (available) {
+      setState(() {});
+    } else {
+      print('Speech recognition not available');
+    }
+  }
+
+  void startListening() async {
+    if (!_isListening) {
+      bool listening = await _speechToText.listen(
+        onResult: (result) {
+          setState(() {
+            _spokenText = result.recognizedWords.trim();
+            _searchController.text = _spokenText; // Set recognized text to search
+          });
+          searchResults(_spokenText);
+        },
+      )??false;
+      if (listening) {
+        setState(() {
+          _isListening = true;
+        });
+      }
+    }
+  }
+
+  void stopListening() async {
+    if (_isListening) {
+      await _speechToText.stop();
+      setState(() {
+        _isListening = false;
+      });
+    }
   }
 
   Future<List<LabTest>> fetchLabTests() async {
@@ -42,17 +85,6 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
       return jsonList.map((labTest) => LabTest.fromJson(labTest)).toList();
     } else {
       throw Exception('Failed to load lab tests');
-    }
-  }
-
-  Future<List<Disease>> fetchDiseases() async {
-    final response = await http.get(Uri.parse(
-        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/disease'));
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonList = jsonDecode(response.body);
-      return jsonList.map((disease) => Disease.fromJson(disease)).toList();
-    } else {
-      throw Exception('Failed to load diseases');
     }
   }
 
@@ -119,7 +151,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: const [
                       BoxShadow(
-                    //    color: Color(0xff7c77d1),
+                        //color: Color(0xff7c77d1),
                         offset: Offset(0.0, 2.0),
                         blurRadius: 1.0,
                         spreadRadius: 0.0,
@@ -146,17 +178,26 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search, color: Color(0xff7c77d1)),
+                prefixIcon: IconButton(
+                  icon: Icon(_isListening ? Icons.mic : Icons.mic_none, color: Colors.white),
+                  onPressed: () {
+                    if (!_isListening) {
+                      startListening();
+                    } else {
+                      stopListening();
+                    }
+                  },
+                ),
                 hintText: S.of(context).Search,
                 filled: true,
-               // fillColor: Colors.white,
+                fillColor: Colors.black,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: const BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                  borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: const BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                  borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
                 ),
               ),
             ),
@@ -167,7 +208,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
               future: labTestsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
+                  return Center(
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7c77d1)),
                     ),
@@ -184,15 +225,14 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                     itemCount: displayList.length,
                     itemBuilder: (context, index) {
                       return Card(
-
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         color: Theme.of(context).colorScheme.secondary,
                         child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 25),
+                          contentPadding:
+                          const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                           leading: Image.asset(
                             widget.image,
                             width: 35,
@@ -201,9 +241,9 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                           title: Text(
                             displayList[index].name ?? '',
                             style: const TextStyle(
-                           //     color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           trailing: RawMaterialButton(
                             onPressed: () {
@@ -240,11 +280,10 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   }
 }
 
-
 class LabTestDetailsPage extends StatelessWidget {
   final LabTest labTest;
 
-  const LabTestDetailsPage({super.key, required this.labTest});
+  const LabTestDetailsPage({Key? key, required this.labTest}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +301,7 @@ class LabTestDetailsPage extends StatelessWidget {
                     colors: [
                       const Color(0xff7c77d1).withOpacity(0.5),
                       const Color(0xff7c77d1).withOpacity(0.7),
-                      const Color(0xff7c77d1).withOpacity(0.9),
+                      const Color(0xff777d1).withOpacity(0.9),
                       const Color(0xff7c77d1),
                     ],
                     begin: Alignment.topLeft,
@@ -286,7 +325,6 @@ class LabTestDetailsPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: const [
                       BoxShadow(
-                        //color: Color(0xff7c77d1),
                         offset: Offset(0.0, 2.0),
                         blurRadius: 1.0,
                         spreadRadius: 0.0,
@@ -336,7 +374,6 @@ class LabTestDetailsPage extends StatelessWidget {
                           labTest.sections[index].content,
                           style: const TextStyle(
                             fontSize: 16,
-                       //     color: Colors.black,
                           ),
                         ),
                       ],
@@ -419,3 +456,4 @@ class Disease {
     );
   }
 }
+

@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                S.of(context).Hello(name!),
+                                name != null ? S.of(context).Hello(name!) : S.of(context).Hello('There'),
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                     fontSize: 20,
