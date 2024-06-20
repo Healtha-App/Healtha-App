@@ -76,7 +76,7 @@ class _SignUpState extends State<SignUp> {
                 ],
               ),
             ),
-            backgroundColor: Colors.white,
+     //       backgroundColor: Colors.white,
             elevation: 8,
             behavior: SnackBarBehavior.floating,
           ),
@@ -156,7 +156,7 @@ class _SignUpState extends State<SignUp> {
                         textStyle: TextStyle(
                           fontSize: screenSize.width * 0.08,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                        //  color: Colors.white,
                         ),
                       ),
                     ),
@@ -166,7 +166,7 @@ class _SignUpState extends State<SignUp> {
               Container(
                 height: screenSize.height * 0.9,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(screenSize.width * 0.05),
                     topRight: Radius.circular(screenSize.width * 0.05),
@@ -333,7 +333,7 @@ class _SignUpState extends State<SignUp> {
                                 S.of(context).Sign_Up,
                                 style: TextStyle(
                                   fontSize: screenSize.width * 0.06,
-                                  color: Colors.white,
+                            //      color: Colors.white,
                                 ),
                               ),
                               onPressed: () {

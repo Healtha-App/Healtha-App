@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:healtha/screens/generated/l10n.dart';
 import 'package:healtha/screens/lab_doctor/lab_doctor.dart';
 import 'package:healtha/themes/dark.dart';
@@ -6,26 +7,30 @@ import 'package:healtha/themes/light.dart';
 import 'package:healtha/variables.dart';
 import 'package:healtha/main.dart';
 import 'package:healtha/variables.dart';
-class SettingsPage extends StatefulWidget {
-  final Function(ThemeData)
-      onThemeChanged; // Add a callback function to handle theme changes
+import 'package:flutter/material.dart';
+import 'package:healtha/screens/generated/l10n.dart';
+import 'package:healtha/themes/dark.dart';
+import 'package:healtha/themes/light.dart';
 
-  const SettingsPage(
-      {super.key,
-      required this.onThemeChanged}); // Constructor for the callback function
+import '../../bloc/themes/themes_bloc.dart';
+import '../../bloc/themes/themes_event.dart';
+
+class SettingsPage extends StatefulWidget {
+  final Function(ThemeData) onThemeChanged;
+
+  const SettingsPage({Key? key, required this.onThemeChanged}) : super(key: key);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late ThemeData _selectedTheme; // Initialize with a default theme
+  late ThemeData _selectedTheme;
 
   @override
   void initState() {
     super.initState();
-    // Initialize the selected theme with the default theme set in MyApp
-    _selectedTheme = ThemeData.light();
+    _selectedTheme = lightTheme; // Initialize with the default theme
   }
 
   @override
@@ -37,11 +42,11 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: <Widget>[
           ExpansionTile(
-            leading: const Icon(Icons.color_lens,
-                color:  Color(0xff7c77d1) ),
+            leading: const Icon(Icons.color_lens, color: Color(0xff7c77d1)),
             title: Text(S.of(context).Themes),
             subtitle: Text(
-                'Current: ${_selectedTheme == lightTheme ? 'Light' : 'Dark'}'),
+              'Current: ${_selectedTheme == lightTheme ? 'Light' : 'Dark'}',
+            ),
             children: <Widget>[
               ListTile(
                 title: const Text('Light'),
@@ -49,19 +54,17 @@ class _SettingsPageState extends State<SettingsPage> {
                   setState(() {
                     _selectedTheme = lightTheme;
                   });
-                  widget.onThemeChanged(
-                      lightTheme); // Call the callback function with light theme
+                  widget.onThemeChanged(lightTheme); // Notify the parent about the theme change
                 },
               ),
               ListTile(
                 title: const Text('Dark'),
                 onTap: () {
-                  setState(() {
-                    _selectedTheme = darkTheme;
-                  });
-                  widget.onThemeChanged(
-                      darkTheme); // Call the callback function with dark theme
-                },
+
+                    BlocProvider.of<ThemesBloc>(context).add(ToggleTheme());
+                  },
+
+
               ),
             ],
           ),

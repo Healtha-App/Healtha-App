@@ -75,7 +75,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
               ),
             ),
             backgroundColor:
-                MyApp().themeData == darkTheme ? Colors.black : Colors.white,
+                darkTheme == darkTheme ? Colors.black : Colors.white,
             elevation: 8,
             behavior: SnackBarBehavior.floating,
           ),
@@ -166,7 +166,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                         child: Container(
                           height: screenSize.height * 0.9,
                           decoration: BoxDecoration(
-                            color: MyApp().themeData == darkTheme
+                            color: darkTheme == darkTheme
                                 ? Colors.black
                                 : Colors.white,
                             borderRadius: BorderRadius.only(

@@ -23,10 +23,10 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int currentTap = 0;
   final List<Widget> screens = [
-    const HomeScreen(),
-    const EncyclopediaTypes(),
-    const NotificationCenter(),
-    const ProfileScreen(),
+    HomeScreen(),
+    EncyclopediaTypes(),
+    NotificationCenter(),
+    ProfileScreen(),
   ];
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = const HomeScreen();
@@ -63,7 +63,7 @@ class _NavbarState extends State<Navbar> {
             },
             elevation: 2.0,
             fillColor:
-                MyApp().themeData == darkTheme ? Colors.black : Colors.white,
+                Theme == darkTheme ? Colors.black : Colors.white,
             padding: const EdgeInsets.all(12.0),
             shape: const CircleBorder(),
             child: Icon(

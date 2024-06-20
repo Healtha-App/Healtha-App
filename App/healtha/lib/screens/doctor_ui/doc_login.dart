@@ -166,7 +166,7 @@ class docLogin extends StatelessWidget {
                 Container(
                   height: screenSize.height * 0.85,
                   decoration: BoxDecoration(
-                    color: MyApp().themeData == darkTheme
+                    color: darkTheme == darkTheme
                         ? Colors.black
                         : Colors.white,
                     borderRadius: BorderRadius.only(

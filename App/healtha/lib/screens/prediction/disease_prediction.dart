@@ -309,7 +309,6 @@ class _DiseaseState extends State<Disease> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -345,11 +344,11 @@ class _DiseaseState extends State<Disease> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: myPurple,
+                        //  color: myPurple,
                           offset: const Offset(0.0, 2.0),
                           blurRadius: 1.0,
                           spreadRadius: 0.0,
@@ -374,7 +373,7 @@ class _DiseaseState extends State<Disease> {
                         Text(
                           S.of(context).Disease_prediction_made_easy,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: 15),
                         ),
                       ],
                     ),
@@ -393,6 +392,7 @@ class _DiseaseState extends State<Disease> {
                     S.of(context).What_are_you_feeling,
                     textAlign: TextAlign.start,
                     style: const TextStyle(
+
                         fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ],
@@ -403,13 +403,14 @@ class _DiseaseState extends State<Disease> {
             ),
             ...symptomsCategories.keys.map((category) {
               return Card(
+                color: Theme.of(context).colorScheme.secondary,
                 elevation: 2,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                   // color: Colors.white,
                     border: Border.all(
                       color: AppConfig.myPurple.withOpacity(0.5),
                       width: 1.5,
@@ -489,7 +490,7 @@ class _DiseaseState extends State<Disease> {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                  //  color: Colors.black,
                   ),
                 ),
               ),

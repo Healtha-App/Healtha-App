@@ -63,7 +63,6 @@ class _UploadPageState extends State<UploadPage> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0, // Set the background color to transparent
@@ -82,7 +81,7 @@ class _UploadPageState extends State<UploadPage> {
             ),
           ),
           iconTheme: IconThemeData(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
           ),
         ),
         drawer: Drawer(
@@ -175,11 +174,11 @@ class _UploadPageState extends State<UploadPage> {
                     padding: const EdgeInsets.all(20),
                     width: screenSize.width * 0.9,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: myPurple,
+                       //   color: myPurple,
                           offset: const Offset(0.0, 2.0),
                           blurRadius: 1.0,
                           spreadRadius: 0.0,
@@ -241,7 +240,7 @@ We will notify you as soon as it is ready
 Thank you for allowing us the time to ensure accuracy!""",
                           textStyle: const TextStyle(
                             fontSize: 14,
-                            color: Colors.black87,
+                         //   color: Colors.black87,
                           ),
                           speed: const Duration(milliseconds: 40),
                         ),

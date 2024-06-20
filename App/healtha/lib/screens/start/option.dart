@@ -207,7 +207,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const EncyclopediaTypes()),
+                                    EncyclopediaTypes()),
                           );
                         },
                         style: ElevatedButton.styleFrom(

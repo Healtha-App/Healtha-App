@@ -14,7 +14,7 @@ class LabTestDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyApp.myPurple,
+        backgroundColor: AppConfig.myPurple,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -64,7 +64,7 @@ class LabTestDetailsPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: MyApp.myPurple,
+                        color: AppConfig.myPurple,
                       ),
                     ),
                   ),
@@ -85,7 +85,7 @@ class LabTestDetailsPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: MyApp.myPurple,
+                      color: AppConfig.myPurple,
                     ),
                   ),
                   const SizedBox(height: 16),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtha/variables.dart';
 
 
 ThemeData darkTheme = ThemeData(
@@ -8,9 +9,10 @@ ThemeData darkTheme = ThemeData(
   ),
 
   colorScheme: ColorScheme.dark(
-    background: Colors.black,
-    primary: Colors.grey.shade700,
-    secondary: Color(0xff7c77d1),
+
+    surface: Colors.black45,
+    primary: AppConfig.myPurple,
+    secondary: Colors.black12,
   ),
 );
 

@@ -108,14 +108,14 @@ class _JoinAsState extends State<joinAs> {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: screenSize.width * 0.08,
-                  color: Colors.white,
+               //   color: Colors.white,
                 ),
               ),
               SizedBox(height: screenSize.height * 0.05),
               Container(
                 height: screenSize.height * 0.7,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(screenSize.width * 0.1),
                     topRight: Radius.circular(screenSize.width * 0.1),
@@ -165,6 +165,7 @@ class _JoinAsState extends State<joinAs> {
                                     style: TextStyle(
                                       fontSize: screenSize.width * 0.06,
                                       fontWeight: FontWeight.w600,
+                                      color: Colors.black
                                     ),
                                   )
                                 ],
@@ -228,6 +229,7 @@ class _JoinAsState extends State<joinAs> {
                                     style: TextStyle(
                                       fontSize: screenSize.width * 0.06,
                                       fontWeight: FontWeight.w600,
+                                        color: Colors.black
                                     ),
                                   )
                                 ],

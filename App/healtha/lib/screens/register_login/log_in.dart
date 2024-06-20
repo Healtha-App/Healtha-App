@@ -135,7 +135,7 @@ class _LoginState extends State<Login> {
               Container(
                 height: screenSize.height * 0.8,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(screenSize.width * 0.1),
                     topRight: Radius.circular(screenSize.width * 0.1),
@@ -195,7 +195,7 @@ class _LoginState extends State<Login> {
                               isPasswordVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: Colors.black,
+                             // color: Colors.black,
                             ),
                             onPressed: () {
                               setState(() {

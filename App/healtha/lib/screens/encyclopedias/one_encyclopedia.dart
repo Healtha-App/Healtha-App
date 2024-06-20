@@ -115,11 +115,11 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: 80,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color(0xff7c77d1),
+                    //    color: Color(0xff7c77d1),
                         offset: Offset(0.0, 2.0),
                         blurRadius: 1.0,
                         spreadRadius: 0.0,
@@ -149,7 +149,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                 prefixIcon: const Icon(Icons.search, color: Color(0xff7c77d1)),
                 hintText: S.of(context).Search,
                 filled: true,
-                fillColor: Colors.white,
+               // fillColor: Colors.white,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide: const BorderSide(color: Color(0xff7c77d1), width: 1.5),
@@ -161,7 +161,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
               ),
             ),
           ),
-        //  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           Expanded(
             child: FutureBuilder<List<LabTest>>(
               future: labTestsFuture,
@@ -184,11 +184,12 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                     itemCount: displayList.length,
                     itemBuilder: (context, index) {
                       return Card(
+
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.secondary,
                         child: ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 25),
@@ -200,7 +201,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                           title: Text(
                             displayList[index].name ?? '',
                             style: const TextStyle(
-                                color: Colors.black,
+                           //     color: Colors.black,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -281,11 +282,11 @@ class LabTestDetailsPage extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.8,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color(0xff7c77d1),
+                        //color: Color(0xff7c77d1),
                         offset: Offset(0.0, 2.0),
                         blurRadius: 1.0,
                         spreadRadius: 0.0,
@@ -335,7 +336,7 @@ class LabTestDetailsPage extends StatelessWidget {
                           labTest.sections[index].content,
                           style: const TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
+                       //     color: Colors.black,
                           ),
                         ),
                       ],

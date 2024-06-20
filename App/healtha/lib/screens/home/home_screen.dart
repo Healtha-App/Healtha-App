@@ -154,6 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 S.of(context).Hello(name!),
@@ -202,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
-                      color: Colors.black,
+                      //color: Colors.black,
                     ),
                   ),
                 ),
@@ -234,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
-                      color: Colors.black,
+                    //  color: Colors.black,
                     ),
                   ),
                 ),

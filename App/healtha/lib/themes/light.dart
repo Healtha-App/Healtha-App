@@ -10,7 +10,7 @@ ThemeData lightTheme = ThemeData(
   ),
 
   colorScheme: ColorScheme.light(
-    background: Colors.grey.shade300,
+    surface: Colors.white,
     primary: Colors.white,
     secondary: Color(0xff7c77d1),
   ),
