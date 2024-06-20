@@ -141,8 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView (
+             // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                S.of(context).Hello(name!),
+                                name != null ? S.of(context).Hello(name!) : S.of(context).Hello('There'),
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                     fontSize: 20,
@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 10,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.12,
+                 height: MediaQuery.of(context).size.height * 0.12,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Expanded(
@@ -259,25 +259,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                /*Padding(
-                  padding:   EdgeInsets.only(right: 15),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        // Navigate to the see all doctors screen
-                      },
-                      child: Text(
-                        S.of(context).See_All,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff7c77d1),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),*/
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -627,6 +608,7 @@ class TestsPoster extends StatelessWidget {
     );
   }
 }
+
 
 class Doctor {
   final String name;

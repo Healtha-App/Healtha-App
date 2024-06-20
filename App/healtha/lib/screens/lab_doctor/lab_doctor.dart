@@ -139,9 +139,9 @@ Widget item(labs l, contxet) {
                 // Handle button press to view the lab
               },
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all<Color>(
+                backgroundColor: MaterialStateProperty.all<Color>(
                     myPurple), // Change this color
-                textStyle: WidgetStateProperty.all<TextStyle>(
+                textStyle: MaterialStateProperty.all<TextStyle>(
                     const TextStyle(fontSize: 18)),
                 // Add more styles as needed
               ),

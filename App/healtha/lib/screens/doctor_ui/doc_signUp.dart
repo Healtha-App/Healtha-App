@@ -347,10 +347,10 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:
-                                            WidgetStateProperty.all<Color>(
+                                        MaterialStateProperty.all<Color>(
                                           const Color(0xff7c77d1),
                                         ),
-                                        shape: WidgetStateProperty.all<
+                                        shape: MaterialStateProperty.all<
                                             OutlinedBorder>(
                                           RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(

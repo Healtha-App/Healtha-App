@@ -402,7 +402,7 @@ class _drProfileState extends State<drProfile> {
                                   ),
                                   style: ButtonStyle(
                                     backgroundColor:
-                                        WidgetStateProperty.all<Color>(
+                                    MaterialStateProperty.all<Color>(
                                             const Color(0xff7c77d1)),
                                   ),
                                 ),

@@ -272,11 +272,11 @@ Thank you for allowing us the time to ensure accuracy!""",
                           },
                           style: ButtonStyle(
                             foregroundColor:
-                                WidgetStateProperty.all<Color>(Colors.white),
+                                MaterialStateProperty.all<Color>(Colors.white),
                             backgroundColor:
-                                WidgetStateProperty.all<Color>(myPurple),
+                                MaterialStateProperty.all<Color>(myPurple),
                             shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                                MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -316,14 +316,14 @@ Thank you for allowing us the time to ensure accuracy!""",
                           }
                         : null,
                     style: ButtonStyle(
-                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      foregroundColor: WidgetStateProperty.all(
+                      foregroundColor: MaterialStateProperty.all(
                           _isEnabled ? Colors.white : myPurple.withOpacity(0)),
-                      backgroundColor: WidgetStateProperty.all(
+                      backgroundColor: MaterialStateProperty.all(
                           _isEnabled ? myPurple : myPurple.withOpacity(0)),
                     ),
                     child: Text(S.of(context).Generate),
