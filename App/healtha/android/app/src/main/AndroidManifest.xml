@@ -16,7 +16,6 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
-
         android:label="healtha"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:healtha/generated/l10n.dart';
+import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
 
 class Report extends StatefulWidget {
@@ -137,6 +138,7 @@ class _ReportState extends State<Report> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+    final myPurple = Theme.of(context).colorScheme.secondary;
 
     return SafeArea(
       child: Scaffold(
@@ -149,11 +151,9 @@ class _ReportState extends State<Report> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Theme.of(context).colorScheme.primary, // Light blue
-                    Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.2), // Light grey
+                    Color(0xff7c77d1), // Light blue
+                    Color(0xff7c77d1).withOpacity(0.2),
+                    Colors.transparent// Light grey
                   ],
                 ),
               ),
@@ -166,7 +166,7 @@ class _ReportState extends State<Report> {
                 width: screenSize.width * 0.6,
                 height: screenSize.width * 0.6,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary, // Purple
+                  color: Color(0xff7c77d1), // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.3),
                 ),
               ),
@@ -178,7 +178,7 @@ class _ReportState extends State<Report> {
                 width: screenSize.width * 0.4,
                 height: screenSize.width * 0.4,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary, // Purple
+                  color: Color(0xff7c77d1), // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.2),
                 ),
               ),
@@ -190,7 +190,7 @@ class _ReportState extends State<Report> {
                 width: screenSize.width * 0.2,
                 height: screenSize.width * 0.2,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary, // Purple
+                  color: AppConfig.myPurple, // Purple
                   borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                 ),
               ),
@@ -200,103 +200,95 @@ class _ReportState extends State<Report> {
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
                   color: Colors.white.withOpacity(0.1),
-                  width: double.infinity,
-                  height: 100,
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(screenSize.width * 0.05),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 700,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white70.withOpacity(0.6),
-                          blurRadius: 1,
-                          offset: const Offset(0, 7),
+            Center(
+              child: Container(
+
+                height: MediaQuery.of(context).size.height * 0.82,
+                width: MediaQuery.of(context).size.width * 0.9,
+
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(15), // Set the radius to make the borders rounded
+
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(screenSize.width * 0.05),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Text(
+                          "Healtha Report",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: myPurple,
+                          ),
                         ),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              S.of(context).Healtha_Report,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                          ),
-                          const Divider(),
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              _translatedReport ?? '',
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          ElevatedButton(
-                            onPressed: !_isTranslating
-                                ? () {
-                                    // Save the report without triggering translation
-                                    _saveReport(1, 'file_path',
-                                        _translatedReport); // Pass report content
-                                  }
-                                : null, // Disable button if translation is ongoing
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              minimumSize: Size(screenSize.width * 0.8, 50),
-                            ),
-                            child: Text(
-                              _isTranslated ? "Save" : "حفظ",
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          InkWell(
-                            onTap: () {
-                              if (!_isTranslating) {
-                                _translateReport();
-                              }
-                            },
-                            child: Text(
-                              S.of(context).Translate_this_report,
-                              style: const TextStyle(
-                                color: Color(0xff7c77d1),
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
                       ),
-                    ),
+                      const Divider(),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _translatedReport ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                ElevatedButton(
+                                  onPressed: !_isTranslating
+                                      ? () {
+                                    // Save the report without triggering translation
+                                    _saveReport(1, 'file_path', _translatedReport); // Pass report content
+                                  }
+                                      : null, // Disable button if translation is ongoing
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: AppConfig.myPurple,
+                                    minimumSize: Size(screenSize.width * 0.8, 50),
+                                  ),
+                                  child: Text(
+                                    _isTranslated ? "Save" : "حفظ",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                InkWell(
+                                  onTap: () {
+                                    if (!_isTranslating) {
+                                      _translateReport();
+                                    }
+                                  },
+                                  child: Text(
+                                    "Translate this report",
+                                    style: const TextStyle(
+                                      color: Color(0xff7c77d1),
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ],

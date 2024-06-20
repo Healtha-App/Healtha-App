@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
 import '../profile/customContainer.dart';
 import 'package:healtha/generated/l10n.dart';
@@ -106,22 +107,15 @@ class _drProfileState extends State<drProfile> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .surface
-                                      .withOpacity(1),
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .surface
-                                      .withOpacity(0.3),
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .surface
-                                      .withOpacity(0),
+                                  AppConfig.myPurple,
+                                  AppConfig.myPurple.withOpacity(0.5),
+                                  Colors.white.withOpacity(0),
+                                  Colors.white.withOpacity(0),
                                 ],
                                 begin: Alignment.bottomCenter,
                                 end: Alignment.topCenter,
                               ),
+
                             ),
                           ),
                         ),
@@ -224,8 +218,8 @@ class _drProfileState extends State<drProfile> {
                                     name ?? "Loading...",
                                     style: TextStyle(
                                       fontSize: 26,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ],
@@ -264,7 +258,7 @@ class _drProfileState extends State<drProfile> {
                                           "images/certificate2.png"),
                                       data: qualifications!,
                                     )
-                                  : const SizedBox(height: 30),
+                                  : const SizedBox(height: 10),
                               Padding(
                                 padding:
                                     EdgeInsets.all(screenSize.width * 0.02),

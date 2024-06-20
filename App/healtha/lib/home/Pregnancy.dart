@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:healtha/generated/l10n.dart';
+import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
 
 class LabTest {
@@ -45,7 +46,7 @@ class Pregnancy extends StatelessWidget {
 
   Future<LabTest> fetchLabTest() async {
     final response = await http.get(Uri.parse(
-        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.comec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
       if (labTests.isNotEmpty && labTests.length >= 179) {
@@ -140,56 +141,25 @@ class LabTestDetailsPage extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 15,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //SizedBox(height: 10,),
+                  Text(
+                    S.of(context).Lab_Test_Details,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppConfig.myPurple,
                     ),
-                    Text(
-                      S.of(context).Lab_Test_Details,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff7c77d1),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      S.of(context).Name(labTest.name),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    // Display sections
-                    if (labTest.sections.isNotEmpty) ...[
-                      const SizedBox(height: 16),
-                      Text(
-                        S.of(context).Sections,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff7c77d1),
-                        ),
-                      ),
-                      for (Section section in labTest.sections)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 8),
-                            Text(
-                              section.title,
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              section.content,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        ),
-                    ],
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    S.of(context).Name(labTest.name),
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  // Add more details as needed
+                ],
               ),
             ),
           ),

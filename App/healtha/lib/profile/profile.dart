@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
     final response = await http.get(Uri.parse(
-        'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
 
     if (response.statusCode == 200) {
       // If the request is successful, parse the JSON response
@@ -96,6 +96,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _scaffoldKey.currentState
                 ?.openDrawer(); // Use the key to open the drawer
           },
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white, // Set the drawer icon color to white
         ),
       ),
       drawer: Drawer(

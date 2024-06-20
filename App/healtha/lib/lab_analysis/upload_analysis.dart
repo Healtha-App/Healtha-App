@@ -63,9 +63,9 @@ class _UploadPageState extends State<UploadPage> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-
           elevation: 0, // Set the background color to transparent
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -80,6 +80,9 @@ class _UploadPageState extends State<UploadPage> {
                 end: Alignment.topRight,
               ),
             ),
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
           ),
         ),
         drawer: Drawer(

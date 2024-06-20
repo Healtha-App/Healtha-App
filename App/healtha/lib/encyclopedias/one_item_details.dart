@@ -1,5 +1,6 @@
 // details_page.dart
 import 'package:flutter/material.dart';
+import 'package:healtha/variables.dart';
 import '../main.dart';
 import 'one_encyclopedia.dart';
 import 'package:healtha/generated/l10n.dart';
@@ -31,7 +32,7 @@ class LabTestDetailsPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: MyApp.myPurple,
+                  color: AppConfig.myPurple,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),

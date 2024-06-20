@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
     final response = await http.get(Uri.parse(
-        'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
 
     if (response.statusCode == 200) {
       // If the request is successful, parse the JSON response
@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
-                      color: Colors.grey,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -227,11 +227,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 20,
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                   'Top Rated Doctors',
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
-                  height: 130,
+                  height: MediaQuery.of(context).size.height * 0.12,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Expanded(
@@ -349,6 +360,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: const EdgeInsets.all(10),
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0xff7c77d1).withOpacity(0.5),
+                              const Color(0xff7c77d1).withOpacity(0.7),
+                              const Color(0xff7c77d1).withOpacity(0.9),
+                              const Color(0xff7c77d1),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: const [
@@ -379,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               S.of(context).Generate_Laboratory_Test_Report,
                               style: const TextStyle(
                                 fontSize: 20,
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -389,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .of(context)
                                   .Discover_how_could_you_get_your_lab_report_via_Healtha,
                               style: const TextStyle(
-                                color: Colors.black54,
+                                color: Colors.white54,
                               ),
                             ),
                           ],

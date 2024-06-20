@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/generated/l10n.dart';
 import 'package:healtha/register_login/join_as.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import Font Awesome package
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:line_icons/line_icon.dart'; // Import Font Awesome package
 
 class option extends StatefulWidget {
   const option({super.key});
@@ -106,6 +107,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -119,6 +121,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
             ),
           ),
           child: Stack(
+
             children: [
               AnimatedBuilder(
                 animation: _animation,
@@ -157,11 +160,11 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                 },
               ),
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 70,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.1,
                     ),
                     Row(
                       children: [
@@ -192,12 +195,12 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 250,
+                    SizedBox(
+                      height:MediaQuery.of(context).size.height * 0.5,
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 60,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: MediaQuery.of(context).size.height * 0.07,
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -231,12 +234,13 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height:
+                      MediaQuery.of(context).size.height * 0.02,
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 60,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: MediaQuery.of(context).size.height * 0.07,
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -269,6 +273,7 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                         ),
                       ),
                     ),
+
                   ],
                 ),
               ),

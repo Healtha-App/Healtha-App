@@ -33,7 +33,7 @@ class _SignUpState extends State<SignUp> {
 
   Future<int?> signUp(BuildContext context) async {
     String healthaIP =
-        'http://ec2-18-220-246-59.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients';
 
     final url = healthaIP;
     try {

@@ -72,7 +72,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
       setState(() {
         _searchResults = labTests
             .where((labTest) =>
-                labTest.name.toLowerCase().contains(query.toLowerCase()))
+            labTest.name.toLowerCase().contains(query.toLowerCase()))
             .toList();
       });
     });
@@ -81,99 +81,95 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.18,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        const Color(0xff7c77d1).withOpacity(0.5),
-                        const Color(0xff7c77d1).withOpacity(0.7),
-                        const Color(0xff7c77d1).withOpacity(0.9),
-                        const Color(0xff7c77d1),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
+      body: Column(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.18,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xff7c77d1).withOpacity(0.5),
+                      const Color(0xff7c77d1).withOpacity(0.7),
+                      const Color(0xff7c77d1).withOpacity(0.9),
+                      const Color(0xff7c77d1),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
                   ),
                 ),
-                Positioned(
-                  bottom: -40,
-                  left: MediaQuery.of(context).size.width * 0.05,
-                  right: MediaQuery.of(context).size.width * 0.05,
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0xff7c77d1),
-                          offset: Offset(0.0, 2.0),
-                          blurRadius: 1.0,
-                          spreadRadius: 0.0,
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        S.of(context).Encyclopedia(widget.category),
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff7c77d1),
-                        ),
+              ),
+              Positioned(
+                bottom: -40,
+                left: MediaQuery.of(context).size.width * 0.05,
+                right: MediaQuery.of(context).size.width * 0.05,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0xff7c77d1),
+                        offset: Offset(0.0, 2.0),
+                        blurRadius: 1.0,
+                        spreadRadius: 0.0,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      S.of(context).Encyclopedia(widget.category),
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff7c77d1),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  prefixIcon:
-                      const Icon(Icons.search, color: Color(0xff7c77d1)),
-                  hintText: S.of(context).Search,
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide:
-                        const BorderSide(color: Color(0xff7c77d1), width: 1.5),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide:
-                        const BorderSide(color: Color(0xff7c77d1), width: 1.5),
-                  ),
+              ),
+            ],
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search, color: Color(0xff7c77d1)),
+                hintText: S.of(context).Search,
+                filled: true,
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(color: Color(0xff7c77d1), width: 1.5),
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            FutureBuilder<List<LabTest>>(
+          ),
+        //  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+          Expanded(
+            child: FutureBuilder<List<LabTest>>(
               future: labTestsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xff7c77d1)),
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7c77d1)),
                     ),
                   );
                 } else if (snapshot.hasError) {
@@ -185,8 +181,6 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                       ? snapshot.data!
                       : _searchResults;
                   return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: displayList.length,
                     itemBuilder: (context, index) {
                       return Card(
@@ -238,12 +232,13 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                 }
               },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+
 
 class LabTestDetailsPage extends StatelessWidget {
   final LabTest labTest;

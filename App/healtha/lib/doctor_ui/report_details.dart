@@ -33,7 +33,7 @@ class _ReportDetailsState extends State<ReportDetails> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?id=${widget.reportId}'),
+            'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?id=${widget.reportId}'),
       );
       if (response.statusCode == 200) {
         setState(() {
@@ -53,7 +53,7 @@ class _ReportDetailsState extends State<ReportDetails> {
     try {
       final response = await http.put(
         Uri.parse(
-            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}'),
+            'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}'),
         body: {'reportContent': _textEditingController.text},
       );
       if (response.statusCode == 200) {
@@ -78,7 +78,7 @@ class _ReportDetailsState extends State<ReportDetails> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}/confirm'),
+            'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports/${widget.reportId}/confirm'),
       );
       if (response.statusCode == 200) {
         // Update UI or take necessary actions upon successful confirmation
@@ -176,63 +176,65 @@ class _ReportDetailsState extends State<ReportDetails> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: double.infinity,
-                    height: screenSize.height * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.82,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white70.withOpacity(0.6),
-                          blurRadius: 1,
-                          offset: const Offset(0, 7),
-                        ),
-                      ],
+                      color: Colors.white.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(
+                          15), // Set the radius to make the borders rounded
                     ),
                     child: _isLoading
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Text(
-                                    S.of(context).Healtha_Report,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff7c77d1),
-                                    ),
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
+                                  S.of(context).Healtha_Report,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xff7c77d1),
                                   ),
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  // Wrap Text widget with TextField
-                                  child: _isEditing
-                                      ? TextField(
-                                          controller: _textEditingController,
-                                          maxLines:
-                                              null, // Allow the TextField to expand vertically
-                                          decoration: InputDecoration(
-                                            border: const OutlineInputBorder(),
-                                            hintText:
-                                                S.of(context).Enter_report_text,
+                              ),
+                              Divider(),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.71,
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    // Wrap Text widget with TextField
+                                    child: _isEditing
+                                        ? TextField(
+                                            controller: _textEditingController,
+                                            maxLines:
+                                                null, // Allow the TextField to expand vertically
+                                            decoration: InputDecoration(
+                                              border:
+                                                  const OutlineInputBorder(),
+                                              hintText: S
+                                                  .of(context)
+                                                  .Enter_report_text,
+                                            ),
+                                          )
+                                        : Text(
+                                            _reportContent,
+                                            style:
+                                                const TextStyle(fontSize: 14),
                                           ),
-                                        )
-                                      : Text(
-                                          _reportContent,
-                                          style: const TextStyle(fontSize: 14),
-                                        ),
+                                  ),
                                 ),
-                                const SizedBox(height: 10),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
                           ),
                   ),
                   const Spacer(),

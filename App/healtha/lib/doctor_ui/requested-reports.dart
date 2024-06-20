@@ -26,7 +26,7 @@ class _RequestedReportsState extends State<RequestedReports> {
   Future<void> _fetchReports() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
+          'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
       if (response.statusCode == 200) {
         setState(() {
           _reports = json.decode(response.body);
@@ -62,8 +62,8 @@ class _RequestedReportsState extends State<RequestedReports> {
             ),
             // Abstract Shapes
             Positioned(
-              top: -screenSize.width * 0.3,
-              right: -screenSize.width * 0.1,
+              top: -screenSize.width * 0.25,
+              right: -screenSize.width * 0.25,
               child: Container(
                 width: screenSize.width * 0.6,
                 height: screenSize.width * 0.6,
@@ -150,6 +150,7 @@ class _RequestedReportsState extends State<RequestedReports> {
                               vertical: screenSize.width * 0.02),
                           child: Container(
                             width: double.infinity,
+                           // height: MediaQuery.of(context).size.height * 0.1,
                             decoration: BoxDecoration(
                               color: Colors.transparent,
                               borderRadius: BorderRadius.all(

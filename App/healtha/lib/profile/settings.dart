@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:healtha/generated/l10n.dart';
+import 'package:healtha/lab_doctor/lab_doctor.dart';
 import 'package:healtha/themes/dark.dart';
 import 'package:healtha/themes/light.dart';
+import 'package:healtha/variables.dart';
 import '../main.dart';
-
+import 'package:healtha/variables.dart';
 class SettingsPage extends StatefulWidget {
   final Function(ThemeData)
       onThemeChanged; // Add a callback function to handle theme changes
@@ -36,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: <Widget>[
           ExpansionTile(
             leading: const Icon(Icons.color_lens,
-                color: Colors.purple), // Set icon color to purple
+                color:  Color(0xff7c77d1) ),
             title: Text(S.of(context).Themes),
             subtitle: Text(
                 'Current: ${_selectedTheme == lightTheme ? 'Light' : 'Dark'}'),
@@ -65,7 +67,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ExpansionTile(
             leading: const Icon(Icons.language,
-                color: Colors.purple), // Set icon color to purple
+                color:  Color(0xff7c77d1)), // Set icon color to purple
             title: Text(S.of(context).Language),
             subtitle: const Text(
                 'Current: English'), // Update this dynamically if needed

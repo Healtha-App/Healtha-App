@@ -13,11 +13,12 @@ class customContainer extends StatelessWidget {
       left: MediaQuery.of(context).size.width * 0.05,
       right: MediaQuery.of(context).size.width * 0.05,
       child: Container(
+
         padding: EdgeInsets.all(20),
         width: MediaQuery.of(context).size.width * 0.9,
-        height: 110,
+        height: MediaQuery.of(context).size.height * 0.12,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
