@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:healtha/screens/chat/chatting.dart';
 import 'package:healtha/screens/doctor_ui/doc-profile.dart';
 import 'package:healtha/screens/doctor_ui/requested-reports.dart';
 import 'package:healtha/screens/encyclopedias/encyclopedia_types.dart';
@@ -45,7 +44,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : darkTheme,
-              home: Chatting(doctorName: 'Dr. Esraa',),
+              home: drProfile(),
             ),
           );
         },
