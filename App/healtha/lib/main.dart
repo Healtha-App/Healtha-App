@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:healtha/doctor_ui/doc-profile.dart';
-import 'package:healtha/doctor_ui/requested-reports.dart';
-import 'package:healtha/generated/l10n.dart';
-import 'package:healtha/home/home_screen.dart';
-import 'package:healtha/lab_analysis/report.dart';
-import 'package:healtha/notification/notification_center.dart';
-import 'package:healtha/profile/profile.dart';
-import 'package:healtha/start/option.dart';
-import 'package:healtha/start/splash.dart';
+import 'package:healtha/screens/doctor_ui/doc-profile.dart';
+import 'package:healtha/screens/doctor_ui/requested-reports.dart';
+import 'package:healtha/screens/generated/l10n.dart';
+import 'package:healtha/screens/home/home_screen.dart';
+import 'package:healtha/screens/lab_analysis/report.dart';
+import 'package:healtha/screens/notification/notification_center.dart';
+import 'package:healtha/screens/profile/profile.dart';
+import 'package:healtha/screens/start/option.dart';
+import 'package:healtha/screens/start/splash.dart';
 import 'package:healtha/themes/light.dart';
 
 import 'themes/dark.dart';
@@ -22,7 +22,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   static Color myPurple = const Color(0xff7c77d1);
-  final ThemeData themeData = lightTheme;
+  final ThemeData themeData = darkTheme;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         supportedLocales: S.delegate.supportedLocales,
         // theme: themeData,
-        home: RequestedReports(),
+        home: SplashScreen(),
       ),
     );
   }
