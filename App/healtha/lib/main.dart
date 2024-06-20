@@ -22,7 +22,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   static Color myPurple = const Color(0xff7c77d1);
-  final ThemeData themeData = darkTheme;
+  final ThemeData themeData = lightTheme;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
