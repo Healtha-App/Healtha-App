@@ -115,7 +115,7 @@ class _JoinAsState extends State<joinAs> {
               Container(
                 height: screenSize.height * 0.7,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(screenSize.width * 0.1),
                     topRight: Radius.circular(screenSize.width * 0.1),

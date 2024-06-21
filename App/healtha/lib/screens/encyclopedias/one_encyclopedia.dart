@@ -288,31 +288,31 @@ class LabTestDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-            children: [
-            Stack(
+      body: Column(
+        children: [
+          Stack(
             clipBehavior: Clip.none,
             children: [
-        Container(
-        height: MediaQuery.of(context).size.height * 0.20,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-        gradient: LinearGradient(
-        colors: [
-        const Color(0xff7c77d1).withOpacity(0.5),
-    const Color(0xff7c77d1).withOpacity(0.7),
-    const Color(0xff777d1).withOpacity(0.9),
-          const Color(0xff7c77d1),
-        ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
-        ),
-        ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.20,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xff7c77d1).withOpacity(0.5),
+                      const Color(0xff7c77d1).withOpacity(0.7),
+                      const Color(0xff777d1).withOpacity(0.9),
+                      const Color(0xff7c77d1),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                ),
+              ),
               Positioned(
                 bottom: -40,
                 left: MediaQuery.of(context).size.width * 0.05,
@@ -344,47 +344,47 @@ class LabTestDetailsPage extends StatelessWidget {
                 ),
               ),
             ],
-            ),
-              const SizedBox(height: 50),
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: labTest.sections.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              labTest.sections[index].title,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff7c77d1),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              labTest.sections[index].content,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
+          ),
+          const SizedBox(height: 50),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: labTest.sections.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          labTest.sections[index].title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff7c77d1),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          labTest.sections[index].content,
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

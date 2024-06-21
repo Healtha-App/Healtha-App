@@ -962,6 +962,7 @@ class S {
     );
   }
 
+
   /// `Enter your email`
   String get Enter_your_email {
     return Intl.message(
@@ -1435,7 +1436,7 @@ class S {
   /// `email`
   String get email {
     return Intl.message(
-      'email',
+      'Email Address',
       name: 'email',
       desc: '',
       args: [],

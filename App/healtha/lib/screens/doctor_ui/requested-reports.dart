@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'report_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/screens/doctor_ui/doc-profile.dart';
-import 'open-report.dart';
 import 'package:healtha/screens/generated/l10n.dart';
 
 class RequestedReports extends StatefulWidget {

@@ -98,75 +98,100 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
         iconTheme: IconThemeData(
-          color: Colors.white, // Set the drawer icon color to white
+          color: Theme.of(context).colorScheme.surface,
+
         ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            SizedBox(
-              height: 60.0, // Reduced height
-              child: DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+        child: Container(
+          color: Theme.of(context).colorScheme.background,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              SizedBox(
+                height: 60.0, // Reduced height
+                child: DrawerHeader(
+                  decoration:  BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  margin: const EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(S.of(context).Menu,
+                      style: const TextStyle(color: Colors.black)
+                  ),
                 ),
-                margin: const EdgeInsets.all(0),
-                padding: const EdgeInsets.all(16.0),
-                child: Text(S.of(context).Menu,
-                    style: const TextStyle(color: Colors.black)),
               ),
-            ),
-            ListTile(
-              leading: Icon(Icons.favorite, color: myPurple),
-              title: Text(S.of(context).Favorites),
-              onTap: () {
-                // Handle Favorites tap
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.bookmark, color: myPurple),
-              title: Text(S.of(context).Saved),
-              onTap: () {
-                // Handle Saved tap
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.help, color: myPurple),
-              title: Text(S.of(context).Help_Support),
-              onTap: () {
-                // Handle Help and Support tap
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings, color: myPurple),
-              title: Text(S.of(context).Settings),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SettingsPage(
-                            onThemeChanged: (ThemeData) {},
-                          )),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.privacy_tip_sharp, color: myPurple),
-              title: Text(S.of(context).Privacy),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app, color: myPurple),
-              title: Text(S.of(context).Log_Out),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              },
-            ),
-          ],
+              ListTile(
+                leading: Icon(Icons.favorite, color: myPurple),
+                title: Text(S.of(context).Favorites,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),),
+                onTap: () {
+                  // Handle Favorites tap
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.bookmark, color: myPurple),
+                title: Text(S.of(context).Saved,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+                onTap: () {
+                  // Handle Saved tap
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.help, color: myPurple),
+                title: Text(S.of(context).Help_Support,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+                onTap: () {
+                  // Handle Help and Support tap
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings, color: myPurple),
+                title: Text(S.of(context).Settings,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SettingsPage(
+                              onThemeChanged: (ThemeData) {},
+                            )),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.privacy_tip_sharp, color: myPurple),
+                title: Text(S.of(context).Privacy,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.exit_to_app, color: myPurple),
+                title: Text(S.of(context).Log_Out,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
 
@@ -184,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           color: Colors.white,
         ),
       ),
-      backgroundColor: Colors.white,
+
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -219,16 +244,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: 10),
                       Text(
                         name ?? "loading..",
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 19,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                       const SizedBox(height: 5),
                       Text(
                         S.of(context).patient,
-                        style: const TextStyle(
-                            fontSize: 15.0, color: Colors.black),
+                        style:  TextStyle(
+                            fontSize: 15.0,
+                          color: Theme.of(context).colorScheme.onPrimary,
+
+                        ),
                       ),
                       const SizedBox(height: 25),
                       customContainer(

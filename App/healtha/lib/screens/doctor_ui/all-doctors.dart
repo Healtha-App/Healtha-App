@@ -54,12 +54,14 @@ class _AllDoctorsState extends State<AllDoctors> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0EEFA),
+     // backgroundColor: const Color(0xFFF0EEFA),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF0EEFA),
+       // backgroundColor: const Color(0xFFF0EEFA),
         title: Text(
           S.of(context).Discover_All_Doctors,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style:  TextStyle(
+              color:Theme.of(context).colorScheme.onPrimary,
+              fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
@@ -71,7 +73,7 @@ class _AllDoctorsState extends State<AllDoctors> {
                 updateSearchQuery(value);
               },
               decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon:  Icon(Icons.search,color: Theme.of(context).colorScheme.onPrimary,),
                 hintText: S.of(context).Search_by_name_location_or_specialty,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -125,7 +127,7 @@ class _DoctorCardState extends State<DoctorCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+    //  color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       child: InkWell(
         onTap: () {
@@ -149,8 +151,10 @@ class _DoctorCardState extends State<DoctorCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+
                       widget.doctor.name,
-                      style: const TextStyle(
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -159,7 +163,9 @@ class _DoctorCardState extends State<DoctorCard> {
                       children: [
                         const Icon(Icons.star,
                             color: Colors.orangeAccent, size: 16.0),
-                        Text(widget.doctor.rating.toString()),
+                        Text(widget.doctor.rating.toString(),
+                        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,
+                        ),),
                       ],
                     ),
                   ],

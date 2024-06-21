@@ -76,7 +76,10 @@ class EncyclopediaTypes extends StatelessWidget {
                               ),
                               Text(
                                 S.of(context).your_pocket_health_encyclopedia,
-                                style: const TextStyle(fontSize: 14),
+                                style:  TextStyle(fontSize: 14,
+                                  color: Theme.of(context).colorScheme.onPrimary,
+
+                                ),
                               ),
                             ],
                           ),
@@ -174,17 +177,8 @@ class MyContainer extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.2,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        //color: Color(0xff7c77d1),
-        gradient: LinearGradient(
-          colors: [
+        color: Color(0xff7c77d1),
 
-            const Color(0xff7c77d1).withOpacity(0.6),
-            const Color(0xff7c77d1).withOpacity(0.9),
-            const Color(0xff7c77d1),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -205,8 +199,10 @@ class MyContainer extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             label,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 17),
+            style:  TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 17,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
           ),
         ],
       ),
@@ -230,7 +226,7 @@ class MyContainer2 extends StatelessWidget {
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
-           // color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -248,8 +244,8 @@ class MyContainer2 extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             label,
-            style: const TextStyle(
-              //  color: Color(0xff7c77d1),
+            style:  TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.bold,
                 fontSize: 17),
           ),
