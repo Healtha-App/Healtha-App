@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:healtha/screens/generated/l10n.dart';
@@ -9,8 +8,7 @@ class ReportDetails extends StatefulWidget {
   final String reportId;
   final Function(bool) onConfirm;
 
-  const ReportDetails(
-      {Key? key, required this.reportId, required this.onConfirm})
+  const ReportDetails({Key? key, required this.reportId, required this.onConfirm})
       : super(key: key);
 
   @override
@@ -19,14 +17,53 @@ class ReportDetails extends StatefulWidget {
 
 class _ReportDetailsState extends State<ReportDetails> {
   String _reportContent = '';
+  String _prompt = '';
   bool _isLoading = true;
   final TextEditingController _textEditingController = TextEditingController();
   bool _isEditing = false;
+  static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
 
   @override
   void initState() {
     super.initState();
     _fetchReportContent();
+    _fetchPromptAndTestValues();
+  }
+
+  Future<void> _fetchPromptAndTestValues() async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://api.chatpdf.com/v1/chats/message'),
+        headers: {
+          'x-api-key': _apiKey,
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'sourceId': 'src_zGaagrXZbLcNV3hDaVUyR',
+          'messages': [
+            {
+              'role': 'user',
+              'content': 'extract and write only the extracted test values from the pdf',
+            }
+          ],
+        }),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        setState(() {
+          _prompt = jsonData['content']; // Adjusted according to the expected key in response
+          _isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to fetch prompt');
+      }
+    } catch (error) {
+      print('Error fetching prompt: $error');
+    }
   }
 
   Future<void> _fetchReportContent() async {
@@ -107,7 +144,7 @@ class _ReportDetailsState extends State<ReportDetails> {
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: Stack(
           children: [
             // Background Gradient
@@ -160,84 +197,89 @@ class _ReportDetailsState extends State<ReportDetails> {
                 ),
               ),
             ),
-            Positioned.fill(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  color: Colors.white.withOpacity(0.1),
-                  width: double.infinity,
-                  height: 100,
-                ),
-              ),
-            ),
+            // Main Content
             Padding(
               padding: EdgeInsets.all(screenSize.width * 0.05),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.82,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(
-                          15), // Set the radius to make the borders rounded
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: _isLoading
+                          ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                          : Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Text(
+                                'Healtha Report',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff7c77d1),
+                                ),
+                              ),
+                            ),
+                            Divider(),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Dear Doctor,\n'
+                                            '\n'
+                                            'This is the extracted test values from a patient\'s'
+                                            ' report, along with the generated report for your review.'
+                                            '',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      Divider(),
+                                      Text('-- Test values',style: const TextStyle(fontSize: 14),
+                                      ),
+                                      if (_prompt != null && _prompt.isNotEmpty)
+                                        Text(_prompt,style: const TextStyle(fontSize: 14),),
+                                      Divider(),
+                                      _isEditing
+                                          ? TextField(
+                                        controller: _textEditingController,
+                                        maxLines: null,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          hintText: S.of(context).Enter_report_text,
+                                        ),
+                                      )
+                                          : Text(
+                                        '-- Generated Reports\n'
+                                            '$_reportContent',
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    child: _isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Text(
-                                  S.of(context).Healtha_Report,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff7c77d1),
-                                  ),
-                                ),
-                              ),
-                              Divider(),
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.71,
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(20),
-                                    // Wrap Text widget with TextField
-                                    child: _isEditing
-                                        ? TextField(
-                                            controller: _textEditingController,
-                                            maxLines:
-                                                null, // Allow the TextField to expand vertically
-                                            decoration: InputDecoration(
-                                              border:
-                                                  const OutlineInputBorder(),
-                                              hintText: S
-                                                  .of(context)
-                                                  .Enter_report_text,
-                                            ),
-                                          )
-                                        : Text(
-                                            _reportContent,
-                                            style:
-                                                const TextStyle(fontSize: 14),
-                                          ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                            ],
-                          ),
                   ),
-                  const Spacer(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Row(
                     children: [
                       Expanded(
@@ -246,20 +288,17 @@ class _ReportDetailsState extends State<ReportDetails> {
                             if (_isEditing) {
                               _updateReport();
                             } else {
-                              _toggleEdit(); // Toggle editing mode
+                              _toggleEdit();
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color(0xFF7C77D1), // Set button color
+                            backgroundColor: const Color(0xFF7C77D1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
                           child: Text(
-                            _isEditing
-                                ? 'Save'
-                                : 'Edit', // Change button text based on editing state
+                            _isEditing ? 'Save' : 'Edit',
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -268,8 +307,7 @@ class _ReportDetailsState extends State<ReportDetails> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                          width: 10), // Add some space between buttons
+                      const SizedBox(width: 10),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -277,17 +315,14 @@ class _ReportDetailsState extends State<ReportDetails> {
                               _confirmReport();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(S
-                                      .of(context)
-                                      .Report_confirmed_successfully),
+                                  content: Text(S.of(context).Report_confirmed_successfully),
                                 ),
                               );
                               widget.onConfirm(true);
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color(0xFF7C77D1), // Set button color
+                            backgroundColor: const Color(0xFF7C77D1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),

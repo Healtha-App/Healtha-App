@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : darkTheme,
-              home: HomeScreen(),
+              home: RequestedReports(),
             ),
           );
         },
