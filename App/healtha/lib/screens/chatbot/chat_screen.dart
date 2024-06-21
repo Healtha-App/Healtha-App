@@ -7,7 +7,7 @@ import '../generated/l10n.dart';
 
 class APIKey {
   static const apiKey =
-     " ";// "sk-proj-WEAitcVj4JjlTd8JwJPyT3BlbkFJbQfjs4l4K8HucBDUi4vk";
+     " ";
 }
 
 class ChatScreen extends StatefulWidget {
