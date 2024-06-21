@@ -63,7 +63,7 @@ class _NavbarState extends State<Navbar> {
             },
             elevation: 2.0,
             fillColor:
-                Theme == darkTheme ? Colors.black : Colors.white,
+             Theme.of(context).colorScheme.surface,
             padding: const EdgeInsets.all(12.0),
             shape: const CircleBorder(),
             child: Icon(

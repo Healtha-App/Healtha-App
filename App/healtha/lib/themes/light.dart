@@ -10,8 +10,13 @@ ThemeData lightTheme = ThemeData(
   ),
 
   colorScheme: ColorScheme.light(
+    onSurface: Color(0xff7c77d1),
     surface: Colors.white,
     primary: Colors.white,
+    onPrimary: Colors.black,
     secondary: Color(0xff7c77d1),
+    onSecondary: Colors.black,
+    background: Colors.white,
+
   ),
 );

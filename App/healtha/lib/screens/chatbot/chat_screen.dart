@@ -7,7 +7,7 @@ import '../generated/l10n.dart';
 
 class APIKey {
   static const apiKey =
-      "sk-proj-acnAHCzd9qBx1Grw4MAOT3BlbkFJQy5qW1ubPlC6JqYPiWLJ";
+      "sk-proj-WEAitcVj4JjlTd8JwJPyT3BlbkFJbQfjs4l4K8HucBDUi4vk";
 }
 
 class ChatScreen extends StatefulWidget {
@@ -56,9 +56,11 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       bottomSheet: Container(
         height: MediaQuery.of(context).size.height * 0.07,
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 10,
             offset: const Offset(0, 3),
@@ -71,6 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Icon(
                 Icons.add,
                 size: MediaQuery.of(context).size.width * 0.07,
+                color: const Color(0xff7c77d1),
               ),
             ),
             Padding(
@@ -87,7 +90,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 alignment: Alignment.centerRight,
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: TextFormField(
+
                   controller: _textEditingController,
+                  style: TextStyle( color: Theme.of(context).colorScheme.onPrimary,
+
+                  ),
                   decoration: InputDecoration(
                     hintText: S.of(context).Type_something,
                     border: InputBorder.none,
@@ -128,11 +135,15 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             Text(
               message.sender,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
             ),
             Text(
               message.text,
-              style: const TextStyle(fontSize: 16),
+              style:  TextStyle(fontSize: 16,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
             ),
           ],
         ),

@@ -18,11 +18,11 @@ class customContainer extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         height: MediaQuery.of(context).size.height * 0.12,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Color(0xff7c77d1),
+           //   color: Color(0xff7c77d1),
               offset: Offset(0.0, 2.0),
               blurRadius: 1.0,
               spreadRadius: 0.0,
@@ -41,7 +41,8 @@ class customContainer extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Color(0xff7c77d1)),),
           subtitle: Text(data!,
-            style: TextStyle(fontSize: 18),),
+            style: TextStyle(fontSize: 18,color: Theme.of(context).colorScheme.onPrimary,
+          ),),
         ),
 
 

@@ -166,9 +166,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                         child: Container(
                           height: screenSize.height * 0.9,
                           decoration: BoxDecoration(
-                            color: darkTheme == darkTheme
-                                ? Colors.black
-                                : Colors.white,
+                            color: Theme.of(context).colorScheme.background,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(screenSize.width * 0.1),
                               topRight: Radius.circular(screenSize.width * 0.1),
@@ -271,8 +269,14 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   SizedBox(height: screenSize.height * 0.02),
                                   Row(
                                     children: [
-                                      Text(S.of(context).Gender),
+                                      Text(S.of(context).Gender,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),),
                                       Checkbox(
+                                        checkColor: Theme.of(context).colorScheme.onPrimary,
+
+
                                         value: isMale,
                                         onChanged: (bool? newValue) {
                                           if (newValue != null) {
@@ -283,8 +287,12 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                           }
                                         },
                                       ),
-                                      Text(S.of(context).Male),
+                                      Text(S.of(context).Male,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),),
                                       Checkbox(
+                                        checkColor: Theme.of(context).colorScheme.onPrimary,
                                         value: isFemale,
                                         onChanged: (bool? newValue) {
                                           if (newValue != null) {
@@ -295,7 +303,11 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                           }
                                         },
                                       ),
-                                      Text(S.of(context).Female),
+                                      Text(S.of(context).Female,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
@@ -372,7 +384,11 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(S.of(context).Have_an_account),
+                                      Text(S.of(context).Have_an_account,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
+                                      ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.push(

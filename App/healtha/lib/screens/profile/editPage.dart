@@ -24,7 +24,7 @@ class editPage extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      backgroundColor: Colors.white,
+      //  backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
           alignment: Alignment.center,
@@ -70,8 +70,10 @@ class editPage extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: S.of(context).Enter_your_Name,
-                        hintStyle: const TextStyle(
-                            fontSize: 15, color: Colors.black54),
+                        hintStyle: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                     )),
                 const SizedBox(height: 10),
@@ -81,8 +83,10 @@ class editPage extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: S.of(context).Patient_Doctor,
-                        hintStyle: const TextStyle(
-                            fontSize: 15, color: Colors.black54),
+                        hintStyle: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                     )),
                 customTextField(

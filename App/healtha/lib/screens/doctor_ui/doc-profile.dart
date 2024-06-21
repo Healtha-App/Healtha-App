@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
 import '../profile/customContainer.dart';
@@ -107,8 +108,8 @@ class _drProfileState extends State<drProfile> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  AppConfig.myPurple,
-                                  AppConfig.myPurple.withOpacity(0.5),
+                                  Theme.of(context).colorScheme.onSurface,
+                                  Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                                   Colors.white.withOpacity(0),
                                   Colors.white.withOpacity(0),
                                 ],
@@ -208,10 +209,10 @@ class _drProfileState extends State<drProfile> {
                                 children: [
                                   Text(
                                     S.of(context).Dr,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 26,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                      color: Theme.of(context).colorScheme.onPrimary,
                                     ),
                                   ),
                                   Text(
@@ -219,7 +220,7 @@ class _drProfileState extends State<drProfile> {
                                     style: TextStyle(
                                       fontSize: 26,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                 //     color: Colors.black,
                                     ),
                                   ),
                                 ],

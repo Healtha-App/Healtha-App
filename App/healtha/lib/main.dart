@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:healtha/screens/chatbot/chat_screen.dart';
 import 'package:healtha/screens/doctor_ui/doc-profile.dart';
 import 'package:healtha/screens/doctor_ui/requested-reports.dart';
 import 'package:healtha/screens/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/screens/generated/l10n.dart';
 import 'package:healtha/screens/home/home_screen.dart';
 import 'package:healtha/screens/lab_analysis/report.dart';
+import 'package:healtha/screens/lab_doctor/lab_doctor.dart';
+import 'package:healtha/screens/navigation/navigation.dart';
 import 'package:healtha/screens/notification/notification_center.dart';
 import 'package:healtha/screens/profile/profile.dart';
 import 'package:healtha/screens/profile/settings.dart';
+import 'package:healtha/screens/register_login/join_as.dart';
 import 'package:healtha/screens/start/option.dart';
 import 'package:healtha/screens/start/splash.dart';
 import 'package:healtha/themes/light.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/themes/themes_bloc.dart';
 import 'bloc/themes/themes_event.dart';
+import 'screens/doctor_ui/all-doctors.dart';
+import 'screens/lab_analysis/upload_analysis.dart';
 import 'themes/dark.dart';
 
 Future<void> main() async {
@@ -44,7 +50,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : darkTheme,
-              home: RequestedReports(),
+              home: joinAs(),
             ),
           );
         },

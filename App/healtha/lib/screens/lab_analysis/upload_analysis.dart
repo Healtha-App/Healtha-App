@@ -1,5 +1,6 @@
 import 'package:healtha/screens/generated/l10n.dart';
 import 'package:healtha/screens/home/home_screen.dart';
+import 'package:healtha/screens/lab_analysis/saved_reports.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -85,60 +86,79 @@ class _UploadPageState extends State<UploadPage> {
           ),
         ),
         drawer: Drawer(
-          child: ListView(
-            //  padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      myPurple.withOpacity(0.5),
-                      myPurple.withOpacity(0.7),
-                      myPurple.withOpacity(0.9),
-                      myPurple,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.topRight,
+          child: Container(
+            color: Theme.of(context).colorScheme.background,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 60,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    margin: const EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      S.of(context).Your_reports,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
-                child: Center(
-                    child: Text(
-                  S.of(context).Your_reports,
-                  style: const TextStyle(color: Colors.white, fontSize: 20),
-                )),
-              ),
-              ListTile(
-                title: Text(S.of(context).Generated_Reports),
-                onTap: () {
-                  // Navigate to the GeneratedReport class when the item is tapped
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GeneratedReports()),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(S.of(context).Saved_Reports),
-                onTap: () {
-                  // Navigate to the GeneratedReport class when the item is tapped
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GeneratedReports()),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(S.of(context).History),
-                onTap: () {
-                  // Navigate to the GeneratedReport class when the item is tapped
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GeneratedReports()),
-                  );
-                },
-              ),
-              // Add more items as needed
-            ],
+                ListTile(
+                  leading: Icon(Icons.library_books_sharp,
+                      color: Theme.of(context).colorScheme.onPrimary),
+                  title: Text(
+                    S.of(context).Generated_Reports,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  onTap: () {
+                    // Navigate to the GeneratedReport class when the item is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GeneratedReports()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.bookmark,
+                      color: Theme.of(context).colorScheme.onPrimary),
+                  title: Text(
+                    S.of(context).Saved_Reports,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  onTap: () {
+                    // Navigate to the SavedReports class when the item is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SavedReports()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.history,
+                      color: Theme.of(context).colorScheme.onPrimary),
+                  title: Text(
+                    S.of(context).History,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  onTap: () {
+                    // Navigate to the History class when the item is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SavedReports()),
+                    );
+                  },
+                ),
+                // Add more items as needed
+              ],
+            ),
           ),
         ),
         body: Column(
@@ -178,7 +198,7 @@ class _UploadPageState extends State<UploadPage> {
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                       //   color: myPurple,
+                          //   color: myPurple,
                           offset: const Offset(0.0, 2.0),
                           blurRadius: 1.0,
                           spreadRadius: 0.0,
@@ -201,7 +221,10 @@ class _UploadPageState extends State<UploadPage> {
                         ),
                         Text(
                           S.of(context).Unlocking_insights_with_smart_reports,
-                          style: const TextStyle(fontSize: 14),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                         ),
                       ],
                     ),
@@ -209,126 +232,134 @@ class _UploadPageState extends State<UploadPage> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.all(screenSize.width * 0.1),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20.0),
-                  Text(
-                    S.of(context).Upload_your_lab_analysis_results,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  FileDropWidget(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Divider(
-                    height: .50, // Customize the thickness
-                    color: Colors.grey, // Customize the color
-                  ),
-                  const SizedBox(height: 10.0),
-                  if (_isEnabled == false)
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          """Your healtha report is being generated with care...
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(screenSize.width * 0.1),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20.0),
+                    Text(
+                      S.of(context).Upload_your_lab_analysis_results,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FileDropWidget(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(
+                      height: .50, // Customize the thickness
+                      color: Colors.grey, // Customize the color
+                    ),
+                    const SizedBox(height: 10.0),
+                    if (_isEnabled == false)
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            """Your healtha report is being generated with care...
 We will notify you as soon as it is ready
 Thank you for allowing us the time to ensure accuracy!""",
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                         //   color: Colors.black87,
-                          ),
-                          speed: const Duration(milliseconds: 40),
-                        ),
-                      ],
-                      isRepeatingAnimation: false,
-                      totalRepeatCount: 1,
-                      displayFullTextOnTap: true,
-                      stopPauseOnTap: true,
-                      repeatForever: false,
-                      onFinished: () {
-                        setState(() {
-                          showAfterAnimation = true;
-                        });
-                      },
-                    ),
-                  if (showAfterAnimation)
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const UploadPage()),
-                            );
-                          },
-                          style: ButtonStyle(
-                            foregroundColor:
-                                WidgetStateProperty.all<Color>(Colors.white),
-                            backgroundColor:
-                                WidgetStateProperty.all<Color>(myPurple),
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
+                            textStyle: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
+                            speed: const Duration(milliseconds: 40),
                           ),
-                          child: Text(S.of(context).Generate_another_report),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(S.of(context).or),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()),
-                                );
-                              },
-                              child: Text(
-                                S.of(context).return_home,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ElevatedButton(
-                    onPressed: _isEnabled
-                        ? () {
-                            setState(() {
-                              _isEnabled = false;
-                            });
-                          }
-                        : null,
-                    style: ButtonStyle(
-                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                        ],
+                        isRepeatingAnimation: false,
+                        totalRepeatCount: 1,
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
+                        repeatForever: false,
+                        onFinished: () {
+                          setState(() {
+                            showAfterAnimation = true;
+                          });
+                        },
                       ),
-                      foregroundColor: WidgetStateProperty.all(
-                          _isEnabled ? Colors.white : myPurple.withOpacity(0)),
-                      backgroundColor: WidgetStateProperty.all(
-                          _isEnabled ? myPurple : myPurple.withOpacity(0)),
+                    if (showAfterAnimation)
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const UploadPage()),
+                              );
+                            },
+                            style: ButtonStyle(
+                              foregroundColor:
+                              WidgetStateProperty.all<Color>(Colors.white),
+                              backgroundColor:
+                              WidgetStateProperty.all<Color>(myPurple),
+                              shape:
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                            child: Text(S.of(context).Generate_another_report),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                S.of(context).or,
+                                style: TextStyle(color: myPurple),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  S.of(context).return_home,
+                                  style: TextStyle(
+                                      color: myPurple, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ElevatedButton(
+                      onPressed: _isEnabled
+                          ? () {
+                        setState(() {
+                          _isEnabled = false;
+                        });
+                      }
+                          : null,
+                      style: ButtonStyle(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        foregroundColor: WidgetStateProperty.all(
+                            _isEnabled ? Colors.white : myPurple.withOpacity(0)),
+                        backgroundColor: WidgetStateProperty.all(
+                            _isEnabled ? myPurple : myPurple.withOpacity(0)),
+                      ),
+                      child: Text(S.of(context).Generate),
                     ),
-                    child: Text(S.of(context).Generate),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
