@@ -160,9 +160,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 name != null ? S.of(context).Hello(name!) : S.of(context).Hello('There'),
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
+                                  textStyle: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w700,
+                                    color: Theme.of(context).colorScheme.onPrimary,
                                   ),
                                 ),
                               ),
@@ -201,10 +202,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
                     S.of(context).Popular_Laboratory_Tests,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
-                      //color: Colors.black,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                 ),
@@ -233,10 +234,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
                    'Top Rated Doctors',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
-                    //  color: Colors.black,
+                      color: Theme.of(context).colorScheme.onPrimary,
+
                     ),
                   ),
                 ),
@@ -658,7 +660,9 @@ class DoctorCard extends StatelessWidget {
                 backgroundImage: AssetImage(doctor.photoAsset),
               )),
           const SizedBox(height: 8.0),
-          Text(doctor.name),
+          Text(doctor.name,
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,
+          ),),
         ],
       ),
     );

@@ -91,7 +91,9 @@ class LabTestDetailsPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     S.of(context).Name(labTest.name),
-                    style: const TextStyle(fontSize: 14),
+                    style:  TextStyle(fontSize: 14,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   // Add more details as needed
                 ],

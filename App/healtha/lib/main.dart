@@ -15,6 +15,7 @@ import 'package:healtha/themes/light.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/themes/themes_bloc.dart';
 import 'bloc/themes/themes_event.dart';
+import 'screens/doctor_ui/all-doctors.dart';
 import 'themes/dark.dart';
 
 Future<void> main() async {
@@ -22,7 +23,6 @@ Future<void> main() async {
   // await Firebase.initializeApp();
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   @override

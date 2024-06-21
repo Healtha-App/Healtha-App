@@ -240,9 +240,11 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                           ),
                           title: Text(
                             displayList[index].name ?? '',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.onPrimary,
+
                             ),
                           ),
                           trailing: RawMaterialButton(
@@ -301,7 +303,7 @@ class LabTestDetailsPage extends StatelessWidget {
                     colors: [
                       const Color(0xff7c77d1).withOpacity(0.5),
                       const Color(0xff7c77d1).withOpacity(0.7),
-                      const Color(0xff777d1).withOpacity(0.9),
+                      const Color(0xff7c77d1).withOpacity(0.9),
                       const Color(0xff7c77d1),
                     ],
                     begin: Alignment.topLeft,
@@ -372,8 +374,10 @@ class LabTestDetailsPage extends StatelessWidget {
                         const SizedBox(height: 10),
                         Text(
                           labTest.sections[index].content,
-                          style: const TextStyle(
+                          style:  TextStyle(
                             fontSize: 16,
+                            color: Theme.of(context).colorScheme.onPrimary,
+
                           ),
                         ),
                       ],
