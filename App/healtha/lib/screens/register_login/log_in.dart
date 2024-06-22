@@ -135,7 +135,7 @@ class _LoginState extends State<Login> {
               Container(
                 height: screenSize.height * 0.8,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(screenSize.width * 0.1),
                     topRight: Radius.circular(screenSize.width * 0.1),
@@ -164,12 +164,19 @@ class _LoginState extends State<Login> {
                       child: TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          suffixIcon: const Icon(Icons.email_outlined),
+                          suffixIcon: Icon(
+                            Icons.email_outlined,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(screenSize.width * 0.1),
                           ),
                           labelText: S.of(context).Email,
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            // Change this to your desired color
+                          ),
                         ),
                       ),
                     ),
@@ -186,16 +193,21 @@ class _LoginState extends State<Login> {
                             !isPasswordVisible, //This will obscure text dynamically
                         decoration: InputDecoration(
                           labelText: S.of(context).Password,
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            // Change this to your desired color
+                          ),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(screenSize.width * 0.1),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
+                              color: Theme.of(context).colorScheme.onPrimary,
                               isPasswordVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                             // color: Colors.black,
+                              // color: Colors.black,
                             ),
                             onPressed: () {
                               setState(() {
@@ -278,7 +290,12 @@ class _LoginState extends State<Login> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(S.of(context).Don_t_have_an_account),
+                        Text(
+                          S.of(context).Don_t_have_an_account,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
                         TextButton(
                           onPressed: () {
                             Navigator.push(

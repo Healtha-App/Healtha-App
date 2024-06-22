@@ -193,7 +193,13 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                     controller: usernameController,
                                     decoration: InputDecoration(
                                       labelText: S.of(context).Username,
-                                      suffixIcon: const Icon(Icons.person),
+                                      labelStyle: TextStyle(
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                        // Change this to your desired color
+                                      ),
+                                      suffixIcon: Icon(Icons.person,
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                      ),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
@@ -218,12 +224,17 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                           });
                                         },
                                         child: Icon(
+                                          color: Theme.of(context).colorScheme.onPrimary,
                                           isPasswordVisible
                                               ? Icons.visibility
                                               : Icons.visibility_off,
                                         ),
                                       ),
                                       labelText: S.of(context).Password,
+                                      labelStyle: TextStyle(
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                        // Change this to your desired color
+                                      ),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
@@ -248,8 +259,14 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                     controller: emailController,
                                     decoration: InputDecoration(
                                       labelText: S.of(context).Email,
+                                      labelStyle: TextStyle(
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                        // Change this to your desired color
+                                      ),
                                       suffixIcon:
-                                          const Icon(Icons.email_outlined),
+                                           Icon(Icons.email_outlined,
+                                             color: Theme.of(context).colorScheme.onPrimary,
+                                           ),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
@@ -275,8 +292,6 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                         ),),
                                       Checkbox(
                                         checkColor: Theme.of(context).colorScheme.onPrimary,
-
-
                                         value: isMale,
                                         onChanged: (bool? newValue) {
                                           if (newValue != null) {
@@ -316,6 +331,10 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                     decoration: InputDecoration(
                                       labelText:
                                           S.of(context).Contact_Information,
+                                      labelStyle: TextStyle(
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                        // Change this to your desired color
+                                      ),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
@@ -335,6 +354,10 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                     controller: specializationController,
                                     decoration: InputDecoration(
                                       labelText: S.of(context).Specialization,
+                                      labelStyle: TextStyle(
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                        // Change this to your desired color
+                                      ),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),

@@ -9,6 +9,7 @@ import 'package:healtha/screens/lab_analysis/report.dart';
 import 'package:healtha/screens/notification/notification_center.dart';
 import 'package:healtha/screens/profile/profile.dart';
 import 'package:healtha/screens/profile/settings.dart';
+import 'package:healtha/screens/register_login/log_in.dart';
 import 'package:healtha/screens/start/option.dart';
 import 'package:healtha/screens/start/splash.dart';
 import 'package:healtha/themes/light.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/themes/themes_bloc.dart';
 import 'bloc/themes/themes_event.dart';
 import 'screens/doctor_ui/all-doctors.dart';
+import 'screens/doctor_ui/doc_login.dart';
 import 'themes/dark.dart';
 
 Future<void> main() async {

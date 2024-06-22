@@ -196,12 +196,18 @@ class docLogin extends StatelessWidget {
                         child: TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
-                            suffixIcon: const Icon(Icons.email_outlined),
+                            suffixIcon:  Icon(Icons.email_outlined,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(screenSize.width * 0.1),
                             ),
                             labelText: S.of(context).Email,
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              // Change this to your desired color
+                            ),
                           ),
                         ),
                       ),
@@ -214,12 +220,18 @@ class docLogin extends StatelessWidget {
                           controller: passwordController,
                           decoration: InputDecoration(
                             suffixIcon:
-                                const Icon(Icons.remove_red_eye_outlined),
+                                 Icon(Icons.remove_red_eye_outlined,
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(screenSize.width * 0.1),
                             ),
                             labelText: S.of(context).Password,
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              // Change this to your desired color
+                            ),
                           ),
                           obscureText: true,
                         ),
@@ -291,7 +303,10 @@ class docLogin extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(S.of(context).Don_t_have_an_account),
+                          Text(S.of(context).Don_t_have_an_account,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),),
                           SizedBox(
                             width: screenSize.width * 0.02,
                           ),
