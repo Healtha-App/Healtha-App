@@ -285,7 +285,8 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
       floatingActionButton: Stack(
         children: [
           Positioned(
-            top: 10, // Adjust this position as needed
+            top: MediaQuery.of(context).size.height *
+                0.02,// Adjust this position as needed
             left: 120, // Adjust this position as needed
             child: Visibility(
               visible: _showDelayedMessage,
@@ -313,7 +314,8 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
             ),
           ),
           Positioned(
-            top: 10, // Adjust this position as needed
+            top: MediaQuery.of(context).size.height *
+                0.02, // Adjust this position as needed
             right: 0, // Adjust this position as needed
             child: InkWell(
               onTap: () {

@@ -7,17 +7,16 @@ import 'package:healtha/screens/generated/l10n.dart';
 import 'package:healtha/screens/home/home_screen.dart';
 import 'package:healtha/screens/lab_analysis/report.dart';
 import 'package:healtha/screens/notification/notification_center.dart';
+import 'package:healtha/screens/prediction/disease_prediction.dart';
 import 'package:healtha/screens/profile/profile.dart';
 import 'package:healtha/screens/profile/settings.dart';
-import 'package:healtha/screens/register_login/log_in.dart';
+import 'package:healtha/screens/register_login/join_as.dart';
 import 'package:healtha/screens/start/option.dart';
 import 'package:healtha/screens/start/splash.dart';
 import 'package:healtha/themes/light.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/themes/themes_bloc.dart';
 import 'bloc/themes/themes_event.dart';
-import 'screens/doctor_ui/all-doctors.dart';
-import 'screens/doctor_ui/doc_login.dart';
 import 'themes/dark.dart';
 
 Future<void> main() async {
@@ -25,6 +24,7 @@ Future<void> main() async {
   // await Firebase.initializeApp();
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : darkTheme,
-              home: EncyclopediaTypes(),
+              home: joinAs(),
             ),
           );
         },
