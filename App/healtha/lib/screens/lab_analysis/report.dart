@@ -401,7 +401,7 @@ class _ReportState extends State<Report> {
                   duration: const Duration(milliseconds: 500),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 8),
+                        horizontal: 33, vertical: 8),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.7),
                       borderRadius: BorderRadius.circular(20),

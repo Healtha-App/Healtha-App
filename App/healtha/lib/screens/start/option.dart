@@ -286,16 +286,17 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
         children: [
           Positioned(
             top: MediaQuery.of(context).size.height *
-                0.02,// Adjust this position as needed
-            left: 120, // Adjust this position as needed
+                0.02, // Adjust position based on screen size
+            left: MediaQuery.of(context).size.width *
+                0.2, // Adjust position based on screen size
             child: Visibility(
               visible: _showDelayedMessage,
               child: AnimatedOpacity(
                 opacity: _showDelayedMessage ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 500),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 33, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(20),
@@ -315,8 +316,8 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
           ),
           Positioned(
             top: MediaQuery.of(context).size.height *
-                0.02, // Adjust this position as needed
-            right: 0, // Adjust this position as needed
+                0.02, // Adjust position based on screen size
+            right: 0,
             child: InkWell(
               onTap: () {
                 _toggleSound();
@@ -335,8 +336,9 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeUp,
                     size: 20,
-                    color:
-                        _isVolumeHigh ? Colors.white : const Color(0xff7c77d1),
+                    color: _isVolumeHigh
+                        ? Colors.white
+                        : const Color(0xff7c77d1),
                   ),
                 ),
               ),
