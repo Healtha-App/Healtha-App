@@ -222,65 +222,70 @@ class _LoginState extends State<Login> {
                       height: screenSize.height * 0.05,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenSize.width * 0.05),
+                      padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
                       child: Container(
                         width: double.infinity,
                         height: screenSize.width * 0.13,
                         decoration: BoxDecoration(
                           color: const Color(0xff7c77d1),
-                          borderRadius:
-                              BorderRadius.circular(screenSize.width * 0.1),
+                          borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                         ),
-                        child: MaterialButton(
-                          child: Text(
-                            S.of(context).Login,
-                            style: TextStyle(
-                              fontSize: screenSize.width * 0.06,
-                              color: Colors.white,
-                            ),
-                          ),
-                          onPressed: () {
-                            login(context).then((success) {
-                              if (success) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: SizedBox(
-                                      height: 60, // Adjust the height as needed
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.check_circle,
-                                              color: Colors.green),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Text(
-                                              'Login successful, \n '
-                                              'Welcome ${usernameController.text} to HEALTHA!',
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
+                        child: Material(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                            splashColor: Colors.white.withOpacity(0.3), // Custom splash color
+                            highlightColor: Colors.transparent, // Disable default highlight color
+                            onTap: () {
+                              login(context).then((success) {
+                                if (success) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: SizedBox(
+                                        height: 60, // Adjust the height as needed
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.check_circle, color: Colors.green),
+                                            const SizedBox(width: 10),
+                                            Expanded(
+                                              child: Text(
+                                                'Login successful, \n '
+                                                    'Welcome ${usernameController.text} to HEALTHA!',
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
+                                      backgroundColor: Colors.white,
+                                      elevation: 8,
+                                      behavior: SnackBarBehavior.floating,
                                     ),
-                                    backgroundColor: Colors.white,
-                                    elevation: 8,
-                                    behavior: SnackBarBehavior.floating,
-                                  ),
-                                );
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const HomeScreen(), // Replace with your home screen
-                                  ),
-                                );
-                              }
-                            });
-                          },
+                                  );
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomeScreen(), // Replace with your home screen
+                                    ),
+                                  );
+                                }
+                              });
+                            },
+                            child: Center(
+                              child: Text(
+                                S.of(context).Login,
+                                style: TextStyle(
+                                  fontSize: screenSize.width * 0.06,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),

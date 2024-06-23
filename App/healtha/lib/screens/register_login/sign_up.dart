@@ -337,22 +337,30 @@ class _SignUpState extends State<SignUp> {
                             height: screenSize.height * 0.07,
                             decoration: BoxDecoration(
                               color: const Color(0xff7c77d1),
-                              borderRadius:
-                                  BorderRadius.circular(screenSize.width * 0.1),
+                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                             ),
-                            child: MaterialButton(
-                              child: Text(
-                                S.of(context).Sign_Up,
-                                style: TextStyle(
-                                  fontSize: screenSize.width * 0.06,
-                            //      color: Colors.white,
+                            child: Material(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                splashColor: Colors.white.withOpacity(0.3),
+                                highlightColor: Colors.transparent,
+                                onTap: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    signUp(context);
+                                  }
+                                },
+                                child: Center(
+                                  child: Text(
+                                    S.of(context).Sign_Up,
+                                    style: TextStyle(
+                                      fontSize: screenSize.width * 0.06,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  signUp(context);
-                                }
-                              },
                             ),
                           ),
                         ),
