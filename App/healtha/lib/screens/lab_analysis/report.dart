@@ -20,6 +20,7 @@ class _ReportState extends State<Report> {
   bool _isTranslated = false;
   bool _isTranslating = false;
   bool _showDelayedMessage = true;
+  String _testName = 'Test Name';
   static const String _apiKey = 'sec_CR4fnBuCT0yYpaeD92AfG1BSihAL9Rq9';
 
   final FlutterTts _flutterTts = FlutterTts();
@@ -81,7 +82,7 @@ class _ReportState extends State<Report> {
   }
 
   Future<void> _saveReport(
-      int userId, String filePath, String reportContent) async {
+      int userId, String filePath, String reportContent, String testName) async {
     if (_translatedReport.isEmpty) {
       // If translated report is not available yet, wait for translation to complete
       return;
@@ -95,7 +96,7 @@ class _ReportState extends State<Report> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://ec2-18-221-98-187.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
+            'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -104,6 +105,7 @@ class _ReportState extends State<Report> {
           'filePath': filePath,
           'reportContent': _translatedReport,
           'confirmed': false, // Set confirmed to false by default
+          'testName': testName, // Include the test name
         }),
       );
 
@@ -129,7 +131,7 @@ class _ReportState extends State<Report> {
     });
 
     String promptWithLanguage =
-        _isTranslated ? _getTranslatedPrompt() : _getOriginalPrompt();
+    _isTranslated ? _getTranslatedPrompt() : _getOriginalPrompt();
 
     final response = await http.post(
       Uri.parse('https://api.chatpdf.com/v1/chats/message'),
@@ -148,17 +150,35 @@ class _ReportState extends State<Report> {
       }),
     );
 
-    if (response.statusCode == 200) {
+    final testNameResponse = await http.post(
+      Uri.parse('https://api.chatpdf.com/v1/chats/message'),
+      headers: {
+        'x-api-key': _apiKey,
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'sourceId': 'src_zGaagrXZbLcNV3hDaVUyR',
+        'messages': [
+          {
+            'role': 'user',
+            'content': 'Write only the name of this test. return the test in this formats:"Complete Blood Count Test',
+          }
+        ],
+      }),
+    );
+
+    if (response.statusCode == 200 && testNameResponse.statusCode == 200) {
       setState(() {
         _translatedReport = json.decode(response.body)['content'];
-        _isTranslated = !_isTranslated;
+        _testName = json.decode(testNameResponse.body)['content'];
+        _isTranslated = true;
         _isTranslating = false;
       });
 
       // Save the translated report
-      _saveReport(1, 'file_path', _translatedReport);
+      _saveReport(1, 'file_path', _translatedReport, _testName);
     } else {
-      print('Failed to translate report');
+      print('Failed to translate report or get test name');
       setState(() {
         _isTranslating = false;
       });
@@ -226,7 +246,7 @@ class _ReportState extends State<Report> {
                     decoration: BoxDecoration(
                       color: Color(0xff7c77d1), // Purple
                       borderRadius:
-                          BorderRadius.circular(constraints.maxWidth * 0.3),
+                      BorderRadius.circular(constraints.maxWidth * 0.3),
                     ),
                   ),
                 ),
@@ -239,7 +259,7 @@ class _ReportState extends State<Report> {
                     decoration: BoxDecoration(
                       color: Color(0xff7c77d1), // Purple
                       borderRadius:
-                          BorderRadius.circular(constraints.maxWidth * 0.2),
+                      BorderRadius.circular(constraints.maxWidth * 0.2),
                     ),
                   ),
                 ),
@@ -252,7 +272,7 @@ class _ReportState extends State<Report> {
                     decoration: BoxDecoration(
                       color: Color(0xff7c77d1), // Purple
                       borderRadius:
-                          BorderRadius.circular(constraints.maxWidth * 0.1),
+                      BorderRadius.circular(constraints.maxWidth * 0.1),
                     ),
                   ),
                 ),
@@ -272,7 +292,10 @@ class _ReportState extends State<Report> {
                         height: constraints.maxHeight * 0.82,
                         width: constraints.maxWidth * 0.9,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surface
+                              .withOpacity(0.7),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Padding(
@@ -296,13 +319,16 @@ class _ReportState extends State<Report> {
                                   child: Padding(
                                     padding: EdgeInsets.all(padding),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           _translatedReport,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Theme.of(context).colorScheme.onPrimary,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
                                           ),
                                         ),
                                         const SizedBox(height: 10),
@@ -320,13 +346,15 @@ class _ReportState extends State<Report> {
                         onPressed: !_isTranslating
                             ? () {
                           // Save the report without triggering translation
-                          _saveReport(1, 'file_path', _translatedReport); // Pass report content
+                          _saveReport(1, 'file_path', _translatedReport,
+                              _testName); // Pass report content
                         }
                             : null, // Disable button if translation is ongoing
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Color(0xff7c77d1),
-                          minimumSize: Size(constraints.maxWidth * buttonWidth, 50),
+                          minimumSize:
+                          Size(constraints.maxWidth * buttonWidth, 50),
                         ),
                         child: Text(
                           _isTranslated ? "Save" : "حفظ",
@@ -355,8 +383,6 @@ class _ReportState extends State<Report> {
                     ],
                   ),
                 ),
-
-
               ],
             );
           },
@@ -374,8 +400,8 @@ class _ReportState extends State<Report> {
                   opacity: _showDelayedMessage ? 1.0 : 0.0,
                   duration: const Duration(milliseconds: 500),
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 8),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.7),
                       borderRadius: BorderRadius.circular(20),

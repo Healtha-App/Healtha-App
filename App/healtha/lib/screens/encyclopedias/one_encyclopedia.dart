@@ -15,8 +15,8 @@ class EncyclopediaPage extends StatefulWidget {
 }
 
 class _EncyclopediaPageState extends State<EncyclopediaPage> {
-  late Future<List<LabTest>> labTestsFuture;
-  List<LabTest> _searchResults = [];
+  late Future<List<dynamic>> dataFuture;
+  List<dynamic> _searchResults = [];
   final TextEditingController _searchController = TextEditingController();
   final stt.SpeechToText _speechToText = stt.SpeechToText();
   bool _isListening = false;
@@ -25,7 +25,11 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   @override
   void initState() {
     super.initState();
-    labTestsFuture = fetchLabTests();
+    if (widget.category.toLowerCase() == 'disease') {
+      dataFuture = fetchDiseases();
+    } else {
+      dataFuture = fetchLabTests();
+    }
     _searchController.addListener(_onSearchChanged);
     initSpeechRecognizer();
   }
@@ -59,7 +63,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
           });
           searchResults(_spokenText);
         },
-      )??false;
+      ) ?? false;
       if (listening) {
         setState(() {
           _isListening = true;
@@ -77,14 +81,23 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
     }
   }
 
-  Future<List<LabTest>> fetchLabTests() async {
+  Future<List<dynamic>> fetchLabTests() async {
     final response = await http.get(Uri.parse(
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
-      final List<dynamic> jsonList = jsonDecode(response.body);
-      return jsonList.map((labTest) => LabTest.fromJson(labTest)).toList();
+      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load lab tests');
+    }
+  }
+
+  Future<List<dynamic>> fetchDiseases() async {
+    final response = await http.get(Uri.parse(
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/disease'));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load diseases');
     }
   }
 
@@ -100,11 +113,11 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
       return;
     }
 
-    labTestsFuture.then((labTests) {
+    dataFuture.then((dataList) {
       setState(() {
-        _searchResults = labTests
-            .where((labTest) =>
-            labTest.name.toLowerCase().contains(query.toLowerCase()))
+        _searchResults = dataList
+            .where((data) =>
+            data['name'].toLowerCase().contains(query.toLowerCase()))
             .toList();
       });
     });
@@ -151,7 +164,6 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: const [
                       BoxShadow(
-                        //color: Color(0xff7c77d1),
                         offset: Offset(0.0, 2.0),
                         blurRadius: 1.0,
                         spreadRadius: 0.0,
@@ -179,7 +191,10 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
               controller: _searchController,
               decoration: InputDecoration(
                 prefixIcon: IconButton(
-                  icon: Icon(_isListening ? Icons.mic : Icons.mic_none, color: Colors.white),
+                  icon: Icon(
+                    _isListening ? Icons.mic : Icons.mic_none,
+                    color: Colors.white,
+                  ),
                   onPressed: () {
                     if (!_isListening) {
                       startListening();
@@ -193,24 +208,27 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                 fillColor: Colors.black,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                  borderSide:
+                  BorderSide(color: Color(0xff7c77d1), width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                  borderSide:
+                  BorderSide(color: Color(0xff7c77d1), width: 1.5),
                 ),
               ),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           Expanded(
-            child: FutureBuilder<List<LabTest>>(
-              future: labTestsFuture,
+            child: FutureBuilder<List<dynamic>>(
+              future: dataFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7c77d1)),
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Color(0xff7c77d1)),
                     ),
                   );
                 } else if (snapshot.hasError) {
@@ -218,7 +236,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                     child: Text(S.of(context).Failed_to_load_data),
                   );
                 } else {
-                  List<LabTest> displayList = _searchController.text.isEmpty
+                  List<dynamic> displayList = _searchController.text.isEmpty
                       ? snapshot.data!
                       : _searchResults;
                   return ListView.builder(
@@ -231,20 +249,19 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                         ),
                         color: Theme.of(context).colorScheme.secondary,
                         child: ListTile(
-                          contentPadding:
-                          const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 25),
                           leading: Image.asset(
                             widget.image,
                             width: 35,
                             height: 35,
                           ),
                           title: Text(
-                            displayList[index].name ?? '',
+                            displayList[index]['name'] ?? '',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).colorScheme.onPrimary,
-
                             ),
                           ),
                           trailing: RawMaterialButton(
@@ -253,7 +270,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => LabTestDetailsPage(
-                                    labTest: displayList[index],
+                                    labTest: LabTest.fromJson(displayList[index]),
                                   ),
                                 ),
                               );
@@ -374,10 +391,9 @@ class LabTestDetailsPage extends StatelessWidget {
                         const SizedBox(height: 10),
                         Text(
                           labTest.sections[index].content,
-                          style:  TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             color: Theme.of(context).colorScheme.onPrimary,
-
                           ),
                         ),
                       ],
@@ -460,4 +476,5 @@ class Disease {
     );
   }
 }
+
 
