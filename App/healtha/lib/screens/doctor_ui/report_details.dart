@@ -208,10 +208,8 @@ class _ReportDetailsState extends State<ReportDetails> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.75,
                       decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.7),
+                        color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
+
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: _isLoading
