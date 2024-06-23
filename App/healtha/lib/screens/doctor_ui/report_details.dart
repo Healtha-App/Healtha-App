@@ -208,10 +208,8 @@ class _ReportDetailsState extends State<ReportDetails> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.75,
                       decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.7),
+                        color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
+
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: _isLoading
@@ -247,10 +245,14 @@ class _ReportDetailsState extends State<ReportDetails> {
                                             'This is the extracted test values from a patient\'s'
                                             ' report, along with the generated report for your review.'
                                             '',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
                                       ),
                                       Divider(),
-                                      Text('-- Test values',style: const TextStyle(fontSize: 14),
+                                      Text('-- Test values',style: TextStyle(fontSize: 14,
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                      ),
                                       ),
                                       if (_prompt != null && _prompt.isNotEmpty)
                                         Text(_prompt,style: const TextStyle(fontSize: 14),),
@@ -267,7 +269,9 @@ class _ReportDetailsState extends State<ReportDetails> {
                                           : Text(
                                         '-- Generated Reports\n'
                                             '$_reportContent',
-                                        style: const TextStyle(fontSize: 14),
+                                        style: TextStyle(fontSize: 14,
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
                                       ),
                                     ],
                                   ),

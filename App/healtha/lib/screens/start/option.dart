@@ -173,9 +173,10 @@ class _OptionState extends State<option> with SingleTickerProviderStateMixin {
                               .of(context)
                               .Step_into_a_world_of_holistic_nhealth_with,
                           //"Step into a world of holistic\nhealth with",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
+
                           ),
                         ),
                       ],

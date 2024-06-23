@@ -166,7 +166,7 @@ class _SignUpState extends State<SignUp> {
               Container(
                 height: screenSize.height * 0.9,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(screenSize.width * 0.05),
                     topRight: Radius.circular(screenSize.width * 0.05),
@@ -191,6 +191,7 @@ class _SignUpState extends State<SignUp> {
                         buildTextFormField(
                           controller: usernameController,
                           labelText: S.of(context).Username,
+
                           suffixIcon: Icons.person,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -273,7 +274,10 @@ class _SignUpState extends State<SignUp> {
                               horizontal: screenSize.width * 0.05),
                           child: Row(
                             children: [
-                              Text(S.of(context).Gender),
+                              Text(S.of(context).Gender,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),),
                               Checkbox(
                                 value: isMale,
                                 onChanged: (bool? newValue) {
@@ -285,8 +289,13 @@ class _SignUpState extends State<SignUp> {
                                   });
                                 },
                               ),
-                              Text(S.of(context).Male),
+                              Text(S.of(context).Male,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),),
                               Checkbox(
+                                checkColor:Theme.of(context).colorScheme.onPrimary,
+
                                 value: isFemale,
                                 onChanged: (bool? newValue) {
                                   setState(() {
@@ -297,7 +306,10 @@ class _SignUpState extends State<SignUp> {
                                   });
                                 },
                               ),
-                              Text(S.of(context).Female),
+                              Text(S.of(context).Female,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),),
                             ],
                           ),
                         ),
@@ -347,7 +359,10 @@ class _SignUpState extends State<SignUp> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(S.of(context).Have_an_account),
+                            Text(S.of(context).Have_an_account,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
@@ -398,13 +413,19 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           suffixIcon: GestureDetector(
             onTap: onTapSuffix,
-            child: Icon(suffixIcon),
+            child: Icon(suffixIcon,
+              color:Theme.of(context).colorScheme.onPrimary,
+            ),
           ),
           border: OutlineInputBorder(
             borderRadius:
                 BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),
           ),
           labelText: labelText,
+          labelStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            // Change this to your desired color
+          ),
         ),
       ),
     );

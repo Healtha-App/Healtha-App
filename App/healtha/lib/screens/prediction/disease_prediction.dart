@@ -373,7 +373,9 @@ class _DiseaseState extends State<Disease> {
                         Text(
                           S.of(context).Disease_prediction_made_easy,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: 15,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                         ),
                       ],
                     ),
@@ -391,9 +393,11 @@ class _DiseaseState extends State<Disease> {
                   Text(
                     S.of(context).What_are_you_feeling,
                     textAlign: TextAlign.start,
-                    style: const TextStyle(
+                    style: TextStyle(
 
-                        fontSize: 18, fontWeight: FontWeight.w600),
+                        fontSize: 18, fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ],
               ),
@@ -422,8 +426,10 @@ class _DiseaseState extends State<Disease> {
                       ListTile(
                         title: Text(
                           category,
-                          style: const TextStyle(
+                          style:  TextStyle(
                             fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onPrimary,
+
                           ),
                         ),
                         trailing: IconButton(
@@ -431,6 +437,7 @@ class _DiseaseState extends State<Disease> {
                             toggleCategoryVisibility(category);
                           },
                           icon: Icon(
+                            color: Theme.of(context).colorScheme.onPrimary,
                             isCategoryVisible(category)
                                 ? Icons.expand_less
                                 : Icons.expand_more,
@@ -443,11 +450,15 @@ class _DiseaseState extends State<Disease> {
                           child: Column(
                             children: symptomsCategories[category]!.map((symptom) {
                               return CheckboxListTile(
-                                title: Text(symptom.replaceAll("_", " ")),
+                                title: Text(symptom.replaceAll("_", " ",),style:
+                                  TextStyle( color: Theme.of(context).colorScheme.onPrimary,
+                                  ),),
                                 value: _isSymptomSelected(symptom),
                                 onChanged: (_) {
                                   _toggleSymptom(symptom);
                                 },
+                                checkColor:Theme.of(context).colorScheme.onPrimary,
+
                               );
                             }).toList(),
                           ),
@@ -487,10 +498,12 @@ class _DiseaseState extends State<Disease> {
               Center(
                 child: Text(
                   S.of(context).Predicted_Disease(predictedDisease),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                  //  color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
+
+                    //  color: Colors.black,
                   ),
                 ),
               ),

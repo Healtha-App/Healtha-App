@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart'; // Import this package for date formatting
 import 'report_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/screens/doctor_ui/doc-profile.dart';
@@ -27,14 +28,40 @@ class _RequestedReportsState extends State<RequestedReports> {
       final response = await http.get(Uri.parse(
           'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
       if (response.statusCode == 200) {
+        List<dynamic> fetchedReports = json.decode(response.body);
+
+        // Sort reports by uploadTime in descending order
+        fetchedReports.sort((a, b) {
+          // Assuming uploadTime is a string in ISO 8601 format
+          DateTime timeA = DateTime.parse(a['uploadTime']);
+          DateTime timeB = DateTime.parse(b['uploadTime']);
+          return timeB.compareTo(timeA); // Sort in descending order
+        });
+
         setState(() {
-          _reports = json.decode(response.body);
+          _reports = fetchedReports;
         });
       } else {
         throw Exception('Failed to fetch reports');
       }
     } catch (error) {
       print('Error fetching reports: $error');
+    }
+  }
+
+  String formatUploadTime(String uploadTime) {
+    // Parse the uploadTime string into DateTime object
+    DateTime uploadDateTime = DateTime.parse(uploadTime);
+
+    // Calculate time difference
+    Duration difference = DateTime.now().difference(uploadDateTime);
+
+    if (difference.inDays > 0) {
+      return 'Requested ${difference.inDays} day${difference.inDays > 1 ? 's' : ''} ago';
+    } else if (difference.inHours > 0) {
+      return 'Requested ${difference.inHours} hour${difference.inHours > 1 ? 's' : ''} ago';
+    } else {
+      return 'Requested ${difference.inMinutes} minute${difference.inMinutes > 1 ? 's' : ''} ago';
     }
   }
 
@@ -53,7 +80,7 @@ class _RequestedReportsState extends State<RequestedReports> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    const Color(0xFFE0E7EA), // Light blue
+                    Theme.of(context).colorScheme.secondary.withOpacity(0.2), // Light blue
                     const Color(0xff7c77d1).withOpacity(0.2), // Light grey
                   ],
                 ),
@@ -98,87 +125,86 @@ class _RequestedReportsState extends State<RequestedReports> {
               ),
             ),
             // Content
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(screenSize.width * 0.05),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkResponse(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => drProfile()),
-                            );
-                          },
-                          child: CircleAvatar(
-                            radius: screenSize.width * 0.1,
-                            backgroundImage: const AssetImage("images/dr.PNG"),
-                          ),
+            Padding(
+              padding: EdgeInsets.all(screenSize.width * 0.03),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => drProfile(),
+                            ),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: screenSize.width * 0.1,
+                          backgroundImage: const AssetImage("images/dr.PNG"),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                        height: screenSize.height * 0.02), // Adjust as needed
-                    Text(
-                      S
-                          .of(context)
-                          .Requested_Reports, // Your healthcare app name
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black, // Dark blue
                       ),
+                    ],
+                  ),
+                  SizedBox(height: screenSize.height * 0.02), // Adjust as needed
+                  Text(
+                    S.of(context).Requested_Reports, // Your healthcare app name
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
-                    SizedBox(height: screenSize.height * 0.02),
-                    // Reports List
-                    ListView.builder(
-                      shrinkWrap:
-                          true, // Important to wrap in a scrollable parent
-                      physics:
-                          const NeverScrollableScrollPhysics(), // Disable inner scrolling
+                  ),
+                  SizedBox(height: screenSize.height * 0.02),
+                  Expanded(
+                    child: ListView.builder(
                       itemCount: _reports.length,
                       itemBuilder: (context, index) {
                         final report = _reports[index];
+                        final testName = report['testName'] ?? 'Unknown Test'; // Get the test name from the report data
+                        final uploadTime = report['uploadTime'] ?? ''; // Assuming uploadTime is in ISO 8601 format
+                        final formattedTime = formatUploadTime(uploadTime);
                         return Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: screenSize.width * 0.02),
+                          padding: EdgeInsets.symmetric(vertical: screenSize.width * 0.01),
                           child: Container(
                             width: double.infinity,
-                           // height: MediaQuery.of(context).size.height * 0.1,
                             decoration: BoxDecoration(
                               color: Colors.transparent,
                               borderRadius: BorderRadius.all(
-                                  Radius.circular(screenSize.width * 0.05)),
+                                Radius.circular(screenSize.width * 0.05),
+                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.white70.withOpacity(0.8),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surface
+                                      .withOpacity(0.7)
+                                      .withOpacity(0.8),
                                   blurRadius: 1,
                                 ),
                               ],
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(screenSize.width * 0.02),
+                              padding: EdgeInsets.symmetric(vertical: screenSize.width * 0.02),
                               child: ListTile(
                                 contentPadding: const EdgeInsets.all(16),
                                 title: Text(
-                                  S.of(context).Report_ID(report['reportid']),
+                                  testName,
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFF7C77D1),
                                   ),
                                 ),
                                 subtitle: Text(
-                                  S.of(context).CBC_Test,
-                                  style: const TextStyle(
+                                  formattedTime,
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w100,
-                                    color: Colors.black87,
+                                    color: Theme.of(context).colorScheme.onPrimary,
                                   ),
                                 ),
                                 trailing: RawMaterialButton(
@@ -186,25 +212,26 @@ class _RequestedReportsState extends State<RequestedReports> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ReportDetails(
-                                                reportId: report['reportid']
-                                                    .toString(),
-                                                onConfirm: (bool confirmed) {
-                                                  /* Handle confirmation logic here */
-                                                },
-                                              )),
+                                        builder: (context) => ReportDetails(
+                                          reportId: report['reportid'].toString(),
+                                          onConfirm: (bool confirmed) {
+                                            /* Handle confirmation logic here */
+                                          },
+                                        ),
+                                      ),
                                     );
                                   },
                                   elevation: 2.0,
                                   fillColor: const Color(0xFF7C77D1),
-                                  padding: EdgeInsets.all(
-                                      MediaQuery.of(context).size.width * 0.04),
-                                  shape: const CircleBorder(),
-                                  child: Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Colors.white,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.065,
+                                  padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
+                                  ),
+                                  child: Text(
+                                    'View',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -213,8 +240,8 @@ class _RequestedReportsState extends State<RequestedReports> {
                         );
                       },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
