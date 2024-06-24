@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
         nextScreen: slider(),
 
 // we can use
-        duration: 4000,
+        duration: 2000,
 //5000= 5 Second
 
 //control the duration of the image , we can use
