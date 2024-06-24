@@ -6,6 +6,7 @@ import 'package:healtha/screens/encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/screens/generated/l10n.dart';
 import 'package:healtha/screens/home/home_screen.dart';
 import 'package:healtha/screens/lab_analysis/report.dart';
+import 'package:healtha/screens/lab_analysis/upload_analysis.dart';
 import 'package:healtha/screens/notification/notification_center.dart';
 import 'package:healtha/screens/prediction/disease_prediction.dart';
 import 'package:healtha/screens/profile/profile.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : darkTheme,
-              home: HomeScreen(),
+              home: UploadPage(),
             ),
           );
         },
