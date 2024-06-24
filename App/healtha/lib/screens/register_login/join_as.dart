@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:healtha/screens/generated/l10n.dart';
-import 'package:healtha/screens/register_login/sign_up.dart';
+
 import '../doctor_ui/doc_signUp.dart';
+import '../generated/l10n.dart';
+import '../register_login/sign_up.dart';
 
 class joinAs extends StatefulWidget {
-  const joinAs({super.key});
-
   @override
   _JoinAsState createState() => _JoinAsState();
 }
@@ -15,8 +14,9 @@ class joinAs extends StatefulWidget {
 class _JoinAsState extends State<joinAs> {
   final FlutterTts _flutterTts = FlutterTts();
   bool _isPlaying = false;
-  bool _showDelayedMessage = true;
+  bool _isDoctorSelected = true;
   bool _isVolumeHigh = true;
+  bool _showDelayedMessage = true;
 
   @override
   void initState() {
@@ -65,176 +65,153 @@ class _JoinAsState extends State<joinAs> {
     if (_isPlaying) {
       _stop();
     } else {
-      _speakAllText();
+      _speak("Join app as: Doctor or Patient");
     }
-    _toggleIcon();
-  }
-
-  void _speakAllText() {
-    const text = "Join as: Doctor or Patient";
-    _speak(text);
-  }
-
-  void _toggleIcon() {
     setState(() {
-      _isVolumeHigh = !_isVolumeHigh;
+      _isVolumeHigh = !_isVolumeHigh; // Toggle volume state
     });
+  }
+
+  void _selectDoctor(BuildContext context) {
+    setState(() {
+      _isDoctorSelected = true;
+    });
+    _speak("Doctor");
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => DocSignUpPage(),
+      ),
+    );
+  }
+
+  void _selectPatient(BuildContext context) {
+    setState(() {
+      _isDoctorSelected = false;
+    });
+    _speak("Patient");
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => SignUp(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+    final double imageHeight = screenSize.height * 0.4;
+    final double imageWidth = screenSize.width * 0.4;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                const Color(0xff7c77d1).withOpacity(0.5),
-                const Color(0xff7c77d1).withOpacity(0.7),
-                const Color(0xff7c77d1).withOpacity(0.9),
-                const Color(0xff7c77d1),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.topRight,
-            ),
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: screenSize.height * 0.1),
-              Text(
-                S.of(context).Join_as,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: screenSize.width * 0.08,
-               //   color: Colors.white,
-                ),
-              ),
-              SizedBox(height: screenSize.height * 0.05),
-              Container(
-                height: screenSize.height * 0.7,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(screenSize.width * 0.1),
-                    topRight: Radius.circular(screenSize.width * 0.1),
+      body: Stack(
+        children: [
+          Container(
+            height: screenSize.height * 0.25,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Text(
+                  "Join app as:",
+                  style: TextStyle(
+                    fontSize: screenSize.height * 0.03,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-                child: Column(
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: Color(0xff7c77d1),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              SizedBox(height: screenSize.height * 0.2),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: screenSize.height * 0.1),
-                    Padding(
-                      padding: EdgeInsets.all(screenSize.width * 0.03),
-                      child: InkWell(
-                        onTap: () {
-                          _speak(S.of(context).Doctor);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => const docSignUpPage(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: screenSize.height * 0.2,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(screenSize.width * 0.03)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: screenSize.width * 0.018,
-                                offset: Offset(
-                                    0,
-                                    screenSize.width *
-                                        0.025), // changes position of shadow
-                              ),
-                            ],
+                    GestureDetector(
+                      onTap: () => _selectDoctor(context),
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        width: _isDoctorSelected ? imageWidth * 1.2 : imageWidth,
+                        height: _isDoctorSelected ? imageHeight * 1.2 : imageHeight,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: AssetImage('images/doctor.jpeg'),
+                            fit: BoxFit.cover,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    S.of(context).Doctor,
-                                    style: TextStyle(
-                                      fontSize: screenSize.width * 0.06,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black
-                                    ),
-                                  )
-                                ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 10,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            color: Colors.black54,
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(vertical: screenSize.height * 0.01),
+                            child: Text(
+                              "Doctor",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: screenSize.height * 0.025,
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(width: screenSize.width * 0.1),
-                              SizedBox(
-                                width: screenSize.width * 0.4,
-                                height: screenSize.height * 0.2,
-                                child: const Image(
-                                    image: AssetImage("images/doc.jpg")),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(screenSize.width * 0.03),
-                      child: InkWell(
-                        onTap: () {
-                          _speak("Patient");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => SignUp(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: screenSize.height * 0.2,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(screenSize.width * 0.03)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: screenSize.width * 0.018,
-                                offset: Offset(
-                                    0,
-                                    screenSize.width *
-                                        0.025), // changes position of shadow
-                              ),
-                            ],
+                    SizedBox(width: screenSize.width * 0.05),
+                    GestureDetector(
+                      onTap: () => _selectPatient(context),
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        width: !_isDoctorSelected ? imageWidth * 1.2 : imageWidth,
+                        height: !_isDoctorSelected ? imageHeight * 1.2 : imageHeight,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: AssetImage('images/patient.jpeg'),
+                            fit: BoxFit.cover,
                           ),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: screenSize.width * 0.4,
-                                height: screenSize.height * 0.2,
-                                child: const Image(
-                                    image: AssetImage("images/patient.jpg")),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 10,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            color: Colors.black54,
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(vertical: screenSize.height * 0.01),
+                            child: Text(
+                              "Patient",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: screenSize.height * 0.025,
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(width: screenSize.width * 0.1),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    S.of(context).Patient,
-                                    style: TextStyle(
-                                      fontSize: screenSize.width * 0.06,
-                                      fontWeight: FontWeight.w600,
-                                        color: Colors.black
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -242,23 +219,26 @@ class _JoinAsState extends State<joinAs> {
                   ],
                 ),
               ),
+              SizedBox(height: screenSize.height * 0.05), // Add some space at the bottom
             ],
           ),
-        ),
+        ],
       ),
       floatingActionButton: Stack(
         children: [
           Positioned(
-            top: 10, // Adjust this position as needed
-            left: 120, // Adjust this position as needed
+            top: MediaQuery.of(context).size.height *
+                0.02, // Adjust position based on screen size
+            left: MediaQuery.of(context).size.width *
+                0.2, // Adjust position based on screen size
             child: Visibility(
               visible: _showDelayedMessage,
               child: AnimatedOpacity(
                 opacity: _showDelayedMessage ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 500),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 33, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(20),
@@ -277,8 +257,9 @@ class _JoinAsState extends State<joinAs> {
             ),
           ),
           Positioned(
-            top: 10, // Adjust this position as needed
-            right: 0, // Adjust this position as needed
+            top: MediaQuery.of(context).size.height *
+                0.02, // Adjust position based on screen size
+            right: 0,
             child: InkWell(
               onTap: () {
                 _toggleSound();
@@ -297,8 +278,9 @@ class _JoinAsState extends State<joinAs> {
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeUp,
                     size: 20,
-                    color:
-                        _isVolumeHigh ? Colors.white : const Color(0xff7c77d1),
+                    color: _isVolumeHigh
+                        ? Colors.white
+                        : const Color(0xff7c77d1),
                   ),
                 ),
               ),
@@ -307,6 +289,46 @@ class _JoinAsState extends State<joinAs> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+    );
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop();
+    super.dispose();
+  }
+}
+
+class DocSignUpPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Doctor Sign Up"),
+      ),
+      body: Center(
+        child: Text(
+          "Doctor Sign Up Page",
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+}
+
+class SignUpPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Patient Sign Up"),
+      ),
+      body: Center(
+        child: Text(
+          "Patient Sign Up Page",
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
