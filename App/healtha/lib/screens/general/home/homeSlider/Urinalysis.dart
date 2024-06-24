@@ -18,8 +18,8 @@ class Section {
   Section({required this.title, required this.content});
 }
 
-class LipidPanel extends StatelessWidget {
-  const LipidPanel({Key? key}) : super(key: key);
+class Urinalysis extends StatelessWidget {
+  const Urinalysis({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +48,12 @@ class LipidPanel extends StatelessWidget {
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty && labTests.length >= 5) {
+      if (labTests.isNotEmpty && labTests.length >= 3) {
         // Check if there are at least 3 lab tests
-        Map<String, dynamic> fifthLabTest =
-            labTests[4]; // Accessing the third lab test using index 2
-        String name = fifthLabTest['name'];
-        List<dynamic> sections = fifthLabTest['sections'];
+        Map<String, dynamic> thirdLabTest =
+            labTests[2]; // Accessing the third lab test using index 2
+        String name = thirdLabTest['name'];
+        List<dynamic> sections = thirdLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {
           return Section(
             title: section['title'],
@@ -158,7 +158,9 @@ class LabTestDetailsPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       S.of(context).Name(labTest.name),
-                      style: const TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                     // Display sections
                     if (labTest.sections.isNotEmpty) ...[
@@ -183,7 +185,9 @@ class LabTestDetailsPage extends StatelessWidget {
                             ),
                             Text(
                               section.content,
-                              style: const TextStyle(fontSize: 14),
+                              style: TextStyle(fontSize: 14,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
                             ),
                           ],
                         ),

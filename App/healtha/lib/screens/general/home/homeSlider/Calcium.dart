@@ -18,8 +18,8 @@ class Section {
   Section({required this.title, required this.content});
 }
 
-class Thyroid extends StatelessWidget {
-  const Thyroid({Key? key}) : super(key: key);
+class Calcium extends StatelessWidget {
+  const Calcium({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +48,12 @@ class Thyroid extends StatelessWidget {
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty && labTests.length >= 2) {
+      if (labTests.isNotEmpty && labTests.length >= 90) {
         // Check if there are at least 3 lab tests
-        Map<String, dynamic> secondLabTest =
-            labTests[1]; // Accessing the third lab test using index 2
-        String name = secondLabTest['name'];
-        List<dynamic> sections = secondLabTest['sections'];
+        Map<String, dynamic> naLabTest =
+            labTests[89]; // Accessing the third lab test using index 2
+        String name = naLabTest['name'];
+        List<dynamic> sections = naLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {
           return Section(
             title: section['title'],
@@ -158,7 +158,9 @@ class LabTestDetailsPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       S.of(context).Name(labTest.name),
-                      style: const TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                     // Display sections
                     if (labTest.sections.isNotEmpty) ...[
@@ -183,7 +185,9 @@ class LabTestDetailsPage extends StatelessWidget {
                             ),
                             Text(
                               section.content,
-                              style: const TextStyle(fontSize: 14),
+                              style: TextStyle(fontSize: 14,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
                             ),
                           ],
                         ),

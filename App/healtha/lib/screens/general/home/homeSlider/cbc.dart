@@ -18,8 +18,8 @@ class Section {
   Section({required this.title, required this.content});
 }
 
-class Calcium extends StatelessWidget {
-  const Calcium({Key? key}) : super(key: key);
+class CBC extends StatelessWidget {
+  const CBC({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +45,13 @@ class Calcium extends StatelessWidget {
 
   Future<LabTest> fetchLabTest() async {
     final response = await http.get(Uri.parse(
-        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty && labTests.length >= 90) {
-        // Check if there are at least 3 lab tests
-        Map<String, dynamic> naLabTest =
-            labTests[89]; // Accessing the third lab test using index 2
-        String name = naLabTest['name'];
-        List<dynamic> sections = naLabTest['sections'];
+      if (labTests.isNotEmpty) {
+        Map<String, dynamic> firstLabTest = labTests.first;
+        String name = firstLabTest['name'];
+        List<dynamic> sections = firstLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {
           return Section(
             title: section['title'],
@@ -62,7 +60,7 @@ class Calcium extends StatelessWidget {
         }).toList();
         return LabTest(name: name, sections: parsedSections);
       } else {
-        throw Exception('Not enough lab tests found');
+        throw Exception('No lab tests found');
       }
     } else {
       throw Exception('Failed to load lab tests');
@@ -158,7 +156,9 @@ class LabTestDetailsPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       S.of(context).Name(labTest.name),
-                      style: const TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                     // Display sections
                     if (labTest.sections.isNotEmpty) ...[
@@ -183,7 +183,9 @@ class LabTestDetailsPage extends StatelessWidget {
                             ),
                             Text(
                               section.content,
-                              style: const TextStyle(fontSize: 14),
+                              style: TextStyle(fontSize: 14,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
                             ),
                           ],
                         ),

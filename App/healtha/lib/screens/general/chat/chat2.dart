@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../doctor_ui/doc-profile.dart';
+import 'package:healtha/screens/doctor/doc-profile.dart';
 
 class HealthaChat extends StatefulWidget {
   @override

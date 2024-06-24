@@ -129,7 +129,7 @@ class LabTestDetailsPage extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff7c77d1),
+
                       ),
                     ),
                   ),
@@ -156,7 +156,9 @@ class LabTestDetailsPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     S.of(context).Name(labTest.name),
-                    style: const TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 14,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   // Add more details as needed
                 ],
