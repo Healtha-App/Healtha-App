@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : lightTheme,
-              home: Disease(),
+              home: HomeScreen(),
             ),
           );
         },

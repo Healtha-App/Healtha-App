@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:healtha/screens/general/home/encyclopediaTypes2.dart';
+import 'package:healtha/screens/patient/profile/drProfile2.dart';
 import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
 import 'package:healtha/localization/generated/l10n.dart';
@@ -213,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EncyclopediaTypes()),
+                          MaterialPageRoute(builder: (context) => EncyclopediaTypes2()),
                         );
                       },
                       child: Container(
@@ -578,7 +580,7 @@ class DoctorCard extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => drProfile()),
+                MaterialPageRoute(builder: (context) => drProfile2()),
               );
             },
             child: CircleAvatar(
