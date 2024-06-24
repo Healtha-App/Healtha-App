@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:healtha/screens/doctor_ui/doc-profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:healtha/screens/generated/l10n.dart';
+import 'package:healtha/screens/doctor_ui/doc-profile.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class AllDoctors extends StatefulWidget {
-  const AllDoctors({super.key});
+  const AllDoctors({Key? key}) : super(key: key);
 
   @override
   _AllDoctorsState createState() => _AllDoctorsState();
@@ -18,6 +17,10 @@ class _AllDoctorsState extends State<AllDoctors> {
   List<Doctor> allDoctors = [];
   List<Doctor> filteredDoctors = [];
   String searchQuery = '';
+  final TextEditingController _searchController = TextEditingController();
+  final stt.SpeechToText _speechToText = stt.SpeechToText();
+  bool _isListening = false;
+  String _spokenText = "";
 
   @override
   void initState() {
@@ -28,11 +31,61 @@ class _AllDoctorsState extends State<AllDoctors> {
         filteredDoctors = doctors;
       });
     });
+    _searchController.addListener(_onSearchChanged);
+    initSpeechRecognizer();
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void initSpeechRecognizer() async {
+    bool available = await _speechToText.initialize(
+      onError: (error) => print('Error: $error'),
+      onStatus: (status) => print('Status: $status'),
+    );
+    if (available) {
+      setState(() {});
+    } else {
+      print('Speech recognition not available');
+    }
+  }
+
+  void startListening() async {
+    if (!_isListening) {
+      bool listening = await _speechToText.listen(
+        onResult: (result) {
+          setState(() {
+            _spokenText = result.recognizedWords.trim();
+            _searchController.text = _spokenText; // Set recognized text to search
+          });
+          updateSearchQuery(_spokenText);
+        },
+      ) ?? false;
+      if (listening) {
+        setState(() {
+          _isListening = true;
+        });
+      }
+    }
+  }
+
+  void stopListening() async {
+    if (_isListening) {
+      await _speechToText.stop();
+      setState(() {
+        _isListening = false;
+      });
+    }
   }
 
   Future<List<Doctor>> fetchDoctors() async {
-    final response = await http.get(Uri.parse(
-        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/doctors'));
+    final response = await http.get(
+      Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/doctors'),
+    );
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -46,22 +99,28 @@ class _AllDoctorsState extends State<AllDoctors> {
     setState(() {
       searchQuery = query;
       filteredDoctors = allDoctors.where((doctor) {
-        return doctor.name.toLowerCase().contains(query.toLowerCase());
+        // Check if doctor's name or location contains the search query
+        return doctor.name.toLowerCase().contains(query.toLowerCase()) ||
+            doctor.location.toLowerCase().contains(query.toLowerCase());
       }).toList();
     });
+  }
+
+  void _onSearchChanged() {
+    updateSearchQuery(_searchController.text);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // backgroundColor: const Color(0xFFF0EEFA),
       appBar: AppBar(
-       // backgroundColor: const Color(0xFFF0EEFA),
         title: Text(
           S.of(context).Discover_All_Doctors,
-          style:  TextStyle(
-              color:Theme.of(context).colorScheme.onPrimary,
-              fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: Column(
@@ -69,14 +128,33 @@ class _AllDoctorsState extends State<AllDoctors> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              onChanged: (value) {
-                updateSearchQuery(value);
-              },
+              controller: _searchController,
+              style: TextStyle(color: Colors.white), // Change text color to white
               decoration: InputDecoration(
-                prefixIcon:  Icon(Icons.search,color: Theme.of(context).colorScheme.onPrimary,),
+                prefixIcon: IconButton(
+                  icon: Icon(
+                    _isListening ? Icons.mic : Icons.mic_none,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    if (!_isListening) {
+                      startListening();
+                    } else {
+                      stopListening();
+                    }
+                  },
+                ),
                 hintText: S.of(context).Search_by_name_location_or_specialty,
-                border: OutlineInputBorder(
+                hintStyle: TextStyle(color: Colors.white70), // Set hint color to light gray
+                filled: true,
+                fillColor: Colors.grey[800], // Set background color of TextField
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
@@ -97,17 +175,17 @@ class _AllDoctorsState extends State<AllDoctors> {
 
 class Doctor {
   final String name;
-  final double rating;
+  final String location;
 
   Doctor({
     required this.name,
-    required this.rating,
+    required this.location,
   });
 
   factory Doctor.fromJson(Map<String, dynamic> json) {
     return Doctor(
       name: json['name'],
-      rating: 4.5,
+      location: json['location'],
     );
   }
 }
@@ -115,7 +193,7 @@ class Doctor {
 class DoctorCard extends StatefulWidget {
   final Doctor doctor;
 
-  const DoctorCard({super.key, required this.doctor});
+  const DoctorCard({Key? key, required this.doctor}) : super(key: key);
 
   @override
   _DoctorCardState createState() => _DoctorCardState();
@@ -127,7 +205,6 @@ class _DoctorCardState extends State<DoctorCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-    //  color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       child: InkWell(
         onTap: () {
@@ -151,7 +228,6 @@ class _DoctorCardState extends State<DoctorCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-
                       widget.doctor.name,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
@@ -159,14 +235,12 @@ class _DoctorCardState extends State<DoctorCard> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Row(
-                      children: [
-                        const Icon(Icons.star,
-                            color: Colors.orangeAccent, size: 16.0),
-                        Text(widget.doctor.rating.toString(),
-                        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,
-                        ),),
-                      ],
+                    Text(
+                      widget.doctor.location,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 14.0,
+                      ),
                     ),
                   ],
                 ),
@@ -190,15 +264,5 @@ class _DoctorCardState extends State<DoctorCard> {
         ),
       ),
     );
-  }
-
-  void _launchURL(String location) async {
-    final Uri url =
-        Uri.parse('https://www.google.com/maps/search/?api=1&query=$location');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }
