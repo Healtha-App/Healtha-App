@@ -258,13 +258,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "Your_reports": MessageLookupByLibrary.simpleMessage("Your reports"),
         "app_name": MessageLookupByLibrary.simpleMessage("Healtha"),
         "description_1": MessageLookupByLibrary.simpleMessage(
-            "Medical knowledge in your pocket. Explore medical encyclopedias"),
+            "Turn your phone into a medical library. Explore in-depth medical knowledge on the go."),
         "description_2": MessageLookupByLibrary.simpleMessage(
-            "Laboratory tests analysis made easy"),
+            "Understand Your Lab Results with Ease. Clear Insights from Your Lab Tests."),
         "description_3": MessageLookupByLibrary.simpleMessage(
-            "Diseases prediction made easy. Consultation with specialists"),
+            "Take control of your health. Get disease predictions and connect with specialists, all in one place."),
         "description_4": MessageLookupByLibrary.simpleMessage(
-            "Proactive health starts here. Insights with smart reports"),
+            "Make informed decisions about your health. Start with our insightful reports."),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "nHealtha": MessageLookupByLibrary.simpleMessage(" \nHealtha"),
         "or": MessageLookupByLibrary.simpleMessage(" or "),
