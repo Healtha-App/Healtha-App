@@ -114,10 +114,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إنشاء تقرير آخر"),
         "Generated_Reports":
             MessageLookupByLibrary.simpleMessage("التقارير المُنشأة"),
-        "Get_Started": MessageLookupByLibrary.simpleMessage("صباح الفل"),
+        "Get_Started": MessageLookupByLibrary.simpleMessage("بدأ الاستخدام"),
         "Have_an_account": MessageLookupByLibrary.simpleMessage("لديك حساب؟"),
-        "Healtha": MessageLookupByLibrary.simpleMessage("Healtha"),
-        "Healtha_Report": MessageLookupByLibrary.simpleMessage("تقرير Healtha"),
+        "Healtha": MessageLookupByLibrary.simpleMessage("هيلثا"),
+        "Healtha_Report": MessageLookupByLibrary.simpleMessage("تقرير هيلثا"),
         "Hello": m4,
         "Help_Support": MessageLookupByLibrary.simpleMessage("المساعدة والدعم"),
         "Hey_nI_am_here_to_read_the_page_for_you":
@@ -216,7 +216,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Step_into_a_world_of_holistic_nhealth_with":
             MessageLookupByLibrary.simpleMessage(
                 "خطوة إلى عالم الصحة الشاملة مع"),
-        "Text_Get_Started": MessageLookupByLibrary.simpleMessage("ابدأ"),
+        "Text_Get_Started": MessageLookupByLibrary.simpleMessage("بدأ الاستخدام"),
         "Themes": MessageLookupByLibrary.simpleMessage("الثيمات"),
         "This_Week": MessageLookupByLibrary.simpleMessage("هذا الأسبوع"),
         "Today": MessageLookupByLibrary.simpleMessage("اليوم"),
@@ -238,7 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "View_report": MessageLookupByLibrary.simpleMessage("عرض التقرير"),
         "Welcome_to_Healtha":
-            MessageLookupByLibrary.simpleMessage("مرحبًا بكم في Healtha"),
+            MessageLookupByLibrary.simpleMessage("مرحبًا بكم في هيلثا"),
         "What_are_you_feeling":
             MessageLookupByLibrary.simpleMessage("ما الذي تشعر به؟"),
         "You": MessageLookupByLibrary.simpleMessage("أنت"),
@@ -249,17 +249,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "Your_health_our_priority":
             MessageLookupByLibrary.simpleMessage("صحتك هي أولويتنا!"),
         "Your_reports": MessageLookupByLibrary.simpleMessage("تقاريرك"),
-        "app_name": MessageLookupByLibrary.simpleMessage("Healtha"),
+        "app_name": MessageLookupByLibrary.simpleMessage("هيلثا"),
         "description_1": MessageLookupByLibrary.simpleMessage(
-            "المعرفة الطبية في جيبك. استكشاف الموسوعات الطبية"),
+            "حوّل هاتفك إلى مكتبة طبية. استكشف المعرفة الطبية المتعمقة أثناء التنقل"),
         "description_2": MessageLookupByLibrary.simpleMessage(
-            "تحليل الاختبارات المعملية أصبح سهلاً"),
+            "افهم نتائج تحاليلك المعملية بسهولة. رؤى واضحة من التحاليل المعملية الخاصة بك"),
         "description_3": MessageLookupByLibrary.simpleMessage(
-            "التنبؤ بالأمراض أصبح سهلاً. استشارة مع المتخصصين"),
+            "احصل على تنبؤات بالأمراض وتواصل مع الأخصائيين ، كل ذلك في مكان واحد"),
         "description_4": MessageLookupByLibrary.simpleMessage(
-            "الصحة الاستباقية تبدأ هنا. رؤى مع التقارير الذكية"),
+            "اتخذ قرارات صائبة بشأن صحتك. ابدأ بتقاريرنا الاستبصارية عن تحليلك"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
-        "nHealtha": MessageLookupByLibrary.simpleMessage("Healtha"),
+        "nHealtha": MessageLookupByLibrary.simpleMessage("هيلثا"),
         "or": MessageLookupByLibrary.simpleMessage("أو"),
         "patient": MessageLookupByLibrary.simpleMessage("مريض"),
         "return_home":
