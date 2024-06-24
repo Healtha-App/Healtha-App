@@ -80,7 +80,7 @@ class _JoinAsState extends State<joinAs> {
     Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => DocSignUpPage(),
+        builder: (context) => docSignUpPage(),
       ),
     );
   }
@@ -105,124 +105,160 @@ class _JoinAsState extends State<joinAs> {
     final double imageWidth = screenSize.width * 0.4;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: screenSize.height * 0.25,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Text(
-                  "Join app as:",
-                  style: TextStyle(
-                    fontSize: screenSize.height * 0.03,
-                    fontWeight: FontWeight.bold,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color(0xff7c77d1).withOpacity(0.5),
+              const Color(0xff7c77d1).withOpacity(0.7),
+              const Color(0xff7c77d1).withOpacity(0.9),
+            ],
+            stops: [0.0, 0.5, 1.0],
+          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 100,
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05,
+              child: Center(
+                child:Container(
+                  padding: const EdgeInsets.all(20),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: BoxDecoration(
                     color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0xff7c77d1),
+                        offset: Offset(0.0, 2.0),
+                        blurRadius: 1.0,
+                        spreadRadius: 0.0,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Join app as .. ",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-            decoration: BoxDecoration(
-              color: Color(0xff7c77d1),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40),
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              SizedBox(height: screenSize.height * 0.2),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => _selectDoctor(context),
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        width: _isDoctorSelected ? imageWidth * 1.2 : imageWidth,
-                        height: _isDoctorSelected ? imageHeight * 1.2 : imageHeight,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: AssetImage('images/doctor.jpeg'),
-                            fit: BoxFit.cover,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 5,
+            Column(
+              children: [
+                SizedBox(height: screenSize.height * 0.2),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () => _selectDoctor(context),
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 300),
+                          width: _isDoctorSelected ? imageWidth * 1.2 : imageWidth,
+                          height: _isDoctorSelected ? imageHeight * 1.2 : imageHeight,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                              image: AssetImage('images/doctor.jpeg'),
+                              fit: BoxFit.cover,
                             ),
-                          ],
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            color: Colors.black54,
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(vertical: screenSize.height * 0.01),
-                            child: Text(
-                              "Doctor",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenSize.height * 0.025,
-                                fontWeight: FontWeight.bold,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 10,
+                                spreadRadius: 5,
+                              ),
+                            ],
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(vertical: screenSize.height * 0.01),
+                              child: Text(
+                                "Doctor",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: screenSize.height * 0.025,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                                color: Colors.black54,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: screenSize.width * 0.05),
-                    GestureDetector(
-                      onTap: () => _selectPatient(context),
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        width: !_isDoctorSelected ? imageWidth * 1.2 : imageWidth,
-                        height: !_isDoctorSelected ? imageHeight * 1.2 : imageHeight,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: AssetImage('images/patient.jpeg'),
-                            fit: BoxFit.cover,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 5,
+                      SizedBox(width: screenSize.width * 0.05),
+                      GestureDetector(
+                        onTap: () => _selectPatient(context),
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 300),
+                          width: !_isDoctorSelected ? imageWidth * 1.2 : imageWidth,
+                          height: !_isDoctorSelected ? imageHeight * 1.2 : imageHeight,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                              image: AssetImage('images/patient.jpeg'),
+                              fit: BoxFit.cover,
                             ),
-                          ],
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            color: Colors.black54,
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(vertical: screenSize.height * 0.01),
-                            child: Text(
-                              "Patient",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenSize.height * 0.025,
-                                fontWeight: FontWeight.bold,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 10,
+                                spreadRadius: 5,
+                              ),
+                            ],
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(vertical: screenSize.height * 0.01),
+                              child: Text(
+                                "Patient",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: screenSize.height * 0.025,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                                color: Colors.black54,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: screenSize.height * 0.05), // Add some space at the bottom
-            ],
-          ),
-        ],
+                SizedBox(height: screenSize.height * 0.05), // Add some space at the bottom
+              ],
+            ),
+          ],
+        ),
       ),
       floatingActionButton: Stack(
         children: [
