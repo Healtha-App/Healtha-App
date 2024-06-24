@@ -16,6 +16,7 @@ class EncyclopediaPage extends StatefulWidget {
 
 class _EncyclopediaPageState extends State<EncyclopediaPage> {
   late Future<List<dynamic>> dataFuture;
+  List<dynamic> _allData = [];
   List<dynamic> _searchResults = [];
   final TextEditingController _searchController = TextEditingController();
   final stt.SpeechToText _speechToText = stt.SpeechToText();
@@ -85,7 +86,8 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
     final response = await http.get(Uri.parse(
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      _allData = jsonDecode(response.body);
+      return _allData;
     } else {
       throw Exception('Failed to load lab tests');
     }
@@ -95,7 +97,8 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
     final response = await http.get(Uri.parse(
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/disease'));
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      _allData = jsonDecode(response.body);
+      return _allData;
     } else {
       throw Exception('Failed to load diseases');
     }
@@ -108,19 +111,16 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
   void searchResults(String query) {
     if (query.isEmpty) {
       setState(() {
-        _searchResults = [];
+        _searchResults = _allData;
       });
-      return;
-    }
-
-    dataFuture.then((dataList) {
+    } else {
       setState(() {
-        _searchResults = dataList
+        _searchResults = _allData
             .where((data) =>
-            data['name'].toLowerCase().contains(query.toLowerCase()))
+            data['name'].toString().toLowerCase().contains(query.toLowerCase()))
             .toList();
       });
-    });
+    }
   }
 
   @override
@@ -189,6 +189,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: TextField(
               controller: _searchController,
+              style: TextStyle(color: Colors.white), // Change text color to white
               decoration: InputDecoration(
                 prefixIcon: IconButton(
                   icon: Icon(
@@ -208,17 +209,16 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                 fillColor: Colors.black,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide:
-                  BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                  borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide:
-                  BorderSide(color: Color(0xff7c77d1), width: 1.5),
+                  borderSide: BorderSide(color: Color(0xff7c77d1), width: 1.5),
                 ),
               ),
             ),
           ),
+
           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           Expanded(
             child: FutureBuilder<List<dynamic>>(
@@ -236,7 +236,7 @@ class _EncyclopediaPageState extends State<EncyclopediaPage> {
                     child: Text(S.of(context).Failed_to_load_data),
                   );
                 } else {
-                  List<dynamic> displayList = _searchController.text.isEmpty
+                  List<dynamic> displayList = _searchResults.isEmpty
                       ? snapshot.data!
                       : _searchResults;
                   return ListView.builder(
@@ -476,4 +476,5 @@ class Disease {
     );
   }
 }
+
 
