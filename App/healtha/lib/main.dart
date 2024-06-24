@@ -11,6 +11,7 @@ import 'package:healtha/screens/patient/lab_analysis/report.dart';
 import 'package:healtha/screens/patient/lab_analysis/upload_analysis.dart';
 import 'package:healtha/screens/patient/notification/notification_center.dart';
 import 'package:healtha/screens/patient/prediction/disease_prediction.dart';
+import 'package:healtha/screens/patient/prediction/static_disease_prediction.dart';
 import 'package:healtha/screens/patient/profile/profile.dart';
 import 'package:healtha/screens/patient/profile/settings.dart';
 import 'package:healtha/screens/patient/register_login/join_as.dart';
