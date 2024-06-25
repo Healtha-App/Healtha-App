@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +6,8 @@ import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
 import 'package:healtha/screens/patient/profile/customContainer.dart';
 import 'package:healtha/localization/generated/l10n.dart';
+
+import '../../general/chat/chat2.dart'; // Import DoctorChat screen
 
 class drProfile2 extends StatefulWidget {
   const drProfile2({Key? key}) : super(key: key);
@@ -18,47 +19,37 @@ class drProfile2 extends StatefulWidget {
 class _drProfileState extends State<drProfile2> {
   String? skills;
   String? qualifications;
-
   String? email;
   String? name;
   String? phone;
   String? spec;
-
-  bool _isLoading = true; // Add a flag to track loading state
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    // Call the function to fetch user data when the page loads
     fetchUserData();
   }
 
   Future<void> fetchUserData() async {
-    // Make an HTTP request to fetch user data
     final response = await http.get(Uri.parse(
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/specialistdoctors'));
 
     if (response.statusCode == 200) {
-      // If the request is successful, parse the JSON response
       List<dynamic> doctorsData = jsonDecode(response.body);
       if (doctorsData.isNotEmpty) {
-        // Retrieve the data for the last doctor signed up
         Map<String, dynamic> userData = doctorsData.last;
-        // Update the state variables with the retrieved user data
         setState(() {
           email = userData[S.of(context).email];
           name = userData['username'];
           phone = userData["contactInformation"];
           spec = userData["specialization"];
-          _isLoading = false; // Set loading flag to false
-          // Update other variables if needed
+          _isLoading = false;
         });
       } else {
-        // Handle the case where the list is empty
-        _isLoading = false; // Set loading flag to false
+        _isLoading = false;
       }
     } else {
-      // If the request fails, show an error message
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -72,7 +63,7 @@ class _drProfileState extends State<drProfile2> {
           ],
         ),
       );
-      _isLoading = false; // Set loading flag to false
+      _isLoading = false;
     }
   }
 
@@ -83,9 +74,7 @@ class _drProfileState extends State<drProfile2> {
     return SafeArea(
       child: Scaffold(
         body: _isLoading
-            ? const Center(
-            child:
-            CircularProgressIndicator()) // Show loading indicator if data is still loading
+            ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
           child: Column(
             children: [
@@ -116,7 +105,6 @@ class _drProfileState extends State<drProfile2> {
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
                         ),
-
                       ),
                     ),
                   ),
@@ -148,7 +136,6 @@ class _drProfileState extends State<drProfile2> {
                             ),
                           ],
                         ),
-                        // Experience widget
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -171,7 +158,6 @@ class _drProfileState extends State<drProfile2> {
                             ),
                           ],
                         ),
-                        // Specialization widget
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -220,19 +206,15 @@ class _drProfileState extends State<drProfile2> {
                               style: TextStyle(
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
-                                //     color: Colors.black,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 25,
-                        ),
+                        const SizedBox(height: 25),
                         customContainer(
                           title: S.of(context).email,
                           icon1: Image.asset("assets/at.png"),
-                          data: email ??
-                              "Loading...", // Display "Loading..." if email is null
+                          data: email ?? "Loading...",
                         ),
                         const SizedBox(height: 15),
                         customContainer(
@@ -240,11 +222,9 @@ class _drProfileState extends State<drProfile2> {
                           icon1: Image.asset("assets/phone-call.png"),
                           data: phone ?? 'loading ..',
                         ),
-                        // New customContainers to display skills and qualifications
                         skills != null
                             ? Padding(
-                          padding: EdgeInsets.all(
-                              screenSize.width * 0.02),
+                          padding: EdgeInsets.all(screenSize.width * 0.02),
                           child: customContainer(
                             title: S.of(context).Skills,
                             icon1: Image.asset("images/skill.png"),
@@ -255,14 +235,12 @@ class _drProfileState extends State<drProfile2> {
                         qualifications != null
                             ? customContainer(
                           title: S.of(context).Qualifications,
-                          icon1: Image.asset(
-                              "images/certificate2.png"),
+                          icon1: Image.asset("images/certificate2.png"),
                           data: qualifications!,
                         )
                             : const SizedBox(height: 10),
                         Padding(
-                          padding:
-                          EdgeInsets.all(screenSize.width * 0.02),
+                          padding: EdgeInsets.all(screenSize.width * 0.02),
                           child: Text('chat'),
                         ),
                       ],
@@ -272,6 +250,16 @@ class _drProfileState extends State<drProfile2> {
               ),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DoctorChat()),
+            );
+          },
+          child: Icon(Icons.message, color: Colors.white),
+          backgroundColor: Color(0xff7c77d1),
         ),
       ),
     );
