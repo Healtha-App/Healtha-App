@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:healtha/localization/generated/l10n.dart';
-import 'package:healtha/screens/doctor/doc-profile.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+
+import '../../localization/generated/l10n.dart';
+import 'doc-profile.dart';
 
 class AllDoctors extends StatefulWidget {
   const AllDoctors({Key? key}) : super(key: key);
@@ -99,10 +99,10 @@ class _AllDoctorsState extends State<AllDoctors> {
     setState(() {
       searchQuery = query;
       filteredDoctors = allDoctors.where((doctor) {
-        // Check if doctor's name or location contains the search query
+        // Check if doctor's name, location, or specialization contains the search query
         return doctor.name.toLowerCase().contains(query.toLowerCase()) ||
-            doctor.speciality.toLowerCase().contains(query.toLowerCase()) ||
-            doctor.location.toLowerCase().contains(query.toLowerCase());
+            doctor.location.toLowerCase().contains(query.toLowerCase()) ||
+            doctor.specialization.toLowerCase().contains(query.toLowerCase());
       }).toList();
     });
   }
@@ -130,12 +130,12 @@ class _AllDoctorsState extends State<AllDoctors> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary), // Change text color to onPrimary
+              style: TextStyle(color: Colors.white), // Change text color to white
               decoration: InputDecoration(
                 prefixIcon: IconButton(
                   icon: Icon(
                     _isListening ? Icons.mic : Icons.mic_none,
-                    color: Theme.of(context).colorScheme.onPrimary, // Change icon color to onPrimary
+                    color: Colors.white,
                   ),
                   onPressed: () {
                     if (!_isListening) {
@@ -146,16 +146,16 @@ class _AllDoctorsState extends State<AllDoctors> {
                   },
                 ),
                 hintText: S.of(context).Search_by_name_location_or_specialty,
-                hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7)), // Set hint color to onPrimary with opacity
+                hintStyle: TextStyle(color: Colors.white70), // Set hint color to light gray
                 filled: true,
-                fillColor: Theme.of(context).colorScheme.surface, // Set background color to surface
+                fillColor: Colors.grey[800], // Set background color of TextField
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colors.grey), // Set border color to grey
+                  borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colors.grey), // Set border color to grey
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
@@ -176,35 +176,28 @@ class _AllDoctorsState extends State<AllDoctors> {
 
 class Doctor {
   final String name;
-  final String speciality;
+  final String specialization;
   final String location;
 
   Doctor({
     required this.name,
-    required this.speciality,
+    required this.specialization,
     required this.location,
   });
 
   factory Doctor.fromJson(Map<String, dynamic> json) {
     return Doctor(
       name: json['name'],
+      specialization: json['specialization'],
       location: json['location'],
-      speciality: json['speciality'],
     );
   }
 }
 
-class DoctorCard extends StatefulWidget {
+class DoctorCard extends StatelessWidget {
   final Doctor doctor;
 
   const DoctorCard({Key? key, required this.doctor}) : super(key: key);
-
-  @override
-  _DoctorCardState createState() => _DoctorCardState();
-}
-
-class _DoctorCardState extends State<DoctorCard> {
-  bool _isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +208,7 @@ class _DoctorCardState extends State<DoctorCard> {
           // Navigate to doctor profile
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => drProfile()),
+            MaterialPageRoute(builder: (context) => DoctorProfile(doctor: doctor)),
           );
         },
         child: Padding(
@@ -232,7 +225,7 @@ class _DoctorCardState extends State<DoctorCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.doctor.name,
+                      doctor.name,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 18.0,
@@ -240,7 +233,14 @@ class _DoctorCardState extends State<DoctorCard> {
                       ),
                     ),
                     Text(
-                      widget.doctor.location,
+                      doctor.specialization,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    Text(
+                      doctor.location,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 14.0,
@@ -251,20 +251,42 @@ class _DoctorCardState extends State<DoctorCard> {
               ),
               IconButton(
                 icon: Icon(
-                  _isFavorited ? Icons.favorite : Icons.favorite_border,
-                  color: _isFavorited
-                      ? const Color(0xff7c77d1)
-                      : const Color(0xff7c77d1),
+                  Icons.favorite_border,
+                  color: const Color(0xff7c77d1),
                   size: 18.0,
                 ),
                 onPressed: () {
-                  setState(() {
-                    _isFavorited = !_isFavorited;
-                  });
+                  // Handle favorite action
                 },
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class DoctorProfile extends StatelessWidget {
+  final Doctor doctor;
+
+  const DoctorProfile({Key? key, required this.doctor}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(doctor.name),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Doctor Name: ${doctor.name}'),
+            Text('Specialization: ${doctor.specialization}'),
+            Text('Location: ${doctor.location}'),
+            // Add more details as needed
+          ],
         ),
       ),
     );

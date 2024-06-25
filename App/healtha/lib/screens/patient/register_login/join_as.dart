@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:healtha/screens/doctor/doc_signUp.dart';
+import 'package:healtha/screens/doctor/doc_signUp.dart'; // This import should match the class name
 import 'package:healtha/localization/generated/l10n.dart';
 import 'sign_up.dart';
 
@@ -80,7 +80,7 @@ class _JoinAsState extends State<joinAs> {
     Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => docSignUpPage(),
+        builder: (context) => docSignUpPage(), // Ensure this matches the imported class
       ),
     );
   }
@@ -93,7 +93,7 @@ class _JoinAsState extends State<joinAs> {
     Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => SignUp(),
+        builder: (context) => SignUp(), // Ensure this matches the imported class
       ),
     );
   }
@@ -129,7 +129,7 @@ class _JoinAsState extends State<joinAs> {
                   padding: const EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.8,
                   decoration: BoxDecoration(
-                      color: Colors.white70,
+                    color: Colors.white70,
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: const [
                       BoxShadow(
@@ -335,36 +335,5 @@ class _JoinAsState extends State<joinAs> {
   }
 }
 
-class DocSignUpPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Doctor Sign Up"),
-      ),
-      body: Center(
-        child: Text(
-          "Doctor Sign Up Page",
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
 
-class SignUpPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Patient Sign Up"),
-      ),
-      body: Center(
-        child: Text(
-          "Patient Sign Up Page",
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
+
