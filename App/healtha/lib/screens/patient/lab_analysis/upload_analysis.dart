@@ -165,301 +165,304 @@ class _UploadPageState extends State<UploadPage> {
 
     return SafeArea(
       child: Scaffold(
-      appBar: AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0, // Set the background color to transparent
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              myPurple.withOpacity(0.5),
-              myPurple.withOpacity(0.7),
-              myPurple.withOpacity(0.9),
-              myPurple,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.topRight,
-          ),
-        ),
-      ),
-      iconTheme: IconThemeData(
-        color: Theme.of(context).colorScheme.surface,
-      ),
-    ),
-    drawer: Drawer(
-    child: Container(
-      color: Theme.of(context).colorScheme.background,
-    child: ListView(
-    children: [
-    SizedBox(
-    height: 60,
-    child: DrawerHeader(
-    decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.primary,
-    ),
-    margin: const EdgeInsets.all(0),
-    padding: const EdgeInsets.all(16.0),
-    child: Text(
-    S.of(context).Your_reports,
-    style: const TextStyle(color: Colors.black),
-    ),
-    ),
-    ),
-    ListTile(
-    leading: Icon(Icons.library_books_sharp),
-    title: Text(
-    S.of(context).Generated_Reports,
-    style: TextStyle(
-      color: Theme.of(context).colorScheme.onPrimary,
-    ),
-    ),
-    onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => GeneratedReports()),
-    );
-    },
-    ),
-    ListTile(
-    leading: Icon(Icons.bookmark),
-    title: Text(
-    S.of(context).Saved_Reports,
-    style: TextStyle(
-    color: Colors.black, // Adjust text color as needed
-    ),
-    ),
-    onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => SavedReports()),
-    );
-    },
-    ),
-    ListTile(
-    leading: Icon(Icons.history),
-    title: Text(
-    S.of(context).History,
-    style: TextStyle(
-      color: Theme.of(context).colorScheme.onPrimary,
-    ),
-    ),
-    onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => SavedReports()),
-    );
-    },
-    ),
-    // Add more items as needed
-    ],
-    ),
-    ),
-    ),
-    body: Column(
-    children: [
-    Stack(
-    clipBehavior: Clip.none,
-    children: [
-    Container(
-    height: screenSize.height * 0.2,
-    width: screenSize.width,
-    decoration: BoxDecoration(
-    gradient: LinearGradient(
-    colors: [
-    myPurple.withOpacity(0.5),
-    myPurple.withOpacity(0.7),
-    myPurple.withOpacity(0.9),
-    myPurple,
-    ],
-    begin: Alignment.topLeft,
-    end: Alignment.topRight,
-    ),
-    borderRadius: const BorderRadius.only(
-    bottomLeft: Radius.circular(15),
-    bottomRight: Radius.circular(15),
-    ),
-    ),
-    ),
-    Positioned(
-    bottom: -50,
-    left: screenSize.width * 0.05,
-    right: screenSize.width * 0.05,
-    child: Container(
-    padding: const EdgeInsets.all(20),
-    width: screenSize.width * 0.9,
-    decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surface,
-    borderRadius: BorderRadius.circular(15),
-    boxShadow: [
-    BoxShadow(
-    //color: myPurple.withOpacity(0.5), // Adjust shadow color as needed
-    offset: const Offset(0.0, 2.0),
-      blurRadius: 1.0,
-      spreadRadius: 0.0,
-    ),
-    ],
-    ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            S.of(context).Proactive_health_starts_here,
-            style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: myPurple),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            S.of(context).Unlocking_insights_with_smart_reports,
-            style: TextStyle(
-              fontSize: 14,
-              color: Theme.of(context).colorScheme.onPrimary,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0, // Set the background color to transparent
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  myPurple.withOpacity(0.5),
+                  myPurple.withOpacity(0.7),
+                  myPurple.withOpacity(0.9),
+                  myPurple,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.topRight,
+              ),
             ),
           ),
-        ],
-      ),
-    ),
-    ),
-    ],
-    ),
-      SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(screenSize.width * 0.1),
-          child: Column(
-            children: [
-              const SizedBox(height: 20.0),
-              Text(
-                S.of(context).Upload_your_lab_analysis_results,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              FileDropWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(
-                height: .50, // Customize the thickness
-                color: Colors.grey, // Customize the color
-              ),
-              const SizedBox(height: 10.0),
-              if (_isEnabled == false)
-                AnimatedTextKit(
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      """Your healtha report is being generated with care...
-We will notify you as soon as it is ready
-Thank you for allowing us the time to ensure accuracy!""",
-                      textStyle: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                      speed: const Duration(milliseconds: 40),
+          iconTheme: IconThemeData(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+        ),
+        drawer: Drawer(
+          child: Container(
+            color: Theme.of(context).colorScheme.background,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 60,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
                     ),
-                  ],
-                  isRepeatingAnimation: false,
-                  totalRepeatCount: 1,
-                  displayFullTextOnTap: true,
-                  stopPauseOnTap: true,
-                  repeatForever: false,
-                  onFinished: () {
-                    setState(() {
-                      showAfterAnimation = true;
-                    });
+                    margin: const EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      S.of(context).Your_reports,
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.library_books_sharp),
+                  title: Text(
+                    S.of(context).Generated_Reports,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GeneratedReports()),
+                    );
                   },
                 ),
-              if (showAfterAnimation)
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
+                ListTile(
+                  leading: Icon(Icons.bookmark),
+                  title: Text(
+                    S.of(context).Saved_Reports,
+                    style: TextStyle(
+                      color: Colors.black, // Adjust text color as needed
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const UploadPage()),
-                        );
-                      },
-                      style: ButtonStyle(
-                        foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(myPurple),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SavedReports()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.history),
+                  title: Text(
+                    S.of(context).History,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SavedReports()),
+                    );
+                  },
+                ),
+                // Add more items as needed
+              ],
+            ),
+          ),
+        ),
+        body: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  height: screenSize.height * 0.2,
+                  width: screenSize.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        myPurple.withOpacity(0.5),
+                        myPurple.withOpacity(0.7),
+                        myPurple.withOpacity(0.9),
+                        myPurple,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: -50,
+                  left: screenSize.width * 0.05,
+                  right: screenSize.width * 0.05,
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    width: screenSize.width * 0.9,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          //color: myPurple.withOpacity(0.5), // Adjust shadow color as needed
+                          offset: const Offset(0.0, 2.0),
+                          blurRadius: 1.0,
+                          spreadRadius: 0.0,
                         ),
-                      ),
-                      child: Text(S.of(context).Generate_another_report),
+                      ],
                     ),
-                    Row(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          S.of(context).or,
-                          style: TextStyle(color: myPurple),
+                          S.of(context).Proactive_health_starts_here,
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: myPurple),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                            );
-                          },
-                          child: Text(
-                            S.of(context).return_home,
-                            style: TextStyle(
-                                color: myPurple,
-                                fontWeight: FontWeight.bold),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          S.of(context).Unlocking_insights_with_smart_reports,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                       ],
                     ),
+                  ),
+                ),
+              ],
+            ),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(screenSize.width * 0.1),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20.0),
+                    Text(
+                      S.of(context).Upload_your_lab_analysis_results,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FileDropWidget(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(
+                      height: .50, // Customize the thickness
+                      color: Colors.grey, // Customize the color
+                    ),
+                    const SizedBox(height: 10.0),
+                    if (_isEnabled == false)
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            """Your healtha report is being generated with care...
+We will notify you as soon as it is ready
+Thank you for allowing us the time to ensure accuracy!""",
+                            textStyle: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                            speed: const Duration(milliseconds: 40),
+                          ),
+                        ],
+                        isRepeatingAnimation: false,
+                        totalRepeatCount: 1,
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
+                        repeatForever: false,
+                        onFinished: () {
+                          setState(() {
+                            showAfterAnimation = true;
+                          });
+                        },
+                      ),
+                    if (showAfterAnimation)
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const UploadPage()),
+                              );
+                            },
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(myPurple),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                            child: Text(S.of(context).Generate_another_report),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                S.of(context).or,
+                                style: TextStyle(color: myPurple),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  S.of(context).return_home,
+                                  style: TextStyle(
+                                      color: myPurple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ElevatedButton(
+                      onPressed: _isEnabled
+                          ? () {
+                              setState(() {
+                                _isEnabled = false;
+                              });
+                            }
+                          : null,
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        foregroundColor: MaterialStateProperty.all(_isEnabled
+                            ? Colors.white
+                            : myPurple.withOpacity(0)),
+                        backgroundColor: MaterialStateProperty.all(
+                            _isEnabled ? myPurple : myPurple.withOpacity(0)),
+                      ),
+                      child: Text(S.of(context).Generate),
+                    ),
+                    const SizedBox(height: 20.0),
                   ],
                 ),
-              ElevatedButton(
-                onPressed: _isEnabled
-                    ? () {
-                  setState(() {
-                    _isEnabled = false;
-                  });
-                }
-                    : null,
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  foregroundColor: MaterialStateProperty.all(
-                      _isEnabled ? Colors.white : myPurple.withOpacity(0)),
-                  backgroundColor: MaterialStateProperty.all(
-                      _isEnabled ? myPurple : myPurple.withOpacity(0)),
-                ),
-                child: Text(S.of(context).Generate),
               ),
-              const SizedBox(height: 20.0),
-
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-    ],
-    ),
         floatingActionButton: Builder(
           builder: (BuildContext context) {
             return Stack(
@@ -538,10 +541,8 @@ Thank you for allowing us the time to ensure accuracy!""",
             );
           },
         ),
-
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       ),
-
     );
   }
 
@@ -551,4 +552,3 @@ Thank you for allowing us the time to ensure accuracy!""",
     super.dispose();
   }
 }
-

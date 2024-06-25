@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healtha/localization/generated/l10n.dart';
+import 'package:healtha/variables.dart';
 //import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -110,7 +112,8 @@ class _NotificationCenterState extends State<NotificationCenter> {
           children: [
             // Background Gradient
             Container(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
+
             ),
 
             // Content
@@ -124,20 +127,20 @@ class _NotificationCenterState extends State<NotificationCenter> {
                         height: screenSize.height * 0.051), // Adjust as needed
                     Text(
                       S.of(context).Notification_Center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                          color: Theme.of(context).colorScheme.onPrimary,
+
                       ),
                     ),
                     SizedBox(height: screenSize.height * 0.02),
                     if (_todayReports.isNotEmpty) ...[
                       Text(
                         S.of(context).Today,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       _buildReportList(_todayReports),
@@ -148,10 +151,9 @@ class _NotificationCenterState extends State<NotificationCenter> {
                     if (_thisWeekReports.isNotEmpty) ...[
                       Text(
                         S.of(context).This_Week,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       _buildReportList(_thisWeekReports),
@@ -162,10 +164,9 @@ class _NotificationCenterState extends State<NotificationCenter> {
                       ),
                       Text(
                         S.of(context).Later_Reports,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       _buildReportList(_laterReports),
@@ -238,50 +239,63 @@ class _NotificationCenterState extends State<NotificationCenter> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.transparent,
+                color: Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.all(Radius.circular(
-                    screenSize.width * 0.02)), // Reduced border radius
+                    screenSize.width * 0.02)), // Border radius
+                boxShadow: [
+                  BoxShadow(
+                    color: AppConfig.myPurple.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 3,
+                    offset: Offset(0, 2), // changes position of shadow
+                  ),
+                ],
               ),
               child: Padding(
                 padding: EdgeInsets.all(
-                    screenSize.width * 0.0081), // Reduced padding
+                    screenSize.width * 0.0081), // Reduced internal padding
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(8), // Reduced padding
                   title: Text(
                     S.of(context).Your_CBC_Test_Report_is_ready,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF7C77D1),
+                      color: Theme.of(context).colorScheme.onPrimary,
+
                     ),
                   ),
                   subtitle: Text(
-                    S
-                        .of(context)
-                        .Uploaded_on(_formatDate(report['uploadTime'])),
+                    S.of(context).Uploaded_on(_formatDate(report['uploadTime'],
+                    ),
+                    ),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   trailing: Padding(
                     padding:
-                        const EdgeInsets.only(right: 12.0), // Added padding
+                    const EdgeInsets.only(right: 12.0), // Added padding
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ReportDetails(
-                                    reportId: report['reportid'].toString(),
-                                    onConfirm: (bool confirmed) {
-                                      /* Handle confirmation logic here */
-                                    },
-                                  )),
+                            builder: (context) => ReportDetails(
+                              reportId: report['reportid'].toString(),
+                              onConfirm: (bool confirmed) {
+                                /* Handle confirmation logic here */
+                              },
+                            ),
+                          ),
                         );
                       },
                       style: TextButton.styleFrom(
                         backgroundColor:
-                            const Color(0xFF7C77D1), // Background color
+                        const Color(0xFF7C77D1), // Background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.circular(18.0), // Rounded corners
+                          BorderRadius.circular(18.0), // Rounded corners
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 8.0), // Button padding

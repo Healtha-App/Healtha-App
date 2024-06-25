@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:healtha/screens/general/chat/chat2.dart';
 import 'package:healtha/screens/patient/chatbot/chat_screen.dart';
 import 'package:healtha/screens/doctor/all-doctors.dart';
 import 'package:healtha/screens/doctor/doc-profile.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : lightTheme,
-              home: HomeScreen(),
+              home: NotificationCenter(),
             ),
           );
         },

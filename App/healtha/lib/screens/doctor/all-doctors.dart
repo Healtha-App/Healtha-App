@@ -101,6 +101,7 @@ class _AllDoctorsState extends State<AllDoctors> {
       filteredDoctors = allDoctors.where((doctor) {
         // Check if doctor's name or location contains the search query
         return doctor.name.toLowerCase().contains(query.toLowerCase()) ||
+            doctor.speciality.toLowerCase().contains(query.toLowerCase()) ||
             doctor.location.toLowerCase().contains(query.toLowerCase());
       }).toList();
     });
@@ -129,12 +130,12 @@ class _AllDoctorsState extends State<AllDoctors> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
-              style: TextStyle(color: Colors.white), // Change text color to white
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary), // Change text color to onPrimary
               decoration: InputDecoration(
                 prefixIcon: IconButton(
                   icon: Icon(
                     _isListening ? Icons.mic : Icons.mic_none,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary, // Change icon color to onPrimary
                   ),
                   onPressed: () {
                     if (!_isListening) {
@@ -145,16 +146,16 @@ class _AllDoctorsState extends State<AllDoctors> {
                   },
                 ),
                 hintText: S.of(context).Search_by_name_location_or_specialty,
-                hintStyle: TextStyle(color: Colors.white70), // Set hint color to light gray
+                hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7)), // Set hint color to onPrimary with opacity
                 filled: true,
-                fillColor: Colors.grey[800], // Set background color of TextField
+                fillColor: Theme.of(context).colorScheme.surface, // Set background color to surface
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(color: Colors.grey), // Set border color to grey
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(color: Colors.grey), // Set border color to grey
                 ),
               ),
             ),
@@ -175,10 +176,12 @@ class _AllDoctorsState extends State<AllDoctors> {
 
 class Doctor {
   final String name;
+  final String speciality;
   final String location;
 
   Doctor({
     required this.name,
+    required this.speciality,
     required this.location,
   });
 
@@ -186,6 +189,7 @@ class Doctor {
     return Doctor(
       name: json['name'],
       location: json['location'],
+      speciality: json['speciality'],
     );
   }
 }

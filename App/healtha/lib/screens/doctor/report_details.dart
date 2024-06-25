@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:healtha/localization/generated/l10n.dart';
@@ -209,7 +208,6 @@ class _ReportDetailsState extends State<ReportDetails> {
                       height: MediaQuery.of(context).size.height * 0.75,
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
-
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: _isLoading
@@ -227,7 +225,7 @@ class _ReportDetailsState extends State<ReportDetails> {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff7c77d1),
+                                  color: Theme.of(context).colorScheme.onPrimary,
                                 ),
                               ),
                             ),
@@ -245,22 +243,35 @@ class _ReportDetailsState extends State<ReportDetails> {
                                             'This is the extracted test values from a patient\'s'
                                             ' report, along with the generated report for your review.'
                                             '',
-                                        style: TextStyle(fontWeight: FontWeight.bold,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                           color: Theme.of(context).colorScheme.onPrimary,
                                         ),
                                       ),
                                       Divider(),
-                                      Text('-- Test values',style: TextStyle(fontSize: 14,
-                                        color: Theme.of(context).colorScheme.onPrimary,
-                                      ),
+                                      Text(
+                                        '-- Test values',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
                                       ),
                                       if (_prompt != null && _prompt.isNotEmpty)
-                                        Text(_prompt,style: const TextStyle(fontSize: 14),),
+                                        Text(
+                                          _prompt,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Theme.of(context).colorScheme.onPrimary,
+                                          ),
+                                        ),
                                       Divider(),
                                       _isEditing
                                           ? TextField(
                                         controller: _textEditingController,
                                         maxLines: null,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
                                           hintText: S.of(context).Enter_report_text,
@@ -269,7 +280,8 @@ class _ReportDetailsState extends State<ReportDetails> {
                                           : Text(
                                         '-- Generated Reports\n'
                                             '$_reportContent',
-                                        style: TextStyle(fontSize: 14,
+                                        style: TextStyle(
+                                          fontSize: 14,
                                           color: Theme.of(context).colorScheme.onPrimary,
                                         ),
                                       ),
