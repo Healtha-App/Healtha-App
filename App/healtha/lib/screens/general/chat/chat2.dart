@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:healtha/screens/doctor/doc-profile.dart';
 
-class HealthaChat extends StatefulWidget {
+class DoctorChat extends StatefulWidget {
   @override
-  _HealthaChatState createState() => _HealthaChatState();
+  _DoctorChatState createState() => _DoctorChatState();
 }
 
-class _HealthaChatState extends State<HealthaChat> {
+class _DoctorChatState extends State<DoctorChat> {
   List<ChatMessage> messages = [
     ChatMessage(text: 'السلام عليكم, ازي حضرتك ي دكتور ايمان اتمني تكوني بخير', isUser: true),
     ChatMessage(text: 'وعليكم السلام الحمد لله خير', isUser: false),
@@ -23,8 +22,6 @@ class _HealthaChatState extends State<HealthaChat> {
     ChatMessage(text: 'تمام هبقي اجي لحضرتك ', isUser: true),
     ChatMessage(text: 'طيب اقدر ابقي استشير حضرتك هنا لو استشارة خفيفة؟', isUser: true),
     ChatMessage(text: 'اه طبعا مفيش مشكلة', isUser: false),
-    ChatMessage(text: 'تمام شكرا لحضرتم ', isUser: true),
-    ChatMessage(text: 'العفو', isUser: false),
   ];
 
   TextEditingController _textController = TextEditingController();
@@ -32,11 +29,11 @@ class _HealthaChatState extends State<HealthaChat> {
   void _handleSubmitted(String text) {
     _textController.clear();
     setState(() {
-      messages.add(ChatMessage(text: text, isUser: true));
+      messages.add(ChatMessage(text: text, isUser: true)); // شكرا جدا لحضرتك ي دكتور
       // Simulating a response from Healtha
       Future.delayed(Duration(seconds: 1), () {
         setState(() {
-          messages.add(ChatMessage(text: "I'm processing your message: '$text'. How else can I assist you?", isUser: false));
+          messages.add(ChatMessage(text: "العفو, علي الرحب", isUser: false));
         });
       });
     });
