@@ -5,6 +5,7 @@ import 'package:healtha/screens/general/home/encyclopediaTypes2.dart';
 import 'package:healtha/screens/general/navigation/navigation.dart';
 import 'package:healtha/screens/patient/lab_analysis/report.dart';
 import 'package:healtha/screens/patient/notification/notification_center.dart';
+import 'package:healtha/screens/patient/prediction/static_disease_prediction.dart';
 import 'package:healtha/screens/patient/profile/drProfile2.dart';
 import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
@@ -374,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Disease()),
+                          MaterialPageRoute(builder: (context) => StaticDisease()),
                         );
                       },
                       child: Container(

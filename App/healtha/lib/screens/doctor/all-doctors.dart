@@ -22,6 +22,7 @@ class _AllDoctorsState extends State<AllDoctors> {
   bool _isListening = false;
   String _spokenText = "";
 
+
   @override
   void initState() {
     super.initState();
@@ -194,10 +195,17 @@ class Doctor {
   }
 }
 
-class DoctorCard extends StatelessWidget {
+class DoctorCard extends StatefulWidget {
   final Doctor doctor;
 
   const DoctorCard({Key? key, required this.doctor}) : super(key: key);
+
+  @override
+  _DoctorCardState createState() => _DoctorCardState();
+}
+
+class _DoctorCardState extends State<DoctorCard> {
+  bool _isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +216,7 @@ class DoctorCard extends StatelessWidget {
           // Navigate to doctor profile
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DoctorProfile(doctor: doctor)),
+            MaterialPageRoute(builder: (context) => DoctorProfile(doctor: widget.doctor)),
           );
         },
         child: Padding(
@@ -225,7 +233,7 @@ class DoctorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      doctor.name,
+                      widget.doctor.name,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 18.0,
@@ -233,30 +241,37 @@ class DoctorCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      doctor.specialization,
+                      widget.doctor.specialization,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 14.0,
                       ),
                     ),
-                    Text(
-                      doctor.location,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 14.0,
-                      ),
+                    Row(
+                      children: [
+                        Icon(Icons.location_pin, color: Colors.red),
+                        Text(
+                          widget.doctor.location,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
               IconButton(
                 icon: Icon(
-                  Icons.favorite_border,
-                  color: const Color(0xff7c77d1),
+                  _isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: _isFavorite ? Colors.purple : Color(0xff7c77d1),
                   size: 18.0,
                 ),
                 onPressed: () {
-                  // Handle favorite action
+                  setState(() {
+                    _isFavorite = !_isFavorite;
+                  });
                 },
               ),
             ],
@@ -266,7 +281,6 @@ class DoctorCard extends StatelessWidget {
     );
   }
 }
-
 class DoctorProfile extends StatelessWidget {
   final Doctor doctor;
 

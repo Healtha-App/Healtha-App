@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:healtha/screens/doctor/doc_login.dart';
 import 'package:healtha/screens/doctor/doc_signUp.dart';
 import 'package:healtha/screens/general/chat/chat2.dart';
+import 'package:healtha/screens/general/chat/chatting.dart';
 import 'package:healtha/screens/general/start/slider.dart';
 import 'package:healtha/screens/patient/chatbot/chat_screen.dart';
 import 'package:healtha/screens/doctor/all-doctors.dart';
@@ -53,11 +54,11 @@ class MyApp extends StatelessWidget {
                 GlobalCupertinoLocalizations.delegate,
               ],
               title: 'Healtha',
-              locale: const Locale('ar'),
+              locale: const Locale('en'),
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : lightTheme,
-              home: RequestedReports(),
+              home: Navbar(),
             ),
           );
         },

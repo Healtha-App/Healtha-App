@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/screens/doctor/doc-profile.dart';
+import 'package:healtha/screens/patient/profile/drProfile2.dart';
 
 class DoctorChat extends StatefulWidget {
   @override
@@ -46,9 +47,18 @@ class _DoctorChatState extends State<DoctorChat> {
         backgroundColor: const Color(0xff7c77d1),
         title: Row(
           children: [
-            ClipOval(
-              child: Image.asset('assets/doctor1.png', height: 40, width: 40, fit: BoxFit.cover),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => drProfile2()),
+                );
+              },
+              child: ClipOval(
+                child: Image.asset('assets/doctor1.png', height: 40, width: 40, fit: BoxFit.cover),
+              ),
             ),
+
             const SizedBox(width: 10.0),
             Text(
               "Dr. Eman",
@@ -64,10 +74,7 @@ class _DoctorChatState extends State<DoctorChat> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => drProfile()),
-            );
+            Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
         ),

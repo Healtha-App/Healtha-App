@@ -239,10 +239,6 @@ class _drProfileState extends State<drProfile2> {
                           data: qualifications!,
                         )
                             : const SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.all(screenSize.width * 0.02),
-                          child: Text('chat'),
-                        ),
                       ],
                     ),
                   ),
