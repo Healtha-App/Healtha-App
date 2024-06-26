@@ -130,12 +130,12 @@ class _AllDoctorsState extends State<AllDoctors> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
-              style: TextStyle(color: Colors.white), // Change text color to white
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary), // Text color set to onPrimary
               decoration: InputDecoration(
                 prefixIcon: IconButton(
                   icon: Icon(
                     _isListening ? Icons.mic : Icons.mic_none,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary, // Icon color set to onPrimary
                   ),
                   onPressed: () {
                     if (!_isListening) {
@@ -146,16 +146,16 @@ class _AllDoctorsState extends State<AllDoctors> {
                   },
                 ),
                 hintText: S.of(context).Search_by_name_location_or_specialty,
-                hintStyle: TextStyle(color: Colors.white70), // Set hint color to light gray
+                hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7)), // Hint color set to onPrimary with opacity
                 filled: true,
-                fillColor: Colors.grey[800], // Set background color of TextField
+                fillColor: Theme.of(context).colorScheme.surface, // Background color set to surface
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(color: Colors.grey), // Border color set to grey
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(color: Colors.grey), // Border color set to grey
                 ),
               ),
             ),

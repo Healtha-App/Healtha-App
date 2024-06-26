@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healtha/screens/general/home/encyclopediaTypes2.dart';
+import 'package:healtha/screens/general/navigation/navigation.dart';
+import 'package:healtha/screens/patient/lab_analysis/report.dart';
+import 'package:healtha/screens/patient/notification/notification_center.dart';
 import 'package:healtha/screens/patient/profile/drProfile2.dart';
 import 'package:healtha/variables.dart';
 import 'package:http/http.dart' as http;
@@ -118,9 +121,28 @@ class _HomeScreenState extends State<HomeScreen> {
       print("Error fetching data: $e");
     }
   }
+  bool hasNewConfirmedReport() {
+    // Implement the logic to check for new confirmed reports
+    // This could involve checking a database or a state management solution
+    // For this example, we'll just return true
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (hasNewConfirmedReport()) {
+        showTopSnackBar(
+          context,
+          "Dear Menna, \nYour lab results interpretation is ready. ",
+          "View report",
+              () {
+            // Navigate to the report page
+            // For example: Navigator.push(context, MaterialPageRoute(builder: (context) => ReportPage()));
+          },
+        );
+      }
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -600,4 +622,98 @@ class DoctorCard extends StatelessWidget {
       ),
     );
   }
+}
+
+
+void showTopSnackBar(BuildContext context, String message, String actionLabel, VoidCallback onActionPressed) {
+  OverlayState? overlayState = Overlay.of(context);
+  OverlayEntry? overlayEntry; // Define overlayEntry as nullable
+
+
+  overlayEntry = OverlayEntry(
+    builder: (context) => Center(
+      child: Material(
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width * 0.8,
+             // margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 8,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    message,
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationCenter()));
+                        },
+                        child: Text(
+                          actionLabel,
+                          style: TextStyle(
+                            color: AppConfig.myPurple,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                      Text('or'),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationCenter()));
+                        },
+                        child: Text(
+                          "View all notifications",
+                          style: TextStyle(
+                            color: AppConfig.myPurple,
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 1
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: IconButton(
+                icon: Icon(Icons.close, color: Theme.of(context).colorScheme.onPrimary),
+                onPressed: () {
+                  overlayEntry?.remove(); // Remove the snackbar when close button is pressed
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  overlayState?.insert(overlayEntry);
+
+  Future.delayed(Duration(seconds: 3), () {
+    if (overlayEntry!.mounted) {
+      overlayEntry?.remove();
+    }
+  });
 }
