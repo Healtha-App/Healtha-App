@@ -31,7 +31,7 @@ class docLogin extends StatelessWidget {
 
         // Check if there is a user with the provided username
         var user = specialistDoctors.firstWhere(
-          (doctor) => doctor['email'] == emailController.text,
+              (doctor) => doctor['email'] == emailController.text,
           orElse: () => null,
         );
 
@@ -136,7 +136,7 @@ class docLogin extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: screenSize.width * 0.2),
+                  EdgeInsets.symmetric(horizontal: screenSize.width * 0.2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -167,7 +167,6 @@ class docLogin extends StatelessWidget {
                   height: screenSize.height * 0.85,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.background,
-
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(screenSize.width * 0.1),
                       topRight: Radius.circular(screenSize.width * 0.1),
@@ -201,12 +200,18 @@ class docLogin extends StatelessWidget {
                             ),
                             border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.circular(screenSize.width * 0.1),
+                              BorderRadius.circular(screenSize.width * 0.1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                             ),
                             labelText: S.of(context).Email,
                             labelStyle: TextStyle(
                               color: Theme.of(context).colorScheme.onPrimary,
-                              // Change this to your desired color
                             ),
                           ),
                         ),
@@ -220,17 +225,23 @@ class docLogin extends StatelessWidget {
                           controller: passwordController,
                           decoration: InputDecoration(
                             suffixIcon:
-                                 Icon(Icons.remove_red_eye_outlined,
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                ),
+                            Icon(Icons.remove_red_eye_outlined,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.circular(screenSize.width * 0.1),
+                              BorderRadius.circular(screenSize.width * 0.1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                             ),
                             labelText: S.of(context).Password,
                             labelStyle: TextStyle(
                               color: Theme.of(context).colorScheme.onPrimary,
-                              // Change this to your desired color
                             ),
                           ),
                           obscureText: true,
@@ -247,7 +258,7 @@ class docLogin extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: const Color(0xff7c77d1),
                             borderRadius:
-                                BorderRadius.circular(screenSize.width * 0.1),
+                            BorderRadius.circular(screenSize.width * 0.1),
                           ),
                           child: MaterialButton(
                             child: Text(
@@ -262,8 +273,7 @@ class docLogin extends StatelessWidget {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: SizedBox(
-                                        height:
-                                            60, // Adjust the height as needed
+                                        height: 60,
                                         child: Row(
                                           children: [
                                             const Icon(Icons.check_circle,
@@ -272,7 +282,7 @@ class docLogin extends StatelessWidget {
                                             Expanded(
                                               child: Text(
                                                 'Login successful, \n '
-                                                'Welcome Dr.${usernameController.text} to HEALTHA!',
+                                                    'Welcome Dr.${usernameController.text} to HEALTHA!',
                                                 style: const TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,

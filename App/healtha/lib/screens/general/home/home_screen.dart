@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+   /* WidgetsBinding.instance.addPostFrameCallback((_) {
       if (hasNewConfirmedReport()) {
         showTopSnackBar(
           context,
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         );
       }
-    });
+    });*/
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -664,7 +664,7 @@ void showTopSnackBar(BuildContext context, String message, String actionLabel, V
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationCenter()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
                         },
                         child: Text(
                           actionLabel,

@@ -11,6 +11,8 @@ import 'package:healtha/screens/doctor/report_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/screens/doctor/doc-profile.dart';
 
+import '../lab_analysis/report.dart';
+
 String _formatDate(String dateTimeString) {
   DateTime dateTime = DateTime.parse(dateTimeString);
   return DateFormat('yyyy-MM-dd').format(dateTime);
@@ -281,12 +283,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ReportDetails(
-                              reportId: report['reportid'].toString(),
-                              onConfirm: (bool confirmed) {
-                                /* Handle confirmation logic here */
-                              },
-                            ),
+                            builder: (context) => Report(),
                           ),
                         );
                       },

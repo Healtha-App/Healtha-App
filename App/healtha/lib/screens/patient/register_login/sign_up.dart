@@ -54,11 +54,12 @@ class _SignUpState extends State<SignUp> {
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: Colors.green,
             content: SizedBox(
               height: 60,
               child: Row(
                 children: [
-                  const Icon(Icons.check_circle, color: Colors.green),
+                  const Icon(Icons.check_circle, color: Colors.white70),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
@@ -67,7 +68,7 @@ class _SignUpState extends State<SignUp> {
                           .Account_created_successfully_nWELCOME_TO_HEALTHA(
                               usernameController.text),
                       style: const TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                       ),

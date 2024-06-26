@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:healtha/screens/doctor/doc_login.dart';
+import 'package:healtha/screens/doctor/doc_signUp.dart';
 import 'package:healtha/screens/general/chat/chat2.dart';
+import 'package:healtha/screens/general/start/slider.dart';
 import 'package:healtha/screens/patient/chatbot/chat_screen.dart';
 import 'package:healtha/screens/doctor/all-doctors.dart';
 import 'package:healtha/screens/doctor/doc-profile.dart';
@@ -18,6 +21,8 @@ import 'package:healtha/screens/patient/profile/settings.dart';
 import 'package:healtha/screens/patient/register_login/join_as.dart';
 import 'package:healtha/screens/general/start/option.dart';
 import 'package:healtha/screens/general/start/splash.dart';
+import 'package:healtha/screens/patient/register_login/log_in.dart';
+import 'package:healtha/screens/patient/register_login/sign_up.dart';
 import 'package:healtha/themes/light.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/themes/themes_bloc.dart';
@@ -48,11 +53,11 @@ class MyApp extends StatelessWidget {
                 GlobalCupertinoLocalizations.delegate,
               ],
               title: 'Healtha',
-              locale: const Locale('en'),
+              locale: const Locale('ar'),
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : lightTheme,
-              home: Navbar(),
+              home: RequestedReports(),
             ),
           );
         },

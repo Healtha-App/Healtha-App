@@ -36,7 +36,7 @@ class _sliderState extends State<slider> {
             }),
             pages: [
               buildPage(
-                const Color(0xff6e54ab),
+                  const Color(0xFF6D64B8),
                 [
                   S.of(context).welcome_to,
                   S.of(context).app_name,
@@ -47,13 +47,14 @@ class _sliderState extends State<slider> {
                 screenSize,
               ),
               buildPage(
-                const Color(0xFF7165D6),
+                const Color(0xff7c77d1),
                 ['', S.of(context).app_name, '', S.of(context).description_2],
                 'images/ency.json',
                 screenSize,
               ),
+              //Color(0xff7c77d1)
               buildPage(
-                const Color(0xff7c77d1),
+                const  Color(0xffa3a0ea),
                 [
                   '',
                   S.of(context).app_name,
@@ -64,8 +65,7 @@ class _sliderState extends State<slider> {
                 screenSize,
               ),
               buildPage(
-                const Color(0xffa79ef9),
-                [
+                const Color(0xffc1bbff),                [
                   '',
                   S.of(context).app_name,
                   '',

@@ -172,6 +172,7 @@ class _LoginState extends State<Login> {
                             borderRadius:
                                 BorderRadius.circular(screenSize.width * 0.1),
                           ),
+
                           labelText: S.of(context).Email,
                           labelStyle: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary,
