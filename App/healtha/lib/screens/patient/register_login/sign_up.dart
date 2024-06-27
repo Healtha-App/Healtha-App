@@ -157,6 +157,7 @@ class _SignUpState extends State<SignUp> {
                         textStyle: TextStyle(
                           fontSize: screenSize.width * 0.08,
                           fontWeight: FontWeight.w700,
+                        color: Colors.white
                         //  color: Colors.white,
                         ),
                       ),
@@ -216,6 +217,7 @@ class _SignUpState extends State<SignUp> {
                             }
                             return null;
                           },
+
                         ),
                         buildTextFormField(
                           controller: passwordController,
@@ -256,6 +258,20 @@ class _SignUpState extends State<SignUp> {
                               initialDate: DateTime.now(),
                               firstDate: DateTime(1900),
                               lastDate: DateTime.now(),
+                              builder: (BuildContext context, Widget? child) {
+                                return Theme(
+                                  data: ThemeData.light().copyWith(
+                                    colorScheme: ColorScheme.light(
+                                      primary: Colors.black, // Header background color
+                                      onPrimary: Colors.white, // Header text color
+                                      surface: Colors.white, // Dialog background color
+                                      onSurface: Colors.black, // Body text color
+                                    ),
+                                    dialogBackgroundColor: Colors.white,
+                                  ),
+                                  child: child!,
+                                );
+                              },
                             );
 
                             if (selectedDate != null &&
@@ -415,6 +431,7 @@ class _SignUpState extends State<SignUp> {
           vertical: MediaQuery.of(context).size.height * 0.01,
           horizontal: MediaQuery.of(context).size.width * 0.05),
       child: TextFormField(
+        style: TextStyle(color: Colors.black),
         controller: controller,
         validator: validator,
         obscureText: obscureText,
@@ -425,6 +442,13 @@ class _SignUpState extends State<SignUp> {
             child: Icon(suffixIcon,
               color:Theme.of(context).colorScheme.onPrimary,
             ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.black, // Keep border black when focused
+              width: 2.0,
+            ),
+           borderRadius: BorderRadius.circular(26.0),
           ),
           border: OutlineInputBorder(
             borderRadius:

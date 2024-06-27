@@ -193,6 +193,7 @@ class docLogin extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: screenSize.width * 0.04),
                         child: TextFormField(
+                          style: TextStyle(color: Colors.black),
                           controller: emailController,
                           decoration: InputDecoration(
                             suffixIcon:  Icon(Icons.email_outlined,
@@ -222,6 +223,7 @@ class docLogin extends StatelessWidget {
                           horizontal: screenSize.width * 0.04,
                         ),
                         child: TextFormField(
+                          style: TextStyle(color: Colors.black),
                           controller: passwordController,
                           decoration: InputDecoration(
                             suffixIcon:
@@ -277,14 +279,14 @@ class docLogin extends StatelessWidget {
                                         child: Row(
                                           children: [
                                             const Icon(Icons.check_circle,
-                                                color: Colors.green),
+                                                color: Colors.white70),
                                             const SizedBox(width: 10),
                                             Expanded(
                                               child: Text(
                                                 'Login successful, \n '
                                                     'Welcome Dr.${usernameController.text} to HEALTHA!',
                                                 style: const TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15,
                                                 ),
@@ -293,7 +295,7 @@ class docLogin extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      backgroundColor: Colors.white,
+                                      backgroundColor: Colors.green,
                                       elevation: 8,
                                       behavior: SnackBarBehavior.floating,
                                     ),

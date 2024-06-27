@@ -35,8 +35,8 @@ class _LoginState extends State<Login> {
 
         // Check if there is a user with the provided username and password
         var user = specialistDoctors.firstWhere(
-          (doctor) =>
-              doctor['email'] == emailController.text &&
+              (doctor) =>
+          doctor['email'] == emailController.text &&
               doctor['password'] == passwordController.text,
           orElse: () => null,
         );
@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
               ),
               Padding(
                 padding:
-                    EdgeInsets.symmetric(horizontal: screenSize.width * 0.15),
+                EdgeInsets.symmetric(horizontal: screenSize.width * 0.15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -163,6 +163,7 @@ class _LoginState extends State<Login> {
                           horizontal: screenSize.width * 0.05),
                       child: TextFormField(
                         controller: emailController,
+                        style: TextStyle(color: Colors.black), // Set entered text color to black
                         decoration: InputDecoration(
                           suffixIcon: Icon(
                             Icons.email_outlined,
@@ -170,13 +171,19 @@ class _LoginState extends State<Login> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.circular(screenSize.width * 0.1),
+                            BorderRadius.circular(screenSize.width * 0.1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                           ),
 
                           labelText: S.of(context).Email,
                           labelStyle: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary,
-                            // Change this to your desired color
                           ),
                         ),
                       ),
@@ -190,17 +197,23 @@ class _LoginState extends State<Login> {
                       child: TextFormField(
                         keyboardType: TextInputType.text,
                         controller: passwordController,
-                        obscureText:
-                            !isPasswordVisible, //This will obscure text dynamically
+                        obscureText: !isPasswordVisible, // This will obscure text dynamically
+                        style: TextStyle(color: Colors.black), // Set entered text color to black
                         decoration: InputDecoration(
                           labelText: S.of(context).Password,
                           labelStyle: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary,
-                            // Change this to your desired color
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.circular(screenSize.width * 0.1),
+                            BorderRadius.circular(screenSize.width * 0.1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -208,7 +221,6 @@ class _LoginState extends State<Login> {
                               isPasswordVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              // color: Colors.black,
                             ),
                             onPressed: () {
                               setState(() {
@@ -228,7 +240,7 @@ class _LoginState extends State<Login> {
                         width: double.infinity,
                         height: screenSize.width * 0.13,
                         decoration: BoxDecoration(
-                          color: const Color(0xff7c77d1),
+                          color:  Color(0xff7c77d1),
                           borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                         ),
                         child: Material(
@@ -243,18 +255,19 @@ class _LoginState extends State<Login> {
                                 if (success) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
+
                                       content: SizedBox(
                                         height: 60, // Adjust the height as needed
                                         child: Row(
                                           children: [
-                                            const Icon(Icons.check_circle, color: Colors.green),
+                                            const Icon(Icons.check_circle, color: Colors.white70),
                                             const SizedBox(width: 10),
                                             Expanded(
                                               child: Text(
                                                 'Login successful, \n '
                                                     'Welcome ${usernameController.text} to HEALTHA!',
                                                 style: const TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15,
                                                 ),
@@ -263,8 +276,7 @@ class _LoginState extends State<Login> {
                                           ],
                                         ),
                                       ),
-                                      backgroundColor: Colors.white,
-                                      elevation: 8,
+                                      backgroundColor: Colors.green,                                      elevation: 8,
                                       behavior: SnackBarBehavior.floating,
                                     ),
                                   );
@@ -313,7 +325,7 @@ class _LoginState extends State<Login> {
                           },
                           child: Text(
                             S.of(context).Sign_Up,
-                            style: const TextStyle(color: Color(0xFF7165D6)),
+                            style: const TextStyle(color: Color(0xff7c77d1)),
                           ),
                         ),
                       ],

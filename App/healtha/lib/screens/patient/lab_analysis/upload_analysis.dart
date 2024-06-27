@@ -479,7 +479,7 @@ Thank you for allowing us the time to ensure accuracy!""",
                       duration: const Duration(milliseconds: 500),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 60,
+                          horizontal: 33,
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(

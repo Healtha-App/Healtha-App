@@ -1,14 +1,12 @@
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/screens/doctor/requested-reports.dart';
-import 'package:http/http.dart' as http;
-import '../general/home/home_screen.dart';
-import 'package:healtha/main.dart';
+import '../../localization/generated/l10n.dart';
 import '../../themes/dark.dart';
 import 'doc_login.dart';
-import 'package:healtha/localization//generated/l10n.dart';
 
 class docSignUpPage extends StatefulWidget {
   const docSignUpPage({super.key});
@@ -58,14 +56,14 @@ class _docSignUpPageState extends State<docSignUpPage> {
               height: 60, // Adjust the height as needed
               child: Row(
                 children: [
-                  const Icon(Icons.check_circle, color: Colors.green),
+                  const Icon(Icons.check_circle,  color: Colors.white70),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       'Account created successfully, \n '
                       'WELCOME Dr.${usernameController.text} TO HEALTHA !',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style:  TextStyle(
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                       ),
@@ -74,8 +72,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                 ],
               ),
             ),
-            backgroundColor:
-                darkTheme == darkTheme ? Colors.black : Colors.white,
+            backgroundColor: Colors.green,
             elevation: 8,
             behavior: SnackBarBehavior.floating,
           ),
@@ -190,6 +187,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
                                   TextFormField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: usernameController,
                                     decoration: InputDecoration(
                                       labelText: S.of(context).Username,
@@ -204,6 +202,13 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
                                       ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                      ),
                                     ),
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -214,6 +219,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
                                   TextFormField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: passwordController,
                                     decoration: InputDecoration(
                                       suffixIcon: GestureDetector(
@@ -239,6 +245,13 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
                                       ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                      ),
                                     ),
                                     obscureText: !isPasswordVisible,
                                     validator: (value) {
@@ -256,6 +269,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
                                   TextFormField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: emailController,
                                     decoration: InputDecoration(
                                       labelText: S.of(context).Email,
@@ -270,6 +284,13 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                                       ),
                                     ),
                                     validator: (value) {
@@ -327,6 +348,7 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
                                   TextFormField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: contactInfoController,
                                     decoration: InputDecoration(
                                       labelText:
@@ -338,6 +360,13 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                                       ),
                                     ),
                                     validator: (value) {
@@ -351,6 +380,8 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                   ),
                                   SizedBox(height: screenSize.height * 0.02),
                                   TextFormField(
+
+                                    style: TextStyle(color: Colors.black),
                                     controller: specializationController,
                                     decoration: InputDecoration(
                                       labelText: S.of(context).Specialization,
@@ -361,6 +392,14 @@ class _docSignUpPageState extends State<docSignUpPage> {
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                             screenSize.width * 0.1),
+
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(screenSize.width * 0.1),
                                       ),
                                     ),
                                     validator: (value) {
