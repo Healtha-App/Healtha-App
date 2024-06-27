@@ -131,11 +131,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-   /* WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (hasNewConfirmedReport()) {
         showTopSnackBar(
           context,
-          "Dear Menna, \nYour lab results interpretation is ready. ",
+          "Dear ${(name!)}, \nYour lab results interpretation is ready. ",
           "View report",
               () {
             // Navigate to the report page
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         );
       }
-    });*/
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,

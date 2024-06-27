@@ -99,6 +99,7 @@ class _ReportDetailsState extends State<ReportDetails> {
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: Colors.green,
             content: Text(S.of(context).Report_updated_successfully),
           ),
         );
@@ -120,7 +121,22 @@ class _ReportDetailsState extends State<ReportDetails> {
         // Update UI or take necessary actions upon successful confirmation
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(S.of(context).Report_confirmed_and_notification_sent),
+            backgroundColor: Colors.green,
+
+            content: SizedBox(
+              height: 60,
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle, color: Colors.white70),
+                  SizedBox(width: 7,),
+                  Text(S.of(context).Report_confirmed_and_notification_sent,style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                      fontSize: 17
+                  ),),
+
+                ],
+              ),
+            )
           ),
         );
         widget.onConfirm(true);
@@ -131,6 +147,8 @@ class _ReportDetailsState extends State<ReportDetails> {
       print('Error confirming report: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          backgroundColor: Colors.red,
+
           content: Text(S.of(context).Failed_to_confirm_report),
         ),
       );
@@ -331,7 +349,22 @@ class _ReportDetailsState extends State<ReportDetails> {
                               _confirmReport();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(S.of(context).Report_confirmed_successfully),
+                                  backgroundColor: Colors.green,
+                                  content: SizedBox(
+                                    height: 60,
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.check_circle, color: Colors.white70),
+                                        SizedBox(width: 7,),
+                                        Text(S.of(context).Report_confirmed_successfully,style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17
+                                        ),),
+
+
+                                      ],
+                                    ),
+                                  )
                                 ),
                               );
                               widget.onConfirm(true);
