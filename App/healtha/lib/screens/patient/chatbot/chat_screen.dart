@@ -84,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: const Color(0xff7c77d1),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Container(
@@ -102,6 +103,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
+
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 10),

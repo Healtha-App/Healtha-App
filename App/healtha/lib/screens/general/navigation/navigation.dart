@@ -33,56 +33,18 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
       body: PageStorage(
         bucket: bucket,
         child: currentScreen,
       ),
-      floatingActionButton: Container(
-        width: MediaQuery.of(context).size.width * 0.19,
-        height: MediaQuery.of(context).size.height * 0.19,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xff7c77d1).withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 6,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: RawMaterialButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const UploadPage()),
-              );
-            },
-            elevation: 2.0,
-            fillColor:
-             Theme.of(context).colorScheme.surface,
-            padding: const EdgeInsets.all(12.0),
-            shape: const CircleBorder(),
-            child: Icon(
-              Icons.cloud_upload_outlined, // Use the upload icon
-              color: currentTap == 0 ? const Color(0xff7c77d1) : Colors.grey,
-              size: 35,
-            ),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomAppBar(
-        //shape: CircularNotchedRectangle(),
         notchMargin: 10,
         child: SizedBox(
-          height: 40,
+          height: 60,
           child: Center(
-            // Wrap the Row with Center
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -114,7 +76,7 @@ class _NavbarState extends State<Navbar> {
                                   ? const Color(0xff7c77d1)
                                   : Colors.grey,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -142,7 +104,7 @@ class _NavbarState extends State<Navbar> {
                                   ? const Color(0xff7c77d1)
                                   : Colors.grey,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -176,7 +138,7 @@ class _NavbarState extends State<Navbar> {
                                   ? const Color(0xff7c77d1)
                                   : Colors.grey,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -205,13 +167,49 @@ class _NavbarState extends State<Navbar> {
                                   ? const Color(0xff7c77d1)
                                   : Colors.grey,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: isKeyboardOpen ? null : Container(
+        width: 70,
+        height: 70,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xff7c77d1).withOpacity(0.4),
+              spreadRadius: 1,
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: RawMaterialButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UploadPage()),
+              );
+            },
+            elevation: 2.0,
+            fillColor: Theme.of(context).colorScheme.surface,
+            padding: const EdgeInsets.all(12.0),
+            shape: const CircleBorder(),
+            child: Icon(
+              Icons.cloud_upload_outlined,
+              color: currentTap == 0 ? const Color(0xff7c77d1) : Colors.grey,
+              size: 35,
             ),
           ),
         ),
