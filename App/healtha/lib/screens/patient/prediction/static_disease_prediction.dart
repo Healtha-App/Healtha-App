@@ -1,3 +1,5 @@
+
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:healtha/localization/generated/l10n.dart';
@@ -512,8 +514,7 @@ class _DiseaseState extends State<StaticDisease> {
             ),
             if (buttonPressed)
               Center(
-                child: _showMessage
-                    ? Text(
+                child: Text(
                   "Predicted disease: Bronchial Asthma",
                   style: TextStyle(
                     fontSize: 18,
@@ -521,7 +522,6 @@ class _DiseaseState extends State<StaticDisease> {
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 )
-                    : Container(), // Display an empty container while waiting
               ),
             const SizedBox(
               height: 50,
