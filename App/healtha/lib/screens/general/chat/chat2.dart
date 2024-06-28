@@ -26,16 +26,33 @@ class _DoctorChatState extends State<DoctorChat> {
   ];
 
   TextEditingController _textController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   void _handleSubmitted(String text) {
     _textController.clear();
     setState(() {
-      messages.add(ChatMessage(text: text, isUser: true)); // شكرا جدا لحضرتك ي دكتور
-      // Simulating a response from Healtha
-      Future.delayed(Duration(seconds: 1), () {
-        setState(() {
-          messages.add(ChatMessage(text: "العفو, علي الرحب", isUser: false));
-        });
+      messages.add(ChatMessage(text: text, isUser: true));
+    });
+    // Simulating a response from Healtha with a 2-second delay
+    Future.delayed(Duration(seconds: 3), () {
+      setState(() {
+        messages.add(ChatMessage(text: "العفو, علي الرحب", isUser: false));
       });
     });
   }
@@ -58,10 +75,9 @@ class _DoctorChatState extends State<DoctorChat> {
                 child: Image.asset('assets/doctor1.png', height: 40, width: 40, fit: BoxFit.cover),
               ),
             ),
-
             const SizedBox(width: 10.0),
             Text(
-              "Dr. Eman",
+              "Dr. Esraa",
               style: GoogleFonts.dancingScript(
                 textStyle: const TextStyle(
                   fontSize: 25,
@@ -106,13 +122,20 @@ class _DoctorChatState extends State<DoctorChat> {
                   onPressed: () {},
                 ),
                 Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      hintText: 'Type something',
-                      border: InputBorder.none,
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(_focusNode);
+                    },
+                    child: TextField(
+                      controller: _textController,
+                      focusNode: _focusNode,
+                      decoration: InputDecoration(
+                        hintText: 'Type something',
+                        border: InputBorder.none,
+                      ),
+                      onSubmitted: _handleSubmitted,
+                      showCursor: true,
                     ),
-                    onSubmitted: _handleSubmitted,
                   ),
                 ),
                 IconButton(
