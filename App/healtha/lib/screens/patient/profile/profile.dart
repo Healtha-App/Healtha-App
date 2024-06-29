@@ -7,6 +7,7 @@ import 'package:healtha/main.dart';
 import 'package:healtha/screens/patient/profile/settings.dart';
 import 'package:healtha/screens/patient/register_login/log_in.dart';
 import 'package:healtha/variables.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../register_login/log_in.dart';
 import 'editPage.dart';
 import 'package:http/http.dart' as http;
@@ -39,30 +40,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> fetchUserData() async {
     // Make an HTTP request to fetch user data
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
     final response = await http.get(Uri.parse(
-        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
+        'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients/$userId'));
 
     if (response.statusCode == 200) {
-      // If the request is successful, parse the JSON response
-      List<dynamic> doctorsData = jsonDecode(response.body);
-      if (doctorsData.isNotEmpty) {
-        // Retrieve the data for the last doctor signed up
-        Map<String, dynamic> userData = doctorsData.last;
-        // Update the state variables with the retrieved user data
-        setState(() {
-          email = userData['email'];
-          name = userData['username'];
-          phone = userData["contactInformation"];
-          DoB = userData["dateOfBirth"];
-          _isLoading = false; // Set loading flag to false
-          // Update other variables if needed
-        });
-      } else {
-        // Handle the case where the list is empty
-        setState(() {
-          _isLoading = false; // Set loading flag to false
-        });
-      }
+      Map<String, dynamic> userData = jsonDecode(response.body);
+      // Update the state variables with the retrieved user data
+      setState(() {
+        email = userData['email'];
+        name = userData['username'];
+        phone = userData["contactInformation"];
+        DoB = userData["dateOfBirth"];
+        _isLoading = false; // Set loading flag to false
+        // Update other variables if needed
+      });
     } else {
       // If the request fails, show an error message
       showDialog(

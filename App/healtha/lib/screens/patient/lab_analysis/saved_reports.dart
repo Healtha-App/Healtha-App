@@ -154,7 +154,7 @@ class SavedReports extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Report()),
+                              MaterialPageRoute(builder: (context) => Report(reportContent: '',)),
                             );
                           },
                           elevation: 2.0,

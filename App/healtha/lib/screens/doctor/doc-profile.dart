@@ -463,7 +463,7 @@ void showTopSnackBar(BuildContext context, String message, String actionLabel, V
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Report(reportContent: '',)));
                         },
                         child: Text(
                           actionLabel,

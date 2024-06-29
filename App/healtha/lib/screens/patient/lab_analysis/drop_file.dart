@@ -1,14 +1,14 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
-
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:healtha/localization/generated/l10n.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../../../localization/generated/l10n.dart';
 
 class FileDropWidget extends StatefulWidget {
-  const FileDropWidget({super.key});
+  final Function(String, String) onFilePicked; // Pass file path and content
+
+  const FileDropWidget({super.key, required this.onFilePicked});
 
   @override
   _FileDropWidgetState createState() => _FileDropWidgetState();
@@ -25,23 +25,25 @@ class _FileDropWidgetState extends State<FileDropWidget> {
         Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.grey, // Color of the border
-              style: BorderStyle.solid, // Solid border style
-              width: 1.0, // Border width
+              color: Colors.grey,
+              style: BorderStyle.solid,
+              width: 1.0,
             ),
           ),
           width: MediaQuery.of(context).size.width * 0.6,
           height: MediaQuery.of(context).size.height * 0.18,
           child: DragTarget<List<String>>(
             onWillAccept: (data) {
-              return data?.length == 1; // Accept only one file
+              return data?.length == 1;
             },
-            onAccept: (data) {
+            onAccept: (data) async {
               setState(() {
                 _pickedFile = File(data.first);
-                _dropText =
-                    _pickedFile!.path.split('/').last; // Display file name
+                _dropText = _pickedFile!.path.split('/').last;
               });
+
+              String content = await _pickedFile!.readAsString();
+              widget.onFilePicked(_pickedFile!.path, content);
             },
             builder: (context, candidateData, rejectedData) {
               return Column(
@@ -64,30 +66,33 @@ class _FileDropWidgetState extends State<FileDropWidget> {
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () async {
-                      FilePickerResult? result = await FilePicker.platform
-                          .pickFiles(allowMultiple: false);
-                      if (result != null && result.files.isNotEmpty) {
-                        setState(() {
-                          _pickedFile = File(result.files.single.path!);
-                          _dropText = _pickedFile!.path.split('/').last;
-                        });
-                      }
+                      Map<Permission, PermissionStatus> statuses = await [
+                        Permission.storage,
+                      ].request();
+
+                        FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+                        if (result != null && result.files.isNotEmpty) {
+                          setState(() {
+                            _pickedFile = File(result.files.single.path!);
+                            _dropText = _pickedFile!.path.split('/').last;
+                          });
+
+                          String content = await _pickedFile!.readAsString();
+                          widget.onFilePicked(_pickedFile!.path, content);
+                        }
                     },
                     style: ButtonStyle(
-                      elevation: MaterialStateProperty.all<double>(
-                          0), // Set elevation to 0
+                      elevation: MaterialStateProperty.all<double>(0),
                       minimumSize: MaterialStateProperty.all<Size>(
                         Size(
                           MediaQuery.of(context).size.width * 0.6,
                           MediaQuery.of(context).size.height * 0.055,
-                        ), // Set the width and height as needed
+                        ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xff00bb9a)),
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff00bb9a)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         const RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.zero, // Set border radius to zero
+                          borderRadius: BorderRadius.zero,
                         ),
                       ),
                     ),

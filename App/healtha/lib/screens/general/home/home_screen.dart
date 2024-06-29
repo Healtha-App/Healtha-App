@@ -16,6 +16,7 @@ import 'package:healtha/screens/patient/register_login/log_in.dart';
 import 'package:healtha/screens/patient/register_login/sign_up.dart';
 import 'package:healtha/screens/patient/chatbot/chat_screen.dart';
 import 'package:healtha/screens/doctor/doc-profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/screens/patient/lab_analysis/upload_analysis.dart';
 import 'package:healtha/screens/patient/prediction/disease_prediction.dart';
@@ -99,22 +100,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchUserData() async {
     try {
       // Make an HTTP request to fetch user data
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
       final response = await http.get(Uri.parse(
-          'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients'));
+          'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/patients/$userId'));
+
 
       if (response.statusCode == 200) {
         // If the request is successful, parse the JSON response
-        List<dynamic> doctorsData = jsonDecode(response.body);
-        if (doctorsData.isNotEmpty) {
-          // Retrieve the data for the last doctor signed up
-          Map<String, dynamic> userData = doctorsData.last;
-          // Update the state variables with the retrieved user data
+        dynamic doctorData = jsonDecode(response.body);
           setState(() {
-            name = userData['username'];
+            name = doctorData['username'];
           });
-        } else {
-          print("No data available");
-        }
       } else {
         print("Failed to fetch data: ${response.statusCode}");
       }
@@ -665,7 +662,7 @@ void showTopSnackBar(BuildContext context, String message, String actionLabel, V
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Report()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Report(reportContent: '',)));
                         },
                         child: Text(
                           actionLabel,

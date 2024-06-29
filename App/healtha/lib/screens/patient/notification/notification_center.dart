@@ -283,7 +283,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Report(),
+                            builder: (context) => Report(reportContent: '',),
                           ),
                         );
                       },

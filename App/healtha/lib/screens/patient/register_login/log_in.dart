@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/localization/generated/l10n.dart';
 import 'package:healtha/screens/patient/register_login/sign_up.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:healtha/screens/general/home/home_screen.dart';
-import 'package:healtha/screens/general/navigation/navigation.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -43,6 +43,11 @@ class _LoginState extends State<Login> {
 
         if (user != null) {
           usernameController.text = user['username'];
+
+          // Save the userId to SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('userId', user['userid'].toString());
+
           // Login successful
           return true;
         } else {
@@ -76,6 +81,11 @@ class _LoginState extends State<Login> {
       print('Error: $e');
       return false;
     }
+  }
+
+  Future<int?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('userId');
   }
 
   @override
@@ -197,8 +207,8 @@ class _LoginState extends State<Login> {
                       child: TextFormField(
                         keyboardType: TextInputType.text,
                         controller: passwordController,
-                        obscureText: !isPasswordVisible, // This will obscure text dynamically
-                        style: TextStyle(color: Colors.black), // Set entered text color to black
+                        obscureText:
+                        !isPasswordVisible, //This will obscure text dynamically
                         decoration: InputDecoration(
                           labelText: S.of(context).Password,
                           labelStyle: TextStyle(
@@ -255,7 +265,6 @@ class _LoginState extends State<Login> {
                                 if (success) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-
                                       content: SizedBox(
                                         height: 60, // Adjust the height as needed
                                         child: Row(

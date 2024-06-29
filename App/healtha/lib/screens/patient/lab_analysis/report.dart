@@ -9,14 +9,16 @@ import 'package:http/http.dart' as http;
 import 'package:healtha/localization/generated/l10n.dart';
 
 class Report extends StatefulWidget {
-  const Report({Key? key}) : super(key: key);
+  final String reportContent;
+
+  const Report({Key? key, required this.reportContent}) : super(key: key);
 
   @override
   _ReportState createState() => _ReportState();
 }
 
 class _ReportState extends State<Report> {
-  String _translatedReport = '';
+  late String _translatedReport;
   bool _isTranslated = false;
   bool _isTranslating = false;
   bool _showDelayedMessage = true;
@@ -30,6 +32,7 @@ class _ReportState extends State<Report> {
   @override
   void initState() {
     super.initState();
+    _translatedReport = widget.reportContent;
     _initTTS();
     _translateReport(); // Initial translation
     Future.delayed(const Duration(seconds: 10), () {
