@@ -38,7 +38,7 @@ const counterSchema = new mongoose.Schema({
 const SequenceCounter = mongoose.model('SequenceCounter', counterSchema);
 
 // Define a pre-save hook to auto-generate userid
-patientSchema.pre('save', async function(next) {
+patientSchema.pre('save', async function (next) {
     const doc = this;
     try {
         // Find the counter document for 'userid'
@@ -64,6 +64,22 @@ router.get('/healtha/patients', async (req, res) => {
     try {
         const patients = await Patient.find();
         res.status(200).json(patients);
+    } catch (error) {
+        console.error('Error retrieving patients', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.get('/healtha/patients/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const patient = await Patient.findOne({ userid: id });
+
+        if (!patient) {
+            return res.status(404).json({ error: 'Patient not found' });
+        }
+
+        res.status(200).json(patient);
     } catch (error) {
         console.error('Error retrieving patients', error);
         res.status(500).json({ error: 'Internal server error' });
