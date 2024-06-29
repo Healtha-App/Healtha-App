@@ -64,6 +64,10 @@ router.get('/healtha/reports', async (req, res) => {
           }
           return res.status(200).json(report);
       }
+      if (req.query.userId){
+        const reports = await Report.find({ userId: parseInt(req.query.userId) });
+        return res.status(200).json(reports);
+      }
       // If query parameter `confirmed` is provided and set to false, fetch unconfirmed reports
       if (req.query.confirmed === 'false') {
         const reports = await Report.find({ confirmed: false });
