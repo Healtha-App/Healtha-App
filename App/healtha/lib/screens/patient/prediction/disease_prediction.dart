@@ -291,7 +291,7 @@ class _DiseaseState extends State<Disease> {
         // Handle error with status code
         setState(() {
           predictedDisease =
-              'Error: Prediction failed. Status code: ${response.statusCode}';
+          'Error: Prediction failed. Status code: ${response.statusCode}';
           buttonPressed = true;
         });
       }
@@ -299,7 +299,7 @@ class _DiseaseState extends State<Disease> {
       // Handle other exceptions (e.g., network errors)
       setState(() {
         predictedDisease =
-            'Error: Unable to get prediction. Check your internet connection.';
+        'Error: Unable to get prediction. Check your internet connection.';
         buttonPressed = true;
       });
       print('Error making prediction request: $error');
@@ -348,7 +348,7 @@ class _DiseaseState extends State<Disease> {
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                        //  color: myPurple,
+                          //  color: myPurple,
                           offset: const Offset(0.0, 2.0),
                           blurRadius: 1.0,
                           spreadRadius: 0.0,
@@ -395,7 +395,7 @@ class _DiseaseState extends State<Disease> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
 
-                        fontSize: 18, fontWeight: FontWeight.w600,
+                      fontSize: 18, fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
@@ -414,7 +414,7 @@ class _DiseaseState extends State<Disease> {
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                   // color: Colors.white,
+                    // color: Colors.white,
                     border: Border.all(
                       color: AppConfig.myPurple.withOpacity(0.5),
                       width: 1.5,
@@ -451,8 +451,8 @@ class _DiseaseState extends State<Disease> {
                             children: symptomsCategories[category]!.map((symptom) {
                               return CheckboxListTile(
                                 title: Text(symptom.replaceAll("_", " ",),style:
-                                  TextStyle( color: Theme.of(context).colorScheme.onPrimary,
-                                  ),),
+                                TextStyle( color: Theme.of(context).colorScheme.onPrimary,
+                                ),),
                                 value: _isSymptomSelected(symptom),
                                 onChanged: (_) {
                                   _toggleSymptom(symptom);
@@ -478,7 +478,7 @@ class _DiseaseState extends State<Disease> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: myPurple,
                 padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
