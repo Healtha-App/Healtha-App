@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:healtha/localization/generated/l10n.dart';
-import 'package:healtha/screens/general/lab_doctor/lab_doctor.dart';
-import 'package:healtha/themes/dark.dart';
-import 'package:healtha/themes/light.dart';
-import 'package:healtha/variables.dart';
-import 'package:healtha/main.dart';
-import 'package:healtha/variables.dart';
-import 'package:flutter/material.dart';
-import 'package:healtha/localization/generated/l10n.dart';
-import 'package:healtha/themes/dark.dart';
 import 'package:healtha/themes/light.dart';
 
 import 'package:healtha/bloc/themes/themes_bloc.dart';
