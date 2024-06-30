@@ -16,6 +16,7 @@ import 'package:healtha/screens/patient/register_login/log_in.dart';
 import 'package:healtha/screens/patient/register_login/sign_up.dart';
 import 'package:healtha/screens/patient/chatbot/chat_screen.dart';
 import 'package:healtha/screens/doctor/doc-profile.dart';
+import '../../patient/prediction/local_prediction.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../encyclopedias/encyclopedia_types.dart';
 import 'package:healtha/screens/patient/lab_analysis/upload_analysis.dart';
@@ -74,7 +75,7 @@ final List<Doctor> Doctors = [
   Doctor(name: 'Dr.Mohammed', photoAsset: 'assets/doctor4.png'),
   Doctor(name: 'Dr.Sara', photoAsset: 'assets/doctor5.jpg'),
   Doctor(name: 'Dr.Ahmed', photoAsset: 'assets/doctor2.jpg'),
-  Doctor(name: 'Dr.Aya', photoAsset: 'assets/doctor3.jpg'),
+  Doctor(name: 'Dr.Esraa', photoAsset: "images/dr.PNG"),
   Doctor(name: 'Dr.John', photoAsset: 'assets/doctor8.jpeg'),
   Doctor(name: 'Dr.Emily', photoAsset: 'assets/doctor9.png'),
   Doctor(name: 'Dr.Michael', photoAsset: 'assets/doctor10.png'),
@@ -128,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+  /*  WidgetsBinding.instance.addPostFrameCallback((_) {
       if (hasNewConfirmedReport()) {
         showTopSnackBar(
           context,
@@ -140,13 +141,13 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         );
       }
-    });
+    });*/
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(7),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -190,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: CircleAvatar(
                         radius: 30,
-                        backgroundImage: AssetImage("images/girl.PNG"),
+                        backgroundImage: AssetImage("assets/pat.PNG"),
                       ),
                     ),
                   ],
@@ -372,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => StaticDisease()),
+                          MaterialPageRoute(builder: (context) => Disease2()),
                         );
                       },
                       child: Container(

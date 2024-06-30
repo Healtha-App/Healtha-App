@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart'; // Import this package for date formatting
+import '../../variables.dart';
+import '../patient/lab_analysis/report.dart';
+import '../patient/notification/notification_center.dart';
 import 'report_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/screens/doctor/doc-profile.dart';
@@ -16,6 +19,7 @@ class RequestedReports extends StatefulWidget {
 
 class _RequestedReportsState extends State<RequestedReports> {
   List<dynamic> _reports = [];
+  String? name;
 
   @override
   void initState() {
@@ -28,8 +32,12 @@ class _RequestedReportsState extends State<RequestedReports> {
       final response = await http.get(Uri.parse(
           'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
       if (response.statusCode == 200) {
+        List<dynamic> doctorsData = jsonDecode(response.body);
         List<dynamic> fetchedReports = json.decode(response.body);
-
+        if (doctorsData.isNotEmpty) {
+          Map<String, dynamic> userData = doctorsData.last;
+          name = userData['username'];
+        }
         // Sort reports by uploadTime in descending order
         fetchedReports.sort((a, b) {
           // Assuming uploadTime is a string in ISO 8601 format
@@ -64,10 +72,30 @@ class _RequestedReportsState extends State<RequestedReports> {
       return 'Requested ${difference.inMinutes} minute${difference.inMinutes > 1 ? 's' : ''} ago';
     }
   }
+  bool hasNewConfirmedReport() {
+    // Implement the logic to check for new confirmed reports
+    // This could involve checking a database or a state management solution
+    // For this example, we'll just return true
+    return true;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (hasNewConfirmedReport()) {
+        showTopSnackBar(
+          context,
+          "Dear Doctor, \nYour lab results interpretation is ready. ",
+          "View requested report",
+              () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => RequestedReports()));
+          },
+        );
+      }
+    });
 
     return SafeArea(
       child: Scaffold(
@@ -249,4 +277,96 @@ class _RequestedReportsState extends State<RequestedReports> {
       ),
     );
   }
+}
+void showTopSnackBar(BuildContext context, String message, String actionLabel, VoidCallback onActionPressed) {
+  OverlayState? overlayState = Overlay.of(context);
+  OverlayEntry? overlayEntry; // Define overlayEntry as nullable
+
+
+  overlayEntry = OverlayEntry(
+    builder: (context) => Center(
+      child: Material(
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width * 0.8,
+              // margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 8,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    message,
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Report(reportContent: '',)));
+                        },
+                        child: Text(
+                          actionLabel,
+                          style: TextStyle(
+                            color: AppConfig.myPurple,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                      //Text('or'),
+                     /* TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationCenter()));
+                        },
+                        child: Text(
+                          "View all notifications",
+                          style: TextStyle(
+                              color: AppConfig.myPurple,
+                              decoration: TextDecoration.underline,
+                              decorationThickness: 1
+                          ),
+                        ),
+                      ),*/
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: IconButton(
+                icon: Icon(Icons.close, color: Theme.of(context).colorScheme.onPrimary),
+                onPressed: () {
+                  overlayEntry?.remove(); // Remove the snackbar when close button is pressed
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  overlayState?.insert(overlayEntry);
+
+  Future.delayed(Duration(seconds: 3), () {
+    if (overlayEntry!.mounted) {
+      overlayEntry?.remove();
+    }
+  });
 }

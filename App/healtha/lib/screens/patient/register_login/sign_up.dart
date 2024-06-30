@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'log_in.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -27,7 +27,7 @@ class _SignUpState extends State<SignUp> {
   bool isMale = false; // New state for gender selection
   bool isFemale = false; // New state for gender selection
   final TextEditingController contactInformationController =
-      TextEditingController();
+  TextEditingController();
 
   // New state for password visibility
   bool isPasswordVisible = false;
@@ -45,12 +45,13 @@ class _SignUpState extends State<SignUp> {
           'password': passwordController.text,
           'email': emailController.text,
           'dateOfBirth': dateOfBirthController.text,
-          'gender': isMale ? S.of(context).Male : S.of(context).Female,
+          'gender': isMale ? 'Male' : 'Female', // Assuming gender is required
           'contactInformation': contactInformationController.text,
         }),
         headers: {'Content-Type': 'application/json'},
       );
-      log(response.body);
+      log('Response status: ${response.statusCode}');
+      log('Response body: ${response.body}');
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -64,10 +65,7 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      S
-                          .of(context)
-                          .Account_created_successfully_nWELCOME_TO_HEALTHA(
-                              usernameController.text),
+                      S.of(context).Account_created_successfully_nWELCOME_TO_HEALTHA(usernameController.text),
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -78,7 +76,6 @@ class _SignUpState extends State<SignUp> {
                 ],
               ),
             ),
-     //       backgroundColor: Colors.white,
             elevation: 8,
             behavior: SnackBarBehavior.floating,
           ),
@@ -94,12 +91,13 @@ class _SignUpState extends State<SignUp> {
           MaterialPageRoute(
             builder: (context) => const Navbar(),
           ),
-          (route) => false,
+              (route) => false,
         );
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userId', patientId.toString());
         return patientId;
       } else {
+        log('Sign-up failed with status code: ${response.statusCode}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -114,8 +112,21 @@ class _SignUpState extends State<SignUp> {
         );
       }
     } catch (e) {
-      print('Error: $e');
+      log('Error during sign-up: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Sign-up failed. Please try again later.',
+            style: const TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.grey,
+        ),
+      );
     }
+
     return null;
   }
 
@@ -160,8 +171,7 @@ class _SignUpState extends State<SignUp> {
                         textStyle: TextStyle(
                           fontSize: screenSize.width * 0.08,
                           fontWeight: FontWeight.w700,
-                        color: Colors.white
-                        //  color: Colors.white,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -196,7 +206,6 @@ class _SignUpState extends State<SignUp> {
                         buildTextFormField(
                           controller: usernameController,
                           labelText: S.of(context).Username,
-
                           suffixIcon: Icons.person,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -214,13 +223,12 @@ class _SignUpState extends State<SignUp> {
                             if (value!.isEmpty) {
                               return 'Please enter your Email';
                             } else if (!RegExp(
-                                    r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
+                                r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
                                 .hasMatch(value)) {
                               return 'Please enter a valid email address';
                             }
                             return null;
                           },
-
                         ),
                         buildTextFormField(
                           controller: passwordController,
@@ -232,7 +240,8 @@ class _SignUpState extends State<SignUp> {
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value!.length < 8 ||
-                                !RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
+                                !RegExp(
+                                    r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])')
                                     .hasMatch(value)) {
                               return 'Password must be at least 8 characters with a mix of uppercase, lowercase, and numbers';
                             }
@@ -261,14 +270,17 @@ class _SignUpState extends State<SignUp> {
                               initialDate: DateTime.now(),
                               firstDate: DateTime(1900),
                               lastDate: DateTime.now(),
-                              builder: (BuildContext context, Widget? child) {
+                              builder:
+                                  (BuildContext context, Widget? child) {
                                 return Theme(
                                   data: ThemeData.light().copyWith(
                                     colorScheme: ColorScheme.light(
                                       primary: Colors.black, // Header background color
-                                      onPrimary: Colors.white, // Header text color
+                                      onPrimary:
+                                      Colors.white, // Header text color
                                       surface: Colors.white, // Dialog background color
-                                      onSurface: Colors.black, // Body text color
+                                      onSurface: Colors
+                                          .black, // Body text color
                                     ),
                                     dialogBackgroundColor: Colors.white,
                                   ),
@@ -280,10 +292,8 @@ class _SignUpState extends State<SignUp> {
                             if (selectedDate != null &&
                                 selectedDate != DateTime.now()) {
                               setState(() {
-                                dateOfBirthController.text = selectedDate
-                                    .toLocal()
-                                    .toString()
-                                    .split(' ')[0];
+                                dateOfBirthController.text =
+                                selectedDate.toLocal().toString().split(' ')[0];
                               });
                             }
                           },
@@ -294,10 +304,12 @@ class _SignUpState extends State<SignUp> {
                               horizontal: screenSize.width * 0.05),
                           child: Row(
                             children: [
-                              Text(S.of(context).Gender,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),),
+                              Text(
+                                S.of(context).Gender,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
                               Checkbox(
                                 value: isMale,
                                 onChanged: (bool? newValue) {
@@ -309,13 +321,15 @@ class _SignUpState extends State<SignUp> {
                                   });
                                 },
                               ),
-                              Text(S.of(context).Male,
+                              Text(
+                                S.of(context).Male,
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.onPrimary,
-                                ),),
+                                ),
+                              ),
                               Checkbox(
-                                checkColor:Theme.of(context).colorScheme.onPrimary,
-
+                                checkColor:
+                                Theme.of(context).colorScheme.onPrimary,
                                 value: isFemale,
                                 onChanged: (bool? newValue) {
                                   setState(() {
@@ -326,10 +340,12 @@ class _SignUpState extends State<SignUp> {
                                   });
                                 },
                               ),
-                              Text(S.of(context).Female,
+                              Text(
+                                S.of(context).Female,
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.onPrimary,
-                                ),),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -357,13 +373,16 @@ class _SignUpState extends State<SignUp> {
                             height: screenSize.height * 0.07,
                             decoration: BoxDecoration(
                               color: const Color(0xff7c77d1),
-                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                              borderRadius: BorderRadius.circular(
+                                  screenSize.width * 0.1),
                             ),
                             child: Material(
                               color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                              borderRadius: BorderRadius.circular(
+                                  screenSize.width * 0.1),
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(screenSize.width * 0.1),
+                                borderRadius: BorderRadius.circular(
+                                    screenSize.width * 0.1),
                                 splashColor: Colors.white.withOpacity(0.3),
                                 highlightColor: Colors.transparent,
                                 onTap: () {
@@ -387,10 +406,12 @@ class _SignUpState extends State<SignUp> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(S.of(context).Have_an_account,
+                            Text(
+                              S.of(context).Have_an_account,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
-                              ),),
+                              ),
+                            ),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
@@ -403,7 +424,7 @@ class _SignUpState extends State<SignUp> {
                               child: Text(
                                 S.of(context).Log_in,
                                 style:
-                                    const TextStyle(color: Color(0xFF7165D6)),
+                                const TextStyle(color: Color(0xFF7165D6)),
                               ),
                             ),
                           ],
@@ -442,8 +463,9 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           suffixIcon: GestureDetector(
             onTap: onTapSuffix,
-            child: Icon(suffixIcon,
-              color:Theme.of(context).colorScheme.onPrimary,
+            child: Icon(
+              suffixIcon,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
           focusedBorder: OutlineInputBorder(
@@ -451,11 +473,11 @@ class _SignUpState extends State<SignUp> {
               color: Colors.black, // Keep border black when focused
               width: 2.0,
             ),
-           borderRadius: BorderRadius.circular(26.0),
+            borderRadius: BorderRadius.circular(26.0),
           ),
           border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),
+            borderRadius: BorderRadius.circular(
+                MediaQuery.of(context).size.width * 0.1),
           ),
           labelText: labelText,
           labelStyle: TextStyle(

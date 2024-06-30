@@ -229,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            image: AssetImage("assets/girl.PNG"),
+                            image: AssetImage("assets/pat.PNG"),
                             fit: BoxFit.cover,
                           ),
                         ),

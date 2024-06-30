@@ -51,7 +51,7 @@ class LipidPanel extends StatelessWidget {
       if (labTests.isNotEmpty && labTests.length >= 3) {
         // Check if there are at least 3 lab tests
         Map<String, dynamic> fifthLabTest =
-        labTests[2]; // Accessing the third lab test using index 2
+            labTests[2]; // Accessing the third lab test using index 2
         String name = fifthLabTest['name'];
         List<dynamic> sections = fifthLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {

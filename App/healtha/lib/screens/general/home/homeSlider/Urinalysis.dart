@@ -51,7 +51,7 @@ class Urinalysis extends StatelessWidget {
       if (labTests.isNotEmpty && labTests.length >= 2) {
         // Check if there are at least 3 lab tests
         Map<String, dynamic> thirdLabTest =
-        labTests[1]; // Accessing the third lab test using index 2
+            labTests[1]; // Accessing the third lab test using index 2
         String name = thirdLabTest['name'];
         List<dynamic> sections = thirdLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {

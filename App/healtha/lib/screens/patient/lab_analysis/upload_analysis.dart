@@ -9,6 +9,7 @@ import 'package:healtha/screens/patient/lab_analysis/saved_reports.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:file_picker/file_picker.dart';
+import '../../general/navigation/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'drop_file.dart';
 import 'generated.dart';
@@ -444,7 +445,7 @@ Thank you for allowing us the time to ensure accuracy!""",
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomeScreen()),
+                                        builder: (context) => Navbar()),
                                   );
                                 },
                                 child: Text(
