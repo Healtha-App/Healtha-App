@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:healtha/localization/generated/l10n.dart';
 import 'package:healtha/screens/patient/lab_analysis/saved_reports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'drop_file.dart';
 import 'generated.dart';
 
@@ -73,6 +74,8 @@ class _UploadPageState extends State<UploadPage> {
   }
 
   Future<void> sendReport(String filePath, String testName, String reportContent) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
     try {
       final response = await http.post(
         Uri.parse('http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports'),
@@ -83,6 +86,7 @@ class _UploadPageState extends State<UploadPage> {
           'filePath': filePath,
           'testName': testName,
           'reportContent': reportContent,
+          'userid': userId!,
         }),
       );
 
