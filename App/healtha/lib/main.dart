@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:healtha/localization/generated/l10n.dart';
+import 'package:healtha/screens/doctor/doc_signUp.dart';
+import 'package:healtha/screens/general/home/home_screen.dart';
+import 'package:healtha/screens/patient/register_login/log_in.dart';
 import 'package:healtha/screens/patient/register_login/sign_up.dart';
 import 'package:healtha/themes/light.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               supportedLocales: S.delegate.supportedLocales,
               theme: (state is ThemeLight) ? darkTheme : lightTheme,
-              home: SignUp(),
+              home: Login(),
             ),
           );
         },

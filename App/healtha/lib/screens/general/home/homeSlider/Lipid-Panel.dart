@@ -48,10 +48,10 @@ class LipidPanel extends StatelessWidget {
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty && labTests.length >= 5) {
+      if (labTests.isNotEmpty && labTests.length >= 3) {
         // Check if there are at least 3 lab tests
         Map<String, dynamic> fifthLabTest =
-            labTests[4]; // Accessing the third lab test using index 2
+        labTests[2]; // Accessing the third lab test using index 2
         String name = fifthLabTest['name'];
         List<dynamic> sections = fifthLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {

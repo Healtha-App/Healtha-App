@@ -7,7 +7,7 @@ import 'package:healtha/localization/generated/l10n.dart';
 
 class APIKey {
   static const apiKey =
-      "sk-proj-JOtmcvMORhHhM1ScZPWeT3BlbkFJb6epQt2n2iDZRYf7PjU0";
+      "sk-proj-ECNUyQIAPyHkUI3EBao8T3BlbkFJAwvLMBgi6gsE8upxBmmD";
 }
 
 class ChatScreen extends StatefulWidget {
@@ -51,7 +51,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: ListView(
         padding:
-            const EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 80),
+        const EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 80),
         children: _messages.map((message) => _buildMessage(message)).toList(),
       ),
       bottomSheet: Container(
@@ -59,13 +59,13 @@ class _ChatScreenState extends State<ChatScreen> {
         decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
             boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ]),
+              BoxShadow(
+                color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ]),
         child: Row(
           children: [
             Padding(
@@ -162,7 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       String response = await sendMessageToChatGpt(userMessage);
       Message chatGptMessage =
-          Message(sender: S.of(context).Healtha, text: response);
+      Message(sender: S.of(context).Healtha, text: response);
       setState(() {
         _messages.add(chatGptMessage);
       });

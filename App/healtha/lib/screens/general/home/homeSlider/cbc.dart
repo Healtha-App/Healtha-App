@@ -48,10 +48,12 @@ class CBC extends StatelessWidget {
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty) {
-        Map<String, dynamic> firstLabTest = labTests.first;
-        String name = firstLabTest['name'];
-        List<dynamic> sections = firstLabTest['sections'];
+      if (labTests.isNotEmpty && labTests.length >= 1) {
+        // Check if there are at least 3 lab tests
+        Map<String, dynamic> thirdLabTest =
+        labTests[0]; // Accessing the third lab test using index 2
+        String name = thirdLabTest['name'];
+        List<dynamic> sections = thirdLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {
           return Section(
             title: section['title'],
@@ -60,7 +62,7 @@ class CBC extends StatelessWidget {
         }).toList();
         return LabTest(name: name, sections: parsedSections);
       } else {
-        throw Exception('No lab tests found');
+        throw Exception('Not enough lab tests found');
       }
     } else {
       throw Exception('Failed to load lab tests');

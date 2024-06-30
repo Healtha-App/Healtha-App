@@ -41,7 +41,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
   Future<void> _fetchReports() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=false'));
+          'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/reports?confirmed=true'));
       if (response.statusCode == 200) {
         List<dynamic> reports = json.decode(response.body);
         setState(() {
@@ -68,7 +68,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
           DateFormat('yyyy-MM-dd').format(now)) {
         _todayReports.add(report);
       } else if (reportDate
-              .isAfter(now.subtract(Duration(days: now.weekday))) &&
+          .isAfter(now.subtract(Duration(days: now.weekday))) &&
           reportDate.isBefore(now.add(Duration(days: 7 - now.weekday)))) {
         _thisWeekReports.add(report);
       } else {
@@ -132,7 +132,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                        color: Theme.of(context).colorScheme.onPrimary,
 
                       ),
                     ),

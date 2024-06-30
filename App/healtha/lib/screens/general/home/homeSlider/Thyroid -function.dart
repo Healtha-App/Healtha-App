@@ -48,10 +48,10 @@ class Thyroid extends StatelessWidget {
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty && labTests.length >= 2) {
+      if (labTests.isNotEmpty && labTests.length >= 3) {
         // Check if there are at least 3 lab tests
         Map<String, dynamic> secondLabTest =
-            labTests[1]; // Accessing the third lab test using index 2
+        labTests[4]; // Accessing the third lab test using index 2
         String name = secondLabTest['name'];
         List<dynamic> sections = secondLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {

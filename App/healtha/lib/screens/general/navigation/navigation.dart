@@ -98,7 +98,7 @@ class _NavbarState extends State<Navbar> {
                                 : Colors.grey,
                           ),
                           Text(
-                            S.of(context).Chatting,
+                            "Chat",
                             style: TextStyle(
                               color: currentTap == 1
                                   ? const Color(0xff7c77d1)

@@ -48,10 +48,10 @@ class ACE extends StatelessWidget {
         'http://ec2-18-117-114-121.us-east-2.compute.amazonaws.com:4000/api/healtha/lab-tests'));
     if (response.statusCode == 200) {
       List<dynamic> labTests = jsonDecode(response.body);
-      if (labTests.isNotEmpty && labTests.length >= 6) {
+      if (labTests.isNotEmpty && labTests.length >= 9) {
         // Check if there are at least 3 lab tests
         Map<String, dynamic> sixLabTest =
-            labTests[5]; // Accessing the third lab test using index 2
+        labTests[10]; // Accessing the third lab test using index 2
         String name = sixLabTest['name'];
         List<dynamic> sections = sixLabTest['sections'];
         List<Section> parsedSections = sections.map((section) {
