@@ -6,6 +6,7 @@ import 'package:healtha/screens/general/navigation/navigation.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtha/screens/general/home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'log_in.dart';
 
 class SignUp extends StatefulWidget {
@@ -95,6 +96,8 @@ class _SignUpState extends State<SignUp> {
           ),
           (route) => false,
         );
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userId', patientId.toString());
         return patientId;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
